@@ -4,6 +4,9 @@ import SignOutButton from '@/components/SignOutButton'
 import DashboardNav from '@/components/dashboard/DashboardNav'
 import { getUnreadInquiryCount } from '@/lib/inquiries'
 
+/** Seller portal uses session + DB — skip static generation at build. */
+export const dynamic = 'force-dynamic'
+
 export default async function DashboardLayout({
   children,
 }: {

@@ -50,11 +50,11 @@ Netlify deploys from Git. Ensure `.env` is **not** committed (it should be in `.
 3. Build settings (must match `netlify.toml`):
    - **Build command:** `npm run build`
    - **Publish directory:** `.next` (do **not** leave blank — Netlify may default to repo root and fail)
-4. **Site settings → Environment variables** — add:
+4. **Site settings → Environment variables** — add (scope: **All** — build + runtime):
 
 | Variable | Value |
 |----------|--------|
-| `DATABASE_URL` | Your hosted Postgres URL (pooled if Neon) |
+| `DATABASE_URL` | Your hosted Postgres URL (same as local `.env`) |
 | `AUTH_SECRET` | Long random string (32+ chars) |
 | `NEXTAUTH_SECRET` | Same as `AUTH_SECRET` (optional duplicate) |
 | `NEXTAUTH_URL` | `https://YOUR-SITE-NAME.netlify.app` |
@@ -86,10 +86,10 @@ Netlify deploys from Git. Ensure `.env` is **not** committed (it should be in `.
 - Redeploy after changing env vars.
 - Confirm `AUTH_SECRET` is set.
 
-**Build fails on Prisma**
+**Build fails on Prisma / `ECONNREFUSED` on `/admin/*`**
 
-- `postinstall` runs `prisma generate` — ensure `package.json` is committed.
-- Set `DATABASE_URL` in Netlify **before** build if logs show DB errors during static generation.
+- Add `DATABASE_URL` in Netlify env vars (available at **build** and **runtime**).
+- Admin and seller dashboard routes are dynamic; if an older deploy still fails, pull latest `netlify.toml` and redeploy with cache cleared.
 
 **Works locally, empty on Netlify**
 
