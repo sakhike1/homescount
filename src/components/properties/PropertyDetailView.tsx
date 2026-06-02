@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import {
+  ArrowLeft,
   Bath,
   BedDouble,
   Car,
@@ -45,20 +46,42 @@ export default function PropertyDetailView({
     ? `${property.suburb}, ${property.location}`
     : property.location
 
+  const isRent = property.listingType === 'RENT'
+  const backHref = isRent ? '/properties?type=rent' : '/properties?type=buy'
+  const backLabel = isRent ? 'Back to rentals' : 'Back to homes for sale'
+
   return (
     <main className="min-h-screen bg-[#faf9f7]">
-      <div className="bg-stone-900 text-white px-4 py-6">
+      <section className="px-4 pt-4 sm:pt-6 pb-2">
         <div className="max-w-7xl mx-auto">
-          <Link
-            href="/properties"
-            className="text-sm text-amber-400 hover:text-amber-300 font-medium"
+          <nav
+            className="flex flex-wrap items-center gap-2 sm:gap-3"
+            aria-label="Property navigation"
           >
-            ← All properties
-          </Link>
+            <Link
+              href={backHref}
+              className="inline-flex items-center gap-2 rounded-full border border-stone-200/80 bg-white px-4 py-2.5 text-sm font-bold text-stone-800 shadow-sm ring-1 ring-stone-900/[0.04] transition hover:border-amber-200 hover:bg-amber-50/60 hover:text-amber-900"
+            >
+              <ArrowLeft className="h-4 w-4 shrink-0 text-amber-600" aria-hidden />
+              {backLabel}
+            </Link>
+            <span className="hidden sm:inline text-stone-300" aria-hidden>
+              /
+            </span>
+            <span className="hidden sm:inline min-w-0 max-w-xl truncate text-sm font-medium text-stone-500">
+              {property.title}
+            </span>
+            <Link
+              href="/properties"
+              className="sm:ml-auto text-sm font-bold text-amber-700 hover:text-amber-800 hover:underline underline-offset-2"
+            >
+              All properties
+            </Link>
+          </nav>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 pb-8 sm:pb-10">
         {isDemo && (
           <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
             This is a <strong>sample listing</strong> for preview purposes. Contact
