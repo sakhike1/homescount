@@ -144,6 +144,14 @@ export function getHeroThemeForIndex(
   return palettes[((index % palettes.length) + palettes.length) % palettes.length]
 }
 
+/** Theme for this visit — SSR uses the default palette for the variant. */
+export function resolveHeroThemeForVisit(variant: LandingHeroVariant): LandingHeroTheme {
+  if (typeof window === 'undefined') {
+    return landingHeroThemes[variant]
+  }
+  return getHeroThemeForIndex(variant, getHeroThemeIndexForVisit(variant))
+}
+
 export type LandingHeroCopy = {
   eyebrow: string
   title: string

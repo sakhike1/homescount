@@ -1,17 +1,16 @@
 'use client'
 
 import Image from 'next/image'
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { ChevronDown, MapPin } from 'lucide-react'
 import { HeroThemeProvider } from '@/components/listing-landing/hero-theme-context'
 import {
   advanceHeroThemeIndexForNextVisit,
-  getHeroThemeForIndex,
-  getHeroThemeIndexForVisit,
   getLandingHeroCopy,
   landingHeroImage,
   landingHeroThemes,
+  resolveHeroThemeForVisit,
   type LandingHeroTheme,
   type LandingHeroVariant,
 } from '@/lib/landing-hero-themes'
@@ -32,15 +31,22 @@ export default function ListingLandingHero({
   const copy = getLandingHeroCopy(variant, { browseType })
   const location = locationHint?.trim() || 'South Africa'
   const [theme, setTheme] = useState<LandingHeroTheme>(() => landingHeroThemes[variant])
+  const variantRef = useRef(variant)
+
+  // Next.js client nav can reuse this component across /buy, /rent, /sell — update
+  // theme in the same render so the previous page's colors do not flash.
+  if (variantRef.current !== variant) {
+    variantRef.current = variant
+    setTheme(resolveHeroThemeForVisit(variant))
+  }
 
   useLayoutEffect(() => {
-    const index = getHeroThemeIndexForVisit(variant)
-    setTheme(getHeroThemeForIndex(variant, index))
+    setTheme(resolveHeroThemeForVisit(variant))
     return () => advanceHeroThemeIndexForNextVisit(variant)
   }, [variant])
 
   return (
-    <HeroThemeProvider theme={theme}>
+    <HeroThemeProvider key={variant} theme={theme}>
       <section className="bg-[#faf9f7] px-4 pt-6 sm:pt-8 pb-4">
         <div className="max-w-7xl mx-auto">
           <div
