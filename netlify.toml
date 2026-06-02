@@ -1,0 +1,11 @@
+# https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/
+
+[build]
+  command = "npm run build"
+  # Required for @netlify/plugin-nextjs — empty/defaults to repo root and the build fails.
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Next.js on Netlify uses the OpenNext adapter automatically when detected.

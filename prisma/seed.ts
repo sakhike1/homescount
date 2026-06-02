@@ -1,0 +1,114 @@
+import 'dotenv/config'
+import bcrypt from 'bcryptjs'
+import { PrismaClient } from '../src/generated/prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+
+const propertyImages = [
+  '/property-images/2f8ec23c4d9785a449ea604b22f3d2d8.jpg',
+  '/property-images/4d82ac2618a6added7fea05b8870d899.jpg',
+  '/property-images/59f7a7ad7ff6f13afbfc384144a0628d.jpg',
+  '/property-images/70ce4843500bfc0fca113bdfa97addbc.jpg',
+  '/property-images/8081603765d99262541199bac9d805c6.jpg',
+  '/property-images/c4e964396df2a1f95b4e4757df7b34bd.jpg',
+]
+
+const listings = [
+  { title: 'Modern family home with pool', suburb: 'Sandton', city: 'Johannesburg', province: 'Gauteng', price: 4250000, listingType: 'SALE' as const, beds: 4, baths: 3, park: 2, size: 320 },
+  { title: 'Luxury apartment with city views', suburb: 'Sea Point', city: 'Cape Town', province: 'Western Cape', price: 2850000, listingType: 'SALE' as const, beds: 2, baths: 2, park: 1, size: 95 },
+  { title: 'Spacious suburban townhouse', suburb: 'Umhlanga', city: 'Durban', province: 'KwaZulu-Natal', price: 1890000, listingType: 'SALE' as const, beds: 3, baths: 2, park: 2, size: 180 },
+  { title: 'Bright open-plan apartment', suburb: 'Menlyn', city: 'Pretoria', province: 'Gauteng', price: 12500, listingType: 'RENT' as const, beds: 2, baths: 1, park: 1, size: 72 },
+  { title: 'Garden cottage to rent', suburb: 'Stellenbosch', city: 'Stellenbosch', province: 'Western Cape', price: 18500, listingType: 'RENT' as const, beds: 3, baths: 2, park: 2, size: 140 },
+  { title: 'Executive penthouse', suburb: 'Bryanston', city: 'Johannesburg', province: 'Gauteng', price: 8900000, listingType: 'SALE' as const, beds: 4, baths: 4, park: 3, size: 280 },
+  { title: 'Coastal duplex near the beach', suburb: 'Ballito', city: 'Ballito', province: 'KwaZulu-Natal', price: 3100000, listingType: 'SALE' as const, beds: 3, baths: 2, park: 2, size: 165 },
+  { title: 'Student-friendly flat', suburb: 'Hatfield', city: 'Pretoria', province: 'Gauteng', price: 7500, listingType: 'RENT' as const, beds: 1, baths: 1, park: 0, size: 48 },
+  { title: 'Family estate home', suburb: 'Centurion', city: 'Pretoria', province: 'Gauteng', price: 3650000, listingType: 'SALE' as const, beds: 5, baths: 3, park: 3, size: 350 },
+  { title: 'Renovated Victorian charmer', suburb: 'Observatory', city: 'Cape Town', province: 'Western Cape', price: 2200000, listingType: 'SALE' as const, beds: 3, baths: 2, park: 1, size: 155 },
+  { title: 'Lock-up-and-go apartment', suburb: 'Rosebank', city: 'Johannesburg', province: 'Gauteng', price: 14500, listingType: 'RENT' as const, beds: 2, baths: 2, park: 1, size: 88 },
+  { title: 'Wine estate villa', suburb: 'Franschhoek', city: 'Franschhoek', province: 'Western Cape', price: 12500000, listingType: 'SALE' as const, beds: 5, baths: 5, park: 4, size: 520 },
+  { title: 'Compact starter apartment', suburb: 'Durban North', city: 'Durban', province: 'KwaZulu-Natal', price: 980000, listingType: 'SALE' as const, beds: 2, baths: 1, park: 1, size: 65 },
+  { title: 'Corporate rental near CBD', suburb: 'Foreshore', city: 'Cape Town', province: 'Western Cape', price: 22000, listingType: 'RENT' as const, beds: 2, baths: 2, park: 1, size: 102 },
+  { title: 'Double-storey family residence', suburb: 'Fourways', city: 'Johannesburg', province: 'Gauteng', price: 4750000, listingType: 'SALE' as const, beds: 4, baths: 3, park: 3, size: 310 },
+  { title: 'Pet-friendly garden flat', suburb: 'Parktown North', city: 'Johannesburg', province: 'Gauteng', price: 11000, listingType: 'RENT' as const, beds: 2, baths: 1, park: 1, size: 78 },
+  { title: 'New development apartment', suburb: 'Green Point', city: 'Cape Town', province: 'Western Cape', price: 3450000, listingType: 'SALE' as const, beds: 2, baths: 2, park: 1, size: 92 },
+  { title: 'Secure complex townhouse', suburb: 'Midrand', city: 'Midrand', province: 'Gauteng', price: 16800, listingType: 'RENT' as const, beds: 3, baths: 2, park: 2, size: 130 },
+]
+
+async function main() {
+  const adapter = new PrismaPg({
+    connectionString: process.env.DATABASE_URL!,
+  })
+  const prisma = new PrismaClient({ adapter })
+
+  const password = await bcrypt.hash('password123', 10)
+
+  const seller = await prisma.user.upsert({
+    where: { email: 'seller@homescount.com' },
+    update: {},
+    create: {
+      email: 'seller@homescount.com',
+      name: 'Homescount Demo Seller',
+      password,
+      role: 'SELLER',
+    },
+  })
+
+  await prisma.user.upsert({
+    where: { email: 'admin@homescount.com' },
+    update: { role: 'ADMIN', active: true },
+    create: {
+      email: 'admin@homescount.com',
+      name: 'Homescount Admin',
+      password,
+      role: 'ADMIN',
+    },
+  })
+
+  await prisma.image.deleteMany({
+    where: { property: { sellerId: seller.id } },
+  })
+  await prisma.property.deleteMany({ where: { sellerId: seller.id } })
+
+  for (let i = 0; i < listings.length; i++) {
+    const L = listings[i]
+    const imgBase = i % propertyImages.length
+
+    const property = await prisma.property.create({
+      data: {
+        title: L.title,
+        description: `Beautiful ${L.listingType === 'RENT' ? 'rental' : 'home'} in ${L.suburb}, ${L.city}. Open-plan living, modern finishes, and great access to schools, shops, and transport. Ideal for families or professionals seeking comfort and convenience in ${L.province}.`,
+        price: L.price,
+        location: `${10 + i} Main Road`,
+        suburb: L.suburb,
+        city: L.city,
+        province: L.province,
+        bedrooms: L.beds,
+        bathrooms: L.baths,
+        parkings: L.park,
+        size: L.size,
+        type: i % 3 === 0 ? 'APARTMENT' : 'HOUSE',
+        listingType: L.listingType,
+        status: 'AVAILABLE',
+        published: true,
+        publishedAt: new Date(),
+        featured: i < 4,
+        sellerId: seller.id,
+        images: {
+          create: [
+            { url: propertyImages[imgBase] },
+            { url: propertyImages[(imgBase + 1) % propertyImages.length] },
+            { url: propertyImages[(imgBase + 2) % propertyImages.length] },
+          ],
+        },
+      },
+    })
+
+    console.log('Created:', property.title)
+  }
+
+  console.log('\nSeed complete!')
+  console.log('Seller login: seller@homescount.com / password123')
+  console.log('Admin login:  admin@homescount.com / password123  → /admin/login')
+  console.log(`${listings.length} published properties created.`)
+}
+
+main().catch(console.error)

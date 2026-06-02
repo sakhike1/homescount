@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id              String         @id @default(cuid())
+  email           String         @unique
+  password        String
+  name            String
+  phone           String?
+  role            Role           @default(BUYER)
+  active          Boolean        @default(true)
+  suspendedAt     DateTime?
+  suspendedReason String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  properties      Property[]
+  adPayments      AdPayment[]
+  activities      SiteActivity[]
+}
+
+model Property {
+  id            String         @id @default(cuid())
+  title         String
+  description   String
+  price         Float
+  location      String
+  suburb        String         @default("")
+  city          String
+  province      String
+  published     Boolean        @default(false)
+  publishedAt   DateTime?
+  bedrooms      Int
+  bathrooms     Int
+  parkings      Int            @default(0)
+  size          Float
+  type          PropertyType
+  listingType   ListingType    @default(SALE)
+  status        PropertyStatus @default(AVAILABLE)
+  images        Image[]
+  seller        User           @relation(fields: [sellerId], references: [id])
+  sellerId      String
+  featured      Boolean        @default(false)
+  featuredUntil DateTime?
+  adPlan        AdPlan         @default(NONE)
+  adPayments    AdPayment[]
+  inquiries     Inquiry[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Inquiry {
+  id               String   @id @default(cuid())
+  name             String
+  email            String
+  phone            String?
+  message          String
+  read             Boolean  @default(false)
+  privacyConsentAt DateTime @default(now())
+  property         Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId       String
+  createdAt        DateTime @default(now())
+}
+
+model Image {
+  id         String   @id @default(cuid())
+  url        String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId String
+  createdAt  DateTime @default(now())
+}
+
+model AdPayment {
+  id         String        @id @default(cuid())
+  plan       AdPlan
+  amount     Float
+  status     PaymentStatus @default(COMPLETED)
+  property   Property      @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId String
+  seller     User          @relation(fields: [sellerId], references: [id])
+  sellerId   String
+  createdAt  DateTime      @default(now())
+}
+
+enum Role {
+  BUYER
+  SELLER
+  ADMIN
+}
+
+enum ListingType {
+  SALE
+  RENT
+}
+
+enum AdPlan {
+  NONE
+  BASIC
+  FEATURED
+  PREMIUM
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum PropertyType {
+  HOUSE
+  APARTMENT
+  TOWNHOUSE
+  LAND
+  COMMERCIAL
+}
+
+enum PropertyStatus {
+  AVAILABLE
+  SOLD
+  RENTED
+  PENDING
+}
+
+model NewsletterSubscriber {
+  id               String   @id @default(cuid())
+  email            String   @unique
+  privacyConsentAt DateTime @default(now())
+  createdAt        DateTime @default(now())
+}
+
+model SiteActivity {
+  id        String       @id @default(cuid())
+  type      ActivityType
+  message   String
+  userId    String?
+  user      User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  metadata  Json?
+  read      Boolean      @default(false)
+  createdAt DateTime     @default(now())
+}
+
+enum ActivityType {
+  USER_REGISTERED
+  SELLER_REGISTERED
+  NEWSLETTER_SUBSCRIBED
+  INQUIRY_SENT
+  LISTING_PUBLISHED
+  AD_PAYMENT
+  SELLER_SUSPENDED
+  SELLER_REACTIVATED
+  AD_EXPIRED
+}

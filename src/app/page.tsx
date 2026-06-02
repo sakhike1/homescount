@@ -1,65 +1,54 @@
-import Image from "next/image";
+import { Suspense } from 'react'
+import Navbar from '@/components/Navbar'
+import HeroSlideshow from '@/components/HeroSlideshow'
+import HeroSearch from '@/components/HeroSearch'
+import HomeDynamicContent from '@/components/home/HomeDynamicContent'
+import HomeHeroStats from '@/components/home/HomeHeroStats'
+import HomeHeroStatsSkeleton from '@/components/home/HomeHeroStatsSkeleton'
+import HomeBelowFoldSkeleton from '@/components/home/HomeBelowFoldSkeleton'
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main>
+      <section className="relative overflow-hidden text-white">
+        <HeroSlideshow />
+
+        <div className="relative max-w-7xl mx-auto px-4 pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-36 lg:pb-28">
+          <Suspense fallback={null}>
+            <Navbar placement="hero" />
+          </Suspense>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            <div className="lg:col-span-7">
+              <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 ring-1 ring-white/15 backdrop-blur">
+                Homescount
+                <span className="h-1 w-1 rounded-full bg-white/60" />
+                South Africa
+              </p>
+
+              <h1 className="mt-6 text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-display">
+                <span className="text-white">Find the home</span>
+                <br />
+                <span className="text-amber-300">you&apos;ll love</span>
+              </h1>
+
+              <p className="mt-5 max-w-xl text-white/75 text-sm sm:text-base leading-relaxed">
+                Search thousands of properties for sale and rent across all 9
+                provinces — trusted sellers, verified listings.
+              </p>
+
+              <HeroSearch />
+            </div>
+
+            <Suspense fallback={<HomeHeroStatsSkeleton />}>
+              <HomeHeroStats />
+            </Suspense>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+      </section>
+
+      <Suspense fallback={<HomeBelowFoldSkeleton />}>
+        <HomeDynamicContent />
+      </Suspense>
+    </main>
+  )
 }
