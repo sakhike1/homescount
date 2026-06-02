@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
+import HomescountLogo from '@/components/brand/HomescountLogo'
 import {
   Apple,
   AtSign,
@@ -222,14 +223,7 @@ export default function Footer() {
       <section className="bg-gray-900 text-gray-300 py-10 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 pb-8 border-b border-gray-800">
-            <Link href="/" className="flex items-center gap-2 w-fit">
-              <div className="bg-amber-500 text-white font-black text-lg px-3 py-1 rounded-lg tracking-tight">
-                HC
-              </div>
-              <span className="font-bold text-xl text-white tracking-tight">
-                Homes<span className="text-amber-300">count</span>
-              </span>
-            </Link>
+            <HomescountLogo tone="onDark" size="lg" className="w-fit" />
 
             <div className="flex items-center gap-5">
               <SocialIcon label="Instagram" href="https://instagram.com">

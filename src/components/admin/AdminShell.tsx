@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import HomescountLogo from '@/components/brand/HomescountLogo'
 import SignOutButton from '@/components/SignOutButton'
 import AdminNav from '@/components/admin/AdminNav'
 
@@ -16,10 +16,14 @@ export default function AdminShell({
       <header className="border-b border-stone-200 bg-stone-900 text-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4">
           <div className="flex items-center gap-4">
-            <Link href="/admin" className="font-bold tracking-tight">
-              Homes<span className="text-amber-400">count</span>
-              <span className="ml-2 text-xs font-semibold text-stone-400">Admin</span>
-            </Link>
+            <HomescountLogo
+              href="/admin"
+              tone="onDark"
+              size="md"
+              suffix={
+                <span className="text-xs font-semibold text-stone-400">Admin</span>
+              }
+            />
           </div>
           <div className="flex items-center gap-3">
             <span className="hidden sm:inline text-sm text-stone-400">{adminName}</span>

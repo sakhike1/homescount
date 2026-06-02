@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import HomescountLogo from '@/components/brand/HomescountLogo'
 import { requireSeller } from '@/lib/seller'
 import SignOutButton from '@/components/SignOutButton'
 import DashboardNav from '@/components/dashboard/DashboardNav'
@@ -20,9 +20,7 @@ export default async function DashboardLayout({
       <header className="border-b border-gray-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4">
           <div className="flex items-center gap-6">
-            <Link href="/" className="font-bold text-gray-900">
-              Homes<span className="text-amber-600">count</span>
-            </Link>
+            <HomescountLogo href="/" size="md" />
             <span className="hidden sm:inline text-sm font-semibold text-gray-500">
               Seller Portal
             </span>

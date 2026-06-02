@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import HomescountLogo from '@/components/brand/HomescountLogo'
 import { useSession, signOut } from 'next-auth/react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -122,17 +123,7 @@ export default function Navbar({
                 : ''
             }`}
           >
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 min-w-0 shrink">
-              <div className="bg-amber-500 text-white font-black text-base sm:text-lg px-2.5 sm:px-3 py-1 rounded-lg tracking-tight">
-                HC
-              </div>
-              <span
-                className={`hidden sm:inline font-bold text-lg sm:text-xl tracking-tight truncate ${isHero ? 'text-white' : 'text-gray-900'}`}
-              >
-                Homes<span className={isHero ? 'text-amber-300' : 'text-amber-600'}>count</span>
-              </span>
-            </Link>
+            <HomescountLogo tone={isHero ? 'hero' : 'default'} size="md" />
 
             {/* Desktop center links */}
             <div className={`hidden md:flex items-center gap-1 rounded-full px-2 py-1 ${pillShell}`}>

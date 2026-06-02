@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Building2, Home, UserRound } from 'lucide-react'
+import HomescountLogo from '@/components/brand/HomescountLogo'
 import { authenticate } from './actions'
 import {
   formButtonPrimaryFullClass,
@@ -57,6 +58,9 @@ export default function LoginForm() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="w-full max-w-md rounded-2xl border border-gray-200/60 bg-white p-8 shadow-md">
+        <div className="mb-6 flex justify-center">
+          <HomescountLogo href="/" size="lg" className="justify-center" />
+        </div>
         <h1 className="text-2xl font-bold text-gray-800 mb-2">Welcome back</h1>
         <p className="text-gray-500 mb-6">Sign in to your Homescount account</p>
 

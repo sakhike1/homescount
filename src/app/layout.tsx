@@ -16,6 +16,10 @@ const geist = Geist({
 export const metadata: Metadata = {
   title: 'Homescount — Find Your Dream Home',
   description: 'Browse thousands of properties for sale across South Africa',
+  icons: {
+    icon: [{ url: '/logo-icon.svg', type: 'image/svg+xml' }],
+    apple: [{ url: '/logo-icon.svg', type: 'image/svg+xml' }],
+  },
 }
 
 export default function RootLayout({
