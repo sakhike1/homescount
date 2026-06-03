@@ -59,6 +59,7 @@ Netlify deploys from Git. Ensure `.env` is **not** committed (it should be in `.
 | `NEXTAUTH_SECRET` | Same as `AUTH_SECRET` (optional duplicate) |
 | `NEXTAUTH_URL` | `https://YOUR-SITE-NAME.netlify.app` |
 | `AUTH_URL` | Same as `NEXTAUTH_URL` (NextAuth v5) |
+| `NEXT_PUBLIC_SITE_URL` | Same as `NEXTAUTH_URL` — used for canonical URLs, Open Graph, and `sitemap.xml` |
 | `NODE_VERSION` | `20` (optional; also in `netlify.toml`) |
 
 5. Deploy. If the build fails, open the deploy log — often missing `DATABASE_URL` during build if a page queries the DB at build time.
@@ -66,6 +67,7 @@ Netlify deploys from Git. Ensure `.env` is **not** committed (it should be in `.
 ## Step 5 — Verify after deploy
 
 - [ ] Home and `/properties` load
+- [ ] `/robots.txt` and `/sitemap.xml` return 200 (SEO)
 - [ ] `/register` → create account → `/login`
 - [ ] Login as seller → `/dashboard`
 - [ ] Open a listing → send enquiry (needs published listing from seed)

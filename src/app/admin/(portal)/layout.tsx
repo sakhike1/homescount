@@ -1,5 +1,12 @@
+import { buildPageMetadata } from '@/lib/seo'
 import AdminShell from '@/components/admin/AdminShell'
 import { requireAdmin } from '@/lib/admin'
+
+export const metadata = buildPageMetadata({
+  title: 'Admin portal',
+  description: 'Homescount administration.',
+  noIndex: true,
+})
 import { getUnreadActivityCount } from '@/lib/activity'
 
 /** Auth + DB — must not prerender at build (no DATABASE_URL on Netlify build workers). */

@@ -1,5 +1,43 @@
 import { Suspense } from 'react'
+import type { Metadata } from 'next'
+import { buildPageMetadata } from '@/lib/seo'
 import PropertyBrowseFilters from '@/components/properties/PropertyBrowseFilters'
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ type?: string; q?: string }>
+}): Promise<Metadata> {
+  const { type, q } = await searchParams
+  const isRent = type === 'rent'
+  const isBuy = type === 'buy' || !type
+
+  if (q?.trim()) {
+    return buildPageMetadata({
+      title: `Properties matching “${q.trim()}”`,
+      description: `Search results for “${q.trim()}” — homes and apartments for ${isRent ? 'rent' : 'sale'} on Homescount across South Africa.`,
+      path: `/properties?q=${encodeURIComponent(q.trim())}`,
+    })
+  }
+
+  if (isRent) {
+    return buildPageMetadata({
+      title: 'Rental Property Search',
+      description:
+        'Search all rental listings on Homescount. Filter by price, suburb, and city to find apartments and houses to rent.',
+      path: '/properties?type=rent',
+      keywords: ['rental property search', 'apartments to rent', 'lease homes South Africa'],
+    })
+  }
+
+  return buildPageMetadata({
+    title: isBuy ? 'Property Search — Homes for Sale' : 'Property Search',
+    description:
+      'Search thousands of homes for sale and rent. Use filters for price, location, and listing type across all South African provinces.',
+    path: isBuy ? '/properties?type=buy' : '/properties',
+    keywords: ['property search', 'real estate listings', 'browse homes South Africa'],
+  })
+}
 import PropertyBrowseHero from '@/components/properties/PropertyBrowseHero'
 import PropertiesBrowseResults from '@/components/properties/PropertiesBrowseResults'
 import PropertiesGridSkeleton from '@/components/properties/PropertiesGridSkeleton'

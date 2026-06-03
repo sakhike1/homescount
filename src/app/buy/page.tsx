@@ -1,5 +1,19 @@
 import { Suspense } from 'react'
+import { buildPageMetadata } from '@/lib/seo'
 import BuyLandingContent from '@/components/listing-landing/BuyLandingContent'
+
+export const metadata = buildPageMetadata({
+  title: 'Homes & Property for Sale',
+  description:
+    'Browse houses, apartments, and townhouses for sale across South Africa. Filter by city, suburb, and price in Johannesburg, Cape Town, Durban, Pretoria, and more.',
+  path: '/buy',
+  keywords: [
+    'property for sale',
+    'houses for sale Gauteng',
+    'buy apartment Cape Town',
+    'townhouses for sale',
+  ],
+})
 import BuyBrowseTeaserAsync from '@/components/listing-landing/BuyBrowseTeaserAsync'
 import RentTeaserSkeleton from '@/components/listing-landing/RentTeaserSkeleton'
 import type { PropertyFilters } from '@/lib/properties'

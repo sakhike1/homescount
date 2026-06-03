@@ -15,6 +15,12 @@ test.describe('Mobile navigation', () => {
     await expect(menu).toBeVisible()
     await expect(menu.getByRole('link', { name: 'Rent', exact: true })).toBeVisible()
     await expect(menu.getByRole('link', { name: 'Sell', exact: true })).toBeVisible()
+    await expect(menu.getByRole('link', { name: /sign in/i })).toBeVisible()
+    await expect(menu.getByRole('link', { name: /get started/i })).toBeVisible()
+  })
+
+  test('header hides sign in on small screens until menu opens', async ({ page }) => {
+    await expect(page.getByRole('navigation').getByRole('link', { name: /sign in/i })).toHaveCount(0)
   })
 
   test('mobile menu navigates to rent page', async ({ page }) => {

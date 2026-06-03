@@ -1,5 +1,19 @@
 import { Suspense } from 'react'
+import { buildPageMetadata } from '@/lib/seo'
 import RentLandingContent from '@/components/listing-landing/RentLandingContent'
+
+export const metadata = buildPageMetadata({
+  title: 'Homes & Apartments to Rent',
+  description:
+    'Find rental homes and apartments across South Africa. Search by suburb, monthly rent, and city — from Sandton to Sea Point.',
+  path: '/rent',
+  keywords: [
+    'property to rent',
+    'apartments for rent',
+    'houses to rent Johannesburg',
+    'monthly rental listings',
+  ],
+})
 import RentBrowseTeaserAsync from '@/components/listing-landing/RentBrowseTeaserAsync'
 import RentTeaserSkeleton from '@/components/listing-landing/RentTeaserSkeleton'
 import type { PropertyFilters } from '@/lib/properties'

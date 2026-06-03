@@ -1,5 +1,12 @@
+import { buildPageMetadata } from '@/lib/seo'
 import HomescountLogo from '@/components/brand/HomescountLogo'
 import { requireSeller } from '@/lib/seller'
+
+export const metadata = buildPageMetadata({
+  title: 'Seller dashboard',
+  description: 'Manage your property listings and enquiries on Homescount.',
+  noIndex: true,
+})
 import SignOutButton from '@/components/SignOutButton'
 import DashboardNav from '@/components/dashboard/DashboardNav'
 import { getUnreadInquiryCount } from '@/lib/inquiries'

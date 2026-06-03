@@ -1,5 +1,17 @@
 import { Suspense } from 'react'
+import { buildPageMetadata, SITE } from '@/lib/seo'
 import Navbar from '@/components/Navbar'
+
+export const metadata = buildPageMetadata({
+  title: 'Homes for Sale & Rent in South Africa',
+  description: SITE.defaultDescription,
+  path: '/',
+  keywords: [
+    'property portal South Africa',
+    'search homes for sale',
+    'find rentals near me',
+  ],
+})
 import HeroSlideshow from '@/components/HeroSlideshow'
 import HeroSearch from '@/components/HeroSearch'
 import HomeDynamicContent from '@/components/home/HomeDynamicContent'

@@ -16,6 +16,35 @@ test.describe('Page metadata', () => {
     await expect(page).toHaveTitle(/homescount/i)
   })
 
+  test('home page has SEO meta description', async ({ page }) => {
+    await page.goto('/')
+    const description = page.locator('meta[name="description"]')
+    await expect(description).toHaveAttribute('content', /property for sale|south africa/i)
+  })
+
+  test('buy page has property-for-sale keywords in description', async ({ page }) => {
+    await page.goto('/buy')
+    const description = page.locator('meta[name="description"]')
+    await expect(description).toHaveAttribute('content', /for sale|south africa/i)
+  })
+
+  test('robots.txt allows public pages', async ({ request }) => {
+    const res = await request.get('/robots.txt')
+    expect(res.ok()).toBeTruthy()
+    const body = await res.text()
+    expect(body).toMatch(/sitemap/i)
+    expect(body).toMatch(/admin/i)
+  })
+
+  test('sitemap.xml includes main landing URLs', async ({ request }) => {
+    const res = await request.get('/sitemap.xml')
+    expect(res.ok()).toBeTruthy()
+    const body = await res.text()
+    expect(body).toMatch(/\/buy/)
+    expect(body).toMatch(/\/rent/)
+    expect(body).toMatch(/\/properties/)
+  })
+
   for (const { path, h1 } of pagesWithTitles) {
     test(`${path} has expected h1`, async ({ page }) => {
       await page.goto(path)
