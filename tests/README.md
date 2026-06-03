@@ -2,43 +2,59 @@
 
 ## Prerequisites
 
-- PostgreSQL running with schema applied (`npm run db:push`)
-- Seed data for auth tests: `npm run db:seed` (seller & admin use `password123` by default)
+- PostgreSQL with schema applied (`npm run db:push`)
+- Seed data: `npm run db:seed` (seller & admin: `password123`)
+- `AUTH_SECRET` and `NEXTAUTH_SECRET` in `.env`
 
 ## Run tests
 
-Stop any existing `npm run dev` process first so Playwright starts a fresh server with your `.env` loaded.
+Playwright starts a dev server automatically (unless you reuse an existing one):
 
 ```bash
-npm run db:seed   # required for login tests
+npm run db:seed
 
-# All browsers (Chromium, Firefox, WebKit) — starts dev server automatically
-npm run test:e2e
-
-# Chromium only (faster)
+# Full suite — Chromium only (recommended locally)
 npm run test:e2e:chromium
+
+# Quick smoke — public pages, nav, auth, branding
+npm run test:e2e:smoke
+
+# All browsers
+npm run test:e2e
 
 # Interactive UI
 npm run test:e2e:ui
-
-# HTML report after a run
-npm run test:e2e:report
 ```
 
-## Optional env overrides
+Reuse an already-running dev server:
 
-```env
-E2E_SELLER_EMAIL=seller@homescount.com
-E2E_SELLER_PASSWORD=password123
-E2E_ADMIN_EMAIL=admin@homescount.com
-E2E_ADMIN_PASSWORD=password123
-PLAYWRIGHT_BASE_URL=http://localhost:3000
+```powershell
+$env:PW_REUSE_SERVER='1'
+npm run test:e2e:chromium
 ```
 
-## What is covered
+## Test files
 
-- Public routes (home, buy, rent, sell, properties, login, register, legal, admin login)
-- Navigation and landing CTAs
-- Cookie consent and legal footer links
-- Property browse filters and demo listing pages
-- Seller/admin login and protected route redirects
+| File | What it covers |
+|------|----------------|
+| `public-pages.spec.ts` | All public routes load |
+| `navigation.spec.ts` | Navbar links, sign in |
+| `home-search.spec.ts` | Home hero search tabs & area chips |
+| `landing-ctas.spec.ts` | Footer CTAs on buy/rent/sell |
+| `landing-heroes.spec.ts` | Hero action cards, cross-page nav |
+| `property-browse.spec.ts` | Filters, listing cards, back links |
+| `property-detail.spec.ts` | Detail layout, specs, seller card |
+| `property-enquiry.spec.ts` | Contact form & POPIA consent |
+| `auth.spec.ts` | Login, protected routes, seller/admin |
+| `register.spec.ts` | Sign up, duplicate email, roles |
+| `user-flows.spec.ts` | Register→login, search→browse |
+| `seller-dashboard.spec.ts` | Listings, messages, new listing form |
+| `admin-portal.spec.ts` | Admin overview, activity, users, sellers |
+| `newsletter.spec.ts` | Home newsletter signup & consent |
+| `mobile-nav.spec.ts` | Mobile menu (390px viewport) |
+| `page-metadata.spec.ts` | Document titles, favicon |
+| `journeys.spec.ts` | Buy/rent/sell journey sections |
+| `legal-and-consent.spec.ts` | Privacy/terms/cookies, cookie banner |
+| `branding.spec.ts` | HC logo in navbar and footer |
+
+Auth and database tests **skip** automatically when secrets or seed data are missing.

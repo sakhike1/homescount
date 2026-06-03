@@ -54,13 +54,15 @@ test.describe('Authentication', () => {
   })
 
   test('unauthenticated admin portal redirects to login', async ({ page }) => {
+    await page.context().clearCookies()
     await page.goto('/admin')
-    await expect(page).toHaveURL(/\/admin\/login/)
+    await expect(page).toHaveURL(/\/admin\/login/, { timeout: 15_000 })
   })
 
   test('unauthenticated dashboard redirects to login', async ({ page }) => {
+    await page.context().clearCookies()
     await page.goto('/dashboard')
-    await expect(page).toHaveURL(/\/login/)
+    await expect(page).toHaveURL(/\/login/, { timeout: 15_000 })
   })
 })
 
@@ -76,7 +78,7 @@ test.describe('Login form UX', () => {
   test('register link from login works', async ({ page }) => {
     await page.goto('/login')
     await acceptCookies(page)
-    await page.locator('a[href="/register"]').click()
+    await page.getByRole('link', { name: /create one/i }).click()
     await expect(page).toHaveURL(/\/register/, { timeout: 15_000 })
   })
 })

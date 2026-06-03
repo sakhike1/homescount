@@ -1,15 +1,8 @@
 import Link from 'next/link'
-import type { ReactNode } from 'react'
 import HomescountLogo from '@/components/brand/HomescountLogo'
-import {
-  Apple,
-  AtSign,
-  Camera,
-  Play,
-  PlayCircle,
-  Pin,
-  Users,
-} from 'lucide-react'
+import { FooterSocialLinks } from '@/components/footer/SocialIconButton'
+import { LEGAL } from '@/lib/legal'
+import { Apple, Play } from 'lucide-react'
 
 const gautengCities = [
   'Alberton',
@@ -107,9 +100,7 @@ function FooterColumn({
   return (
     <div>
       {title && (
-        <h3 className="text-sm font-bold text-white mb-3 leading-snug">
-          {title}
-        </h3>
+        <h3 className="text-sm font-bold text-white mb-3 leading-snug">{title}</h3>
       )}
       <CityList cities={cities} />
     </div>
@@ -119,7 +110,7 @@ function FooterColumn({
 const utilityLinks = {
   company: [
     { label: 'About Us', comingSoon: true },
-    { label: 'Contact Us', href: 'mailto:hello@homescount.com' },
+    { label: 'Contact Us', href: `mailto:${LEGAL.contactEmail}` },
     { label: 'Feedback', comingSoon: true },
     { label: 'Sitemap', href: '/properties' },
   ],
@@ -147,7 +138,7 @@ function UtilityLink({
 }) {
   if (comingSoon) {
     return (
-      <span className="text-sm text-gray-500 cursor-default" title="Coming soon">
+      <span className="text-sm text-stone-500 cursor-default" title="Coming soon">
         {label}
       </span>
     )
@@ -157,38 +148,19 @@ function UtilityLink({
 
   if (isExternal) {
     return (
-      <a href={href} className="text-sm hover:text-white transition">
+      <a
+        href={href}
+        className="text-sm text-stone-400 hover:text-amber-200 transition"
+      >
         {label}
       </a>
     )
   }
 
   return (
-    <Link href={href!} className="text-sm hover:text-white transition">
+    <Link href={href!} className="text-sm text-stone-400 hover:text-amber-200 transition">
       {label}
     </Link>
-  )
-}
-
-function SocialIcon({
-  label,
-  children,
-  href,
-}: {
-  label: string
-  children: ReactNode
-  href: string
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={label}
-      className="text-gray-400 hover:text-white transition"
-    >
-      {children}
-    </a>
   )
 }
 
@@ -200,84 +172,106 @@ export default function Footer() {
   return (
     <footer className="mt-auto">
       {/* Regional property links */}
-      <section className="bg-gradient-to-br from-amber-500 to-amber-700 text-white py-10 px-4">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
-          <FooterColumn
-            title="Property for sale in Gauteng"
-            cities={gautengCol1}
-          />
+      <section className="relative overflow-hidden bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800 text-white py-10 px-4">
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_20%_0%,rgba(255,255,255,0.22),transparent_55%)]"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_100%_100%,rgba(253,230,138,0.2),transparent_50%)]"
+          aria-hidden
+        />
+        <div className="relative max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
+          <FooterColumn title="Property for sale in Gauteng" cities={gautengCol1} />
           <FooterColumn cities={gautengCol2} />
-          <FooterColumn
-            title="Property for sale in KwaZulu Natal"
-            cities={kznCities}
-          />
-          <FooterColumn
-            title="Property for sale in Western Cape"
-            cities={westernCapeCities}
-          />
+          <FooterColumn title="Property for sale in KwaZulu Natal" cities={kznCities} />
+          <FooterColumn title="Property for sale in Western Cape" cities={westernCapeCities} />
           <FooterColumn title="Rest of South Africa" cities={restOfSaCities} />
         </div>
       </section>
 
-      {/* Brand, links & apps */}
-      <section className="bg-gray-900 text-gray-300 py-10 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 pb-8 border-b border-gray-800">
-            <HomescountLogo tone="onDark" size="lg" className="w-fit" />
+      {/* Brand, links & social */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-stone-950 via-stone-900 to-amber-950 text-stone-300 py-12 px-4">
+        <div
+          className="pointer-events-none absolute -top-24 left-1/4 h-64 w-96 rounded-full bg-amber-500/20 blur-3xl"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute bottom-0 right-0 h-48 w-72 rounded-full bg-amber-400/10 blur-3xl"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(105deg,transparent_40%,rgba(255,255,255,0.03)_50%,transparent_60%)]"
+          aria-hidden
+        />
 
-            <div className="flex items-center gap-5">
-              <SocialIcon label="Instagram" href="https://instagram.com">
-                <Camera className="w-5 h-5" aria-hidden />
-              </SocialIcon>
-              <SocialIcon label="Facebook" href="https://facebook.com">
-                <Users className="w-5 h-5" aria-hidden />
-              </SocialIcon>
-              <SocialIcon label="X" href="https://x.com">
-                <AtSign className="w-5 h-5" aria-hidden />
-              </SocialIcon>
-              <SocialIcon label="YouTube" href="https://youtube.com">
-                <PlayCircle className="w-5 h-5" aria-hidden />
-              </SocialIcon>
-              <SocialIcon label="Pinterest" href="https://pinterest.com">
-                <Pin className="w-5 h-5" aria-hidden />
-              </SocialIcon>
+        <div className="relative max-w-7xl mx-auto">
+          <div className="flex flex-col gap-8 pb-10 border-b border-white/10 lg:flex-row lg:items-start lg:justify-between">
+            <div className="space-y-4 max-w-md">
+              <HomescountLogo tone="onDark" size="lg" className="w-fit" />
+              <p className="text-sm leading-relaxed text-stone-400">
+                Find homes to buy and rent across South Africa — trusted sellers,
+                clear listings, and guidance from enquiry to handover.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-400/90">
+                Follow us
+              </p>
+              <FooterSocialLinks />
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-8">
-            <ul className="space-y-2.5">
-              {utilityLinks.company.map((link) => (
-                <li key={link.label}>
-                  <UtilityLink {...link} />
-                </li>
-              ))}
-            </ul>
-            <ul className="space-y-2.5">
-              {utilityLinks.legal.map((link) => (
-                <li key={link.label}>
-                  <UtilityLink {...link} />
-                </li>
-              ))}
-            </ul>
-            <ul className="space-y-2.5">
-              {utilityLinks.business.map((link) => (
-                <li key={link.label}>
-                  <UtilityLink {...link} />
-                </li>
-              ))}
-            </ul>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-10">
             <div>
-              <p className="text-sm font-medium text-white mb-3">
-                Download the App
+              <p className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-4">
+                Company
               </p>
-              <div className="flex flex-col gap-2 opacity-60">
+              <ul className="space-y-2.5">
+                {utilityLinks.company.map((link) => (
+                  <li key={link.label}>
+                    <UtilityLink {...link} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-4">
+                Legal
+              </p>
+              <ul className="space-y-2.5">
+                {utilityLinks.legal.map((link) => (
+                  <li key={link.label}>
+                    <UtilityLink {...link} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-4">
+                For business
+              </p>
+              <ul className="space-y-2.5">
+                {utilityLinks.business.map((link) => (
+                  <li key={link.label}>
+                    <UtilityLink {...link} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-4">
+                Download the app
+              </p>
+              <div className="flex flex-col gap-2 opacity-70">
                 <div
-                  className="inline-flex items-center gap-2 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 cursor-not-allowed"
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 cursor-not-allowed backdrop-blur-sm"
                   title="Mobile app coming soon"
                 >
-                  <Apple className="w-6 h-6 text-white shrink-0" aria-hidden />
+                  <Apple className="h-6 w-6 text-white shrink-0" aria-hidden />
                   <div className="text-left">
-                    <div className="text-[10px] text-gray-400 leading-none">
+                    <div className="text-[10px] text-stone-500 leading-none">
                       Download on the
                     </div>
                     <div className="text-sm font-semibold text-white leading-tight">
@@ -286,31 +280,29 @@ export default function Footer() {
                   </div>
                 </div>
                 <div
-                  className="inline-flex items-center gap-2 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 cursor-not-allowed"
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 cursor-not-allowed backdrop-blur-sm"
                   title="Mobile app coming soon"
                 >
-                  <Play className="w-6 h-6 text-white shrink-0 fill-white" aria-hidden />
+                  <Play className="h-6 w-6 text-white shrink-0 fill-white" aria-hidden />
                   <div className="text-left">
-                    <div className="text-[10px] text-gray-400 leading-none">
-                      GET IT ON
-                    </div>
+                    <div className="text-[10px] text-stone-500 leading-none">GET IT ON</div>
                     <div className="text-sm font-semibold text-white leading-tight">
                       Google Play
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-gray-500">Mobile app coming soon</p>
+                <p className="text-xs text-stone-600">Mobile app coming soon</p>
               </div>
             </div>
           </div>
 
-          <p className="text-xs text-gray-500 pt-4 border-t border-gray-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <p className="text-xs text-stone-600 pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <span>
-              Copyright © {new Date().getFullYear()} Homescount. All rights reserved.
+              Copyright © {new Date().getFullYear()} {LEGAL.siteName}. All rights reserved.
             </span>
             <Link
               href="/admin/login"
-              className="text-gray-600 hover:text-gray-500 transition"
+              className="text-stone-600 hover:text-stone-500 transition"
             >
               Admin access
             </Link>
