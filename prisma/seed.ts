@@ -105,10 +105,54 @@ async function main() {
     console.log('Created:', property.title)
   }
 
+  await prisma.newsletterSubscriber.upsert({
+    where: { email: 'demo.subscriber@homescount.com' },
+    update: {},
+    create: {
+      email: 'demo.subscriber@homescount.com',
+      privacyConsentAt: new Date(),
+    },
+  })
+
+  const firstProperty = await prisma.property.findFirst({
+    where: { sellerId: seller.id },
+    orderBy: { createdAt: 'asc' },
+  })
+
+  await prisma.siteActivity.deleteMany({})
+  await prisma.siteActivity.createMany({
+    data: [
+      {
+        type: 'SELLER_REGISTERED',
+        message: `Seller registered: ${seller.name} (${seller.email})`,
+        userId: seller.id,
+        read: true,
+      },
+      {
+        type: 'NEWSLETTER_SUBSCRIBED',
+        message: 'Newsletter subscription: demo.subscriber@homescount.com',
+        metadata: { email: 'demo.subscriber@homescount.com' },
+        read: false,
+      },
+      ...(firstProperty
+        ? [
+            {
+              type: 'LISTING_PUBLISHED' as const,
+              message: `Listing published: "${firstProperty.title}"`,
+              userId: seller.id,
+              metadata: { propertyId: firstProperty.id },
+              read: false,
+            },
+          ]
+        : []),
+    ],
+  })
+
   console.log('\nSeed complete!')
   console.log('Seller login: seller@homescount.com / password123')
   console.log('Admin login:  admin@homescount.com / password123  → /admin/login')
   console.log(`${listings.length} published properties created.`)
+  console.log('Admin portal: sample newsletter + activity records added.')
 }
 
 main().catch(console.error)

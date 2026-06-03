@@ -40,6 +40,12 @@ test.describe('Admin portal', () => {
     await expect(page.getByRole('heading', { name: /subscriptions & payments/i })).toBeVisible()
   })
 
+  test('listings page loads with management actions', async ({ page }) => {
+    await adminNav(page).getByRole('link', { name: 'Listings', exact: true }).click()
+    await expect(page).toHaveURL('/admin/listings')
+    await expect(page.getByRole('heading', { name: /^listings$/i })).toBeVisible()
+  })
+
   test('public site link returns to home', async ({ page }) => {
     await adminNav(page).getByRole('link', { name: /public site/i }).click()
     await expect(page).toHaveURL('/')

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
   Activity,
+  Building2,
   CreditCard,
   LayoutDashboard,
   Store,
@@ -13,16 +14,17 @@ import {
 const links = [
   { href: '/admin', label: 'Overview', icon: LayoutDashboard, exact: true },
   { href: '/admin/activity', label: 'Activity', icon: Activity },
-  { href: '/admin/users', label: 'Buyers', icon: Users },
-  { href: '/admin/sellers', label: 'Sellers', icon: Store },
+  { href: '/admin/listings', label: 'Listings', icon: Building2 },
   { href: '/admin/subscriptions', label: 'Subscriptions', icon: CreditCard },
+  { href: '/admin/sellers', label: 'Sellers', icon: Store },
+  { href: '/admin/users', label: 'Buyers', icon: Users },
 ]
 
 export default function AdminNav({ unreadCount }: { unreadCount: number }) {
   const pathname = usePathname()
 
   return (
-    <nav className="flex flex-wrap lg:flex-col gap-1">
+    <nav className="flex flex-wrap lg:flex-col gap-1 lg:sticky lg:top-24">
       {links.map((link) => {
         const Icon = link.icon
         const active = link.exact

@@ -21,6 +21,10 @@ const typeColors: Record<string, string> = {
   SELLER_SUSPENDED: 'bg-red-100 text-red-800',
   SELLER_REACTIVATED: 'bg-teal-100 text-teal-800',
   AD_EXPIRED: 'bg-stone-200 text-stone-800',
+  LISTING_UNPUBLISHED: 'bg-orange-100 text-orange-800',
+  LISTING_SUSPENDED: 'bg-red-100 text-red-800',
+  LISTING_REMOVED: 'bg-red-200 text-red-900',
+  LISTING_REPUBLISHED: 'bg-green-100 text-green-800',
 }
 
 export default function ActivityFeed({

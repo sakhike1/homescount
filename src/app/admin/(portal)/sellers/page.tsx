@@ -1,8 +1,11 @@
+import AdminSetupNotice from '@/components/admin/AdminSetupNotice'
 import SellerManageActions from '@/components/admin/SellerManageActions'
+import { isPrismaMissingTableError } from '@/lib/admin-errors'
 import prisma from '@/lib/prisma'
 import { AD_PLANS } from '@/lib/ad-plans'
 
 export default async function AdminSellersPage() {
+  try {
   const now = new Date()
 
   const sellers = await prisma.user.findMany({
@@ -149,4 +152,14 @@ export default async function AdminSellersPage() {
       </div>
     </div>
   )
+  } catch (error) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-2xl font-black text-stone-900">Sellers</h1>
+        <AdminSetupNotice
+          detail={isPrismaMissingTableError(error) ? undefined : String(error)}
+        />
+      </div>
+    )
+  }
 }

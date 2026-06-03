@@ -44,6 +44,15 @@ body {
   }
 }
 
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 .platform-mesh {
   background-image:
     radial-gradient(at 40% 20%, rgba(245, 158, 11, 0.08) 0px, transparent 50%),

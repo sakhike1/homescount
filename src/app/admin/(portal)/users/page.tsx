@@ -1,6 +1,9 @@
+import AdminSetupNotice from '@/components/admin/AdminSetupNotice'
+import { isPrismaMissingTableError } from '@/lib/admin-errors'
 import prisma from '@/lib/prisma'
 
 export default async function AdminUsersPage() {
+  try {
   const buyers = await prisma.user.findMany({
     where: { role: 'BUYER' },
     orderBy: { createdAt: 'desc' },
@@ -53,4 +56,14 @@ export default async function AdminUsersPage() {
       </div>
     </div>
   )
+  } catch (error) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-2xl font-black text-stone-900">Buyers</h1>
+        <AdminSetupNotice
+          detail={isPrismaMissingTableError(error) ? undefined : String(error)}
+        />
+      </div>
+    )
+  }
 }

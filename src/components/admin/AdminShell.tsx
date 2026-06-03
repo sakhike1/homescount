@@ -34,8 +34,10 @@ export default function AdminShell({
 
       <div className="mx-auto max-w-7xl px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          <aside className="lg:w-52 shrink-0">
-            <AdminNav unreadCount={unreadCount} />
+          <aside className="lg:w-56 shrink-0">
+            <div className="rounded-2xl border border-stone-200 bg-white p-2 shadow-sm lg:p-3">
+              <AdminNav unreadCount={unreadCount} />
+            </div>
           </aside>
           <main className="flex-1 min-w-0">{children}</main>
         </div>

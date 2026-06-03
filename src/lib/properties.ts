@@ -41,6 +41,7 @@ function buildWhere(filters: PropertyFilters): Prisma.PropertyWhereInput {
 
   if (filters.publishedOnly !== false) {
     where.published = true
+    where.seller = { active: true }
   }
 
   if (filters.listingType) {
@@ -102,7 +103,7 @@ export async function getProperties(filters: PropertyFilters = {}, limit?: numbe
 
 export async function getPropertyById(id: string) {
   return prisma.property.findFirst({
-    where: { id, published: true, status: 'AVAILABLE' },
+    where: { id, published: true, status: 'AVAILABLE', seller: { active: true } },
     include: {
       images: { orderBy: { createdAt: 'asc' } },
       seller: { select: { name: true, email: true } },
@@ -114,7 +115,7 @@ const getHasPublishedListingsCached = unstable_cache(
   async () => {
     try {
       const count = await prisma.property.count({
-        where: { published: true, status: 'AVAILABLE' },
+        where: { published: true, status: 'AVAILABLE', seller: { active: true } },
       })
       return count > 0
     } catch {
@@ -221,7 +222,7 @@ async function computePlatformStats(): Promise<PlatformStats> {
     if (useReal) {
       const [listingCount, sellerCount, provinceRows] = await Promise.all([
         prisma.property.count({
-          where: { published: true, status: 'AVAILABLE' },
+          where: { published: true, status: 'AVAILABLE', seller: { active: true } },
         }),
         prisma.user.count({
           where: {
@@ -230,7 +231,7 @@ async function computePlatformStats(): Promise<PlatformStats> {
           },
         }),
         prisma.property.findMany({
-          where: { published: true, status: 'AVAILABLE' },
+          where: { published: true, status: 'AVAILABLE', seller: { active: true } },
           select: { province: true },
           distinct: ['province'],
         }),

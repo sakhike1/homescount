@@ -5,25 +5,15 @@ import HomescountLogo from '@/components/brand/HomescountLogo'
 import { useSession, signOut } from 'next-auth/react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import {
-  Building2,
-  Home,
-  KeyRound,
-  LayoutDashboard,
-  LogIn,
-  Menu,
-  Sparkles,
-  Store,
-  Tag,
-  X,
-} from 'lucide-react'
+import { Menu } from 'lucide-react'
+import MobileNavDrawer from '@/components/nav/MobileNavDrawer'
 
 const navLinks = [
-  { href: '/', label: 'Home', icon: Home },
-  { href: '/properties', label: 'Properties', icon: Building2 },
-  { href: '/buy', label: 'Buy', icon: Store },
-  { href: '/sell', label: 'Sell', icon: Tag },
-  { href: '/rent', label: 'Rent', icon: KeyRound },
+  { href: '/', label: 'Home' },
+  { href: '/properties', label: 'Properties' },
+  { href: '/buy', label: 'Buy' },
+  { href: '/sell', label: 'Sell' },
+  { href: '/rent', label: 'Rent' },
 ] as const
 
 function isNavLinkActive(
@@ -102,36 +92,12 @@ export default function Navbar({
     }
   }, [mobileNavOpen])
 
-  function navLinkClass(active: boolean, mobile = false) {
-    if (mobile) {
-      return active
-        ? 'bg-amber-500/20 text-amber-50 ring-1 ring-amber-400/40 shadow-sm shadow-amber-500/10'
-        : 'text-white/85 hover:bg-white/10 hover:text-white'
-    }
+  function navLinkClass(active: boolean) {
     return active
       ? isHero
         ? 'bg-white/15 text-white'
         : 'bg-white text-gray-900 shadow-sm'
       : `${linkBase} hover:bg-white/10`
-  }
-
-  function mobileNavLinkContent(link: (typeof navLinks)[number], active: boolean) {
-    const Icon = link.icon
-    return (
-      <>
-        <span
-          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition ${
-            active ? 'bg-amber-500/25 text-amber-200' : 'bg-white/10 text-white/70'
-          }`}
-        >
-          <Icon className="h-5 w-5" aria-hidden />
-        </span>
-        <span className="flex-1">{link.label}</span>
-        {active && (
-          <span className="h-2 w-2 shrink-0 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
-        )}
-      </>
-    )
   }
 
   return (
@@ -244,136 +210,13 @@ export default function Navbar({
         </div>
       </nav>
 
-      {/* Mobile menu overlay */}
-      {mobileNavOpen && (
-        <div className="fixed inset-0 z-[100] md:hidden">
-          <button
-            type="button"
-            className="absolute inset-0 bg-stone-950/70 backdrop-blur-md transition-opacity"
-            aria-label="Close menu"
-            onClick={() => setMobileNavOpen(false)}
-          />
-
-          <div
-            className="absolute inset-y-0 right-0 flex w-[min(100%,18.5rem)] flex-col border-l border-white/10 bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950 text-white shadow-2xl shadow-black/40"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Navigation menu"
-          >
-            <div
-              className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-amber-500/20 via-amber-500/5 to-transparent"
-              aria-hidden
-            />
-
-            <div className="relative flex h-14 shrink-0 items-center justify-between border-b border-white/10 px-4">
-              <HomescountLogo tone="hero" size="sm" />
-              <button
-                type="button"
-                onClick={() => setMobileNavOpen(false)}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
-                aria-label="Close menu"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            {session ? (
-              <div className="relative shrink-0 border-b border-white/10 px-4 py-3">
-                <div className="flex items-center gap-3 rounded-2xl bg-white/5 px-3 py-3 ring-1 ring-white/10">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-amber-600 text-sm font-bold text-white shadow-md shadow-amber-500/30">
-                    {session.user.name?.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="truncate font-semibold text-white">{session.user.name}</p>
-                    <p className="truncate text-xs text-white/55">{session.user.email}</p>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="relative shrink-0 border-b border-white/10 px-4 py-3">
-                <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-amber-200/90">
-                  <Sparkles className="h-3.5 w-3.5" aria-hidden />
-                  Find your next home
-                </p>
-                <p className="mt-1 text-sm text-white/55">Browse sale and rental listings across SA</p>
-              </div>
-            )}
-
-            <nav className="relative shrink-0 space-y-1.5 overflow-y-auto px-3 py-3">
-              {navLinks.map((link) => {
-                const active = isNavLinkActive(link.href, pathname, listingType)
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileNavOpen(false)}
-                    className={`flex items-center gap-3 rounded-2xl px-3 py-3 text-base font-semibold transition ${navLinkClass(active, true)}`}
-                  >
-                    {mobileNavLinkContent(link, active)}
-                  </Link>
-                )
-              })}
-
-              {session?.user.role === 'SELLER' && (
-                <Link
-                  href="/dashboard"
-                  onClick={() => setMobileNavOpen(false)}
-                  className={`flex items-center gap-3 rounded-2xl px-3 py-3 text-base font-semibold transition ${navLinkClass(pathname.startsWith('/dashboard'), true)}`}
-                >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-white/70">
-                    <LayoutDashboard className="h-5 w-5" aria-hidden />
-                  </span>
-                  <span className="flex-1">My Listings</span>
-                </Link>
-              )}
-            </nav>
-
-            <div className="relative shrink-0 space-y-2 border-t border-white/10 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3">
-              {session ? (
-                <>
-                  <Link
-                    href="/dashboard"
-                    onClick={() => setMobileNavOpen(false)}
-                    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-sm font-semibold text-white ring-1 ring-white/15 transition hover:bg-white/15"
-                  >
-                    <LayoutDashboard className="h-4 w-4" aria-hidden />
-                    Dashboard
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMobileNavOpen(false)
-                      signOut({ callbackUrl: '/' })
-                    }}
-                    className="block w-full rounded-2xl px-4 py-3 text-sm font-semibold text-red-300 transition hover:bg-red-500/10"
-                  >
-                    Sign out
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    onClick={() => setMobileNavOpen(false)}
-                    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-sm font-semibold text-white ring-1 ring-white/15 transition hover:bg-white/15"
-                  >
-                    <LogIn className="h-4 w-4" aria-hidden />
-                    Sign in
-                  </Link>
-                  <Link
-                    href="/register"
-                    onClick={() => setMobileNavOpen(false)}
-                    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-amber-500/25 transition hover:from-amber-400 hover:to-amber-500"
-                  >
-                    <Sparkles className="h-4 w-4" aria-hidden />
-                    Get started
-                  </Link>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      <MobileNavDrawer
+        open={mobileNavOpen}
+        onClose={() => setMobileNavOpen(false)}
+        session={session ?? null}
+        pathname={pathname}
+        listingType={listingType}
+      />
     </>
   )
 }

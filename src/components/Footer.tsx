@@ -110,6 +110,7 @@ function FooterColumn({
 const utilityLinks = {
   company: [
     { label: 'About Us', comingSoon: true },
+    { label: 'Bond calculator', href: '/tools/bond-calculator' },
     { label: 'Contact Us', href: `mailto:${LEGAL.contactEmail}` },
     { label: 'Feedback', comingSoon: true },
     { label: 'Sitemap', href: '/properties' },

@@ -29,9 +29,9 @@ const links: QuickLink[] = [
   },
   {
     label: 'Bond calculator',
-    description: 'Estimate monthly repayments',
+    description: 'See what you can afford',
+    href: '/tools/bond-calculator',
     icon: Calculator,
-    comingSoon: true,
   },
   {
     label: 'Property guides',

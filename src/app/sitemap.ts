@@ -7,6 +7,8 @@ const staticPaths = [
   { path: '/buy', priority: 0.9, changeFrequency: 'daily' as const },
   { path: '/rent', priority: 0.9, changeFrequency: 'daily' as const },
   { path: '/sell', priority: 0.85, changeFrequency: 'weekly' as const },
+  { path: '/tools/bond-calculator', priority: 0.8, changeFrequency: 'monthly' as const },
+  // Admin is noindex — omitted from sitemap
   { path: '/properties', priority: 0.95, changeFrequency: 'daily' as const },
   { path: '/properties?type=buy', priority: 0.85, changeFrequency: 'daily' as const },
   { path: '/properties?type=rent', priority: 0.85, changeFrequency: 'daily' as const },

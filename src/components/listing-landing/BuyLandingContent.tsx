@@ -121,6 +121,8 @@ export default function BuyLandingContent({
         description="Search published homes for sale, filter by budget and location, and message sellers directly from each listing."
         primaryHref={browseHref}
         primaryLabel="Search homes for sale"
+        secondaryHref="/tools/bond-calculator"
+        secondaryLabel="Check affordability"
       />
     </main>
   )
