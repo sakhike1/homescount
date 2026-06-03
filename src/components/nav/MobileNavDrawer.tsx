@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import HomescountLogo from '@/components/brand/HomescountLogo'
 import { signOut } from 'next-auth/react'
@@ -23,6 +24,9 @@ const navLinks: { href: string; label: string; icon: LucideIcon }[] = [
   { href: '/sell', label: 'Sell', icon: Tag },
   { href: '/rent', label: 'Rent', icon: KeyRound },
 ]
+
+/** Hero photography from public/slide-hero — fills space above sign-in on mobile menu */
+const MENU_FEATURE_IMAGE = '/slide-hero/0c4dc544712037037444983752fe0a52.jpg'
 
 function isNavLinkActive(
   href: string,
@@ -105,7 +109,7 @@ export default function MobileNavDrawer({
           </div>
         ) : null}
 
-        <nav className="flex-1 overflow-y-auto px-3 py-4">
+        <nav className="shrink-0 overflow-y-auto px-3 pt-4 pb-2">
           <p className="mb-2 px-2 text-[11px] font-bold uppercase tracking-[0.14em] text-stone-400">
             Menu
           </p>
@@ -166,7 +170,28 @@ export default function MobileNavDrawer({
           </ul>
         </nav>
 
-        <footer className="shrink-0 border-t border-stone-200/90 bg-[#f5f4f1] px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+        <Link
+          href="/properties"
+          onClick={onClose}
+          className="relative mx-3 my-2 min-h-[7.5rem] flex-1 overflow-hidden rounded-2xl border border-stone-200/90 bg-stone-200 shadow-sm"
+        >
+          <Image
+            src={MENU_FEATURE_IMAGE}
+            alt="Homes for sale and rent in South Africa"
+            fill
+            className="object-cover"
+            sizes="(max-width: 320px) 100vw, 312px"
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-stone-950/75 via-stone-950/10 to-transparent"
+            aria-hidden
+          />
+          <p className="absolute bottom-3 left-3 right-3 text-sm font-bold leading-snug text-white drop-shadow-md">
+            Explore homes across South Africa
+          </p>
+        </Link>
+
+        <footer className="shrink-0 border-t border-stone-200/90 bg-[#f5f4f1] px-4 py-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
           {session ? (
             <div className="flex flex-col gap-2">
               <Link
@@ -188,7 +213,7 @@ export default function MobileNavDrawer({
               </button>
             </div>
           ) : (
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-1.5">
               <Link
                 href="/register"
                 onClick={onClose}
@@ -199,7 +224,7 @@ export default function MobileNavDrawer({
               <Link
                 href="/login"
                 onClick={onClose}
-                className="flex w-full items-center justify-center py-2 text-sm font-semibold text-stone-600 transition hover:text-stone-900"
+                className="flex w-full items-center justify-center rounded-full border border-stone-300/90 bg-white py-2.5 text-sm font-semibold text-stone-700 transition hover:border-stone-400 hover:bg-stone-50"
               >
                 Sign in
               </Link>
