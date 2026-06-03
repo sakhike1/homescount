@@ -55,7 +55,7 @@ export default function RentLandingContent({
 
   return (
     <main className="min-h-screen bg-[#faf9f7]">
-      <ListingLandingHero variant="rent" locationHint={searchParams.q}>
+      <ListingLandingHero key="rent" variant="rent" locationHint={searchParams.q}>
         <LandingHeroActionCard
           variant="rent"
           primaryHref={hasSearch ? browseHref : '/properties?type=rent'}

@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect } from 'react'
 import type { ReactNode } from 'react'
 import { ChevronDown, MapPin } from 'lucide-react'
 import { HeroThemeProvider } from '@/components/listing-landing/hero-theme-context'
@@ -11,7 +11,6 @@ import {
   landingHeroImage,
   landingHeroThemes,
   resolveHeroThemeForVisit,
-  type LandingHeroTheme,
   type LandingHeroVariant,
 } from '@/lib/landing-hero-themes'
 
@@ -22,6 +21,13 @@ type Props = {
   children?: ReactNode
 }
 
+function themeForRender(variant: LandingHeroVariant) {
+  if (typeof window === 'undefined') {
+    return landingHeroThemes[variant]
+  }
+  return resolveHeroThemeForVisit(variant)
+}
+
 export default function ListingLandingHero({
   variant,
   locationHint,
@@ -30,26 +36,22 @@ export default function ListingLandingHero({
 }: Props) {
   const copy = getLandingHeroCopy(variant, { browseType })
   const location = locationHint?.trim() || 'South Africa'
-  const [theme, setTheme] = useState<LandingHeroTheme>(() => landingHeroThemes[variant])
-  const variantRef = useRef(variant)
-
-  // Next.js client nav can reuse this component across /buy, /rent, /sell — update
-  // theme in the same render so the previous page's colors do not flash.
-  if (variantRef.current !== variant) {
-    variantRef.current = variant
-    setTheme(resolveHeroThemeForVisit(variant))
-  }
+  const theme = themeForRender(variant)
 
   useLayoutEffect(() => {
-    setTheme(resolveHeroThemeForVisit(variant))
     return () => advanceHeroThemeIndexForNextVisit(variant)
   }, [variant])
 
   return (
     <HeroThemeProvider key={variant} theme={theme}>
-      <section className="bg-[#faf9f7] px-4 pt-6 sm:pt-8 pb-4">
+      <section
+        key={variant}
+        className="bg-[#faf9f7] px-4 pt-6 sm:pt-8 pb-4"
+        suppressHydrationWarning
+      >
         <div className="max-w-7xl mx-auto">
           <div
+            key={`hero-card-${variant}`}
             className={`relative rounded-[1.75rem] sm:rounded-[2rem] overflow-hidden shadow-xl ${theme.shadow} min-h-[300px] sm:min-h-[340px] lg:min-h-[380px]`}
             suppressHydrationWarning
           >

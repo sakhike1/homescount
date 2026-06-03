@@ -10,7 +10,7 @@ import { Camera, HousePlus, Users } from 'lucide-react'
 export default function SellLandingContent() {
   return (
     <main className="min-h-screen bg-[#faf9f7]">
-      <ListingLandingHero variant="sell">
+      <ListingLandingHero key="sell" variant="sell">
         <LandingHeroActionCard
           variant="sell"
           primaryHref="/register?role=SELLER"

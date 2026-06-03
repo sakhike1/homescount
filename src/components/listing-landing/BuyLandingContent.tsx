@@ -54,7 +54,7 @@ export default function BuyLandingContent({
 
   return (
     <main className="min-h-screen bg-[#faf9f7]">
-      <ListingLandingHero variant="buy" locationHint={searchParams.q}>
+      <ListingLandingHero key="buy" variant="buy" locationHint={searchParams.q}>
         <LandingHeroActionCard
           variant="buy"
           primaryHref={hasSearch ? browseHref : '/properties?type=buy'}

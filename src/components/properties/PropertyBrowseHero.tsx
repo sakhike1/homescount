@@ -9,7 +9,12 @@ type Props = {
 
 export default function PropertyBrowseHero({ type, locationHint, children }: Props) {
   return (
-    <ListingLandingHero variant="browse" browseType={type} locationHint={locationHint}>
+    <ListingLandingHero
+      key={`browse-${type}`}
+      variant="browse"
+      browseType={type}
+      locationHint={locationHint}
+    >
       {children}
     </ListingLandingHero>
   )
