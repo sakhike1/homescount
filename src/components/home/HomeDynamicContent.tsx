@@ -3,12 +3,18 @@ import FeaturedPropertiesGrid from '@/components/FeaturedPropertiesGrid'
 import PropertyNews from '@/components/PropertyNews'
 import EstateAgentCta from '@/components/EstateAgentCta'
 import { getFeaturedListings, getPlatformStats } from '@/lib/properties'
+import { localImageCacheBust } from '@/lib/local-image-url'
 
 export default async function HomeDynamicContent() {
   const [{ items: gridProperties, isDemo }, platformStats] = await Promise.all([
     getFeaturedListings(6),
     getPlatformStats(),
   ])
+
+  const propertiesWithFreshImages = gridProperties.map((property) => ({
+    ...property,
+    imageUrl: property.imageUrl ? localImageCacheBust(property.imageUrl) : property.imageUrl,
+  }))
 
   return (
     <>
@@ -18,7 +24,7 @@ export default async function HomeDynamicContent() {
         provinces={platformStats.provinces}
         isLive={platformStats.isLive}
       />
-      <FeaturedPropertiesGrid properties={gridProperties} isDemo={isDemo} />
+      <FeaturedPropertiesGrid properties={propertiesWithFreshImages} isDemo={isDemo} />
       <PropertyNews />
       <EstateAgentCta />
     </>

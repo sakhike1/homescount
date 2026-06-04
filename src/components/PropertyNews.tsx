@@ -1,4 +1,3 @@
-import NewsletterSignup from '@/components/NewsletterSignup'
 import SafeImage from '@/components/SafeImage'
 import { newsImages } from '@/lib/news-images'
 
@@ -46,7 +45,7 @@ export default function PropertyNews() {
                     src={article.image}
                     alt={article.alt}
                     fill
-                    className="object-cover"
+                    className="object-cover transition duration-500 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, 40vw"
                   />
                 </div>
@@ -65,14 +64,14 @@ export default function PropertyNews() {
 
           <div className="lg:col-span-4 flex flex-col gap-5 sm:gap-6">
             {sideStories.map((story) => (
-              <article key={story.title} className="flex gap-4 items-start">
+              <article key={story.title} className="group flex gap-4 items-start">
                 <div className="relative h-16 w-16 sm:h-[72px] sm:w-[72px] shrink-0 overflow-hidden rounded-lg bg-gray-100">
                   <SafeImage
                     src={story.image}
                     alt=""
                     fill
                     sizes="72px"
-                    className="object-cover"
+                    className="object-cover transition duration-500 group-hover:scale-105"
                   />
                 </div>
                 <h3 className="text-sm sm:text-base font-bold text-gray-900 leading-snug pt-0.5">
@@ -83,7 +82,6 @@ export default function PropertyNews() {
           </div>
         </div>
 
-        <NewsletterSignup />
       </div>
     </section>
   )

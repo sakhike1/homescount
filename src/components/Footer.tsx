@@ -1,8 +1,7 @@
+import type { ReactNode } from 'react'
 import Link from 'next/link'
-import HomescountLogo from '@/components/brand/HomescountLogo'
-import { FooterSocialLinks } from '@/components/footer/SocialIconButton'
+import NewsletterFooterForm from '@/components/footer/NewsletterFooterForm'
 import { LEGAL } from '@/lib/legal'
-import { Apple, Play } from 'lucide-react'
 
 const gautengCities = [
   'Alberton',
@@ -75,12 +74,12 @@ function cityHref(city: string) {
 
 function CityList({ cities }: { cities: string[] }) {
   return (
-    <ul className="space-y-1.5">
+    <ul className="space-y-2">
       {cities.map((city) => (
         <li key={city}>
           <Link
             href={cityHref(city)}
-            className="text-sm text-amber-50/90 hover:text-white transition"
+            className="text-sm text-white/90 transition hover:text-white"
           >
             {city}
           </Link>
@@ -90,7 +89,7 @@ function CityList({ cities }: { cities: string[] }) {
   )
 }
 
-function FooterColumn({
+function CityColumn({
   title,
   cities,
 }: {
@@ -98,44 +97,50 @@ function FooterColumn({
   cities: string[]
 }) {
   return (
-    <div>
+    <div className="min-w-0">
       {title && (
-        <h3 className="text-sm font-bold text-white mb-3 leading-snug">{title}</h3>
+        <h3 className="mb-3 text-sm font-bold leading-snug text-white">{title}</h3>
       )}
       <CityList cities={cities} />
     </div>
   )
 }
 
-const utilityLinks = {
-  company: [
-    { label: 'About Us', comingSoon: true },
-    { label: 'Bond calculator', href: '/tools/bond-calculator' },
-    { label: 'Contact Us', href: `mailto:${LEGAL.contactEmail}` },
-    { label: 'Feedback', comingSoon: true },
-    { label: 'Sitemap', href: '/properties' },
-  ],
-  legal: [
-    { label: 'Terms & Conditions', href: '/terms' },
-    { label: 'Privacy Policy', href: '/privacy' },
-    { label: 'Cookie Policy', href: '/cookies' },
-    { label: 'PAIA Manual', comingSoon: true },
-  ],
-  business: [
-    { label: 'Join Our Team', comingSoon: true },
-    { label: 'Agent Zone', href: '/sell' },
-    { label: 'Agency Products', href: '/register?role=SELLER' },
-  ],
-} as const
+const browseLinks = [
+  { label: 'All properties', href: '/properties', highlight: true },
+  { label: 'Homes for sale', href: '/buy' },
+  { label: 'Rentals', href: '/rent' },
+  { label: 'List your property', href: '/sell' },
+  { label: 'Bond calculator', href: '/tools/bond-calculator' },
+] as const
 
-function UtilityLink({
+const companyLinks = [
+  { label: 'About Us', comingSoon: true },
+  { label: 'Contact Us', href: `mailto:${LEGAL.contactEmail}` },
+  { label: 'Feedback', comingSoon: true },
+  { label: 'Agent Zone', href: '/sell' },
+  { label: 'Agency Products', href: '/register?role=SELLER' },
+] as const
+
+const legalLinks = [
+  { label: 'Terms & Conditions', href: '/terms' },
+  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'Cookie Policy', href: '/cookies' },
+  { label: 'PAIA Manual', comingSoon: true },
+  { label: 'Join Our Team', comingSoon: true },
+  { label: 'Sitemap', href: '/properties' },
+] as const
+
+function FooterLink({
   label,
   href,
   comingSoon,
+  highlight,
 }: {
   label: string
   href?: string
   comingSoon?: boolean
+  highlight?: boolean
 }) {
   if (comingSoon) {
     return (
@@ -145,22 +150,57 @@ function UtilityLink({
     )
   }
 
+  const className = highlight
+    ? 'text-sm font-medium text-amber-600 transition hover:text-amber-700'
+    : 'text-sm text-stone-600 transition hover:text-stone-900'
+
   const isExternal = href?.startsWith('mailto:') || href?.startsWith('http')
 
   if (isExternal) {
     return (
-      <a
-        href={href}
-        className="text-sm text-stone-400 hover:text-amber-200 transition"
-      >
+      <a href={href} className={className}>
         {label}
       </a>
     )
   }
 
   return (
-    <Link href={href!} className="text-sm text-stone-400 hover:text-amber-200 transition">
+    <Link href={href!} className={className}>
       {label}
+    </Link>
+  )
+}
+
+function LinkColumn({
+  title,
+  children,
+}: {
+  title: string
+  children: ReactNode
+}) {
+  return (
+    <div className="min-w-0">
+      <h3 className="text-base font-bold text-stone-900">{title}</h3>
+      <ul className="mt-5 space-y-3">{children}</ul>
+    </div>
+  )
+}
+
+function FooterWordmark() {
+  return (
+    <Link
+      href="/"
+      aria-label="Homescount home"
+      className="mt-14 block select-none sm:mt-20"
+    >
+      <span
+        className="block font-black leading-[0.88] tracking-tighter"
+        style={{ fontSize: 'clamp(3.5rem, 16vw, 10rem)' }}
+      >
+        <span className="text-stone-900">Homes</span>
+        <span className="text-amber-500">count</span>
+        <sup className="ml-1 align-super text-[0.12em] font-bold text-stone-400">®</sup>
+      </span>
     </Link>
   )
 }
@@ -171,139 +211,76 @@ export default function Footer() {
   const gautengCol2 = gautengCities.slice(gautengMid)
 
   return (
-    <footer className="mt-auto">
-      {/* Regional property links */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800 text-white py-10 px-4">
+    <footer className="mt-auto w-full">
+      {/* City links — amber band */}
+      <section className="relative w-full overflow-hidden bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800 text-white">
         <div
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_20%_0%,rgba(255,255,255,0.22),transparent_55%)]"
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_100%_100%,rgba(253,230,138,0.2),transparent_50%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_100%_100%,rgba(253,230,138,0.25),transparent_50%)]"
           aria-hidden
         />
-        <div className="relative max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
-          <FooterColumn title="Property for sale in Gauteng" cities={gautengCol1} />
-          <FooterColumn cities={gautengCol2} />
-          <FooterColumn title="Property for sale in KwaZulu Natal" cities={kznCities} />
-          <FooterColumn title="Property for sale in Western Cape" cities={westernCapeCities} />
-          <FooterColumn title="Rest of South Africa" cities={restOfSaCities} />
+        <div className="relative mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <p className="mb-8 text-xs font-bold uppercase tracking-[0.2em] text-amber-50/90">
+            Properties by area
+          </p>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-8">
+            <CityColumn title="Property for sale in Gauteng" cities={gautengCol1} />
+            <CityColumn cities={gautengCol2} />
+            <CityColumn title="Property for sale in KwaZulu Natal" cities={kznCities} />
+            <CityColumn title="Property for sale in Western Cape" cities={westernCapeCities} />
+            <CityColumn title="Rest of South Africa" cities={restOfSaCities} />
+          </div>
         </div>
       </section>
 
-      {/* Brand, links & social */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-stone-950 via-stone-900 to-amber-950 text-stone-300 py-12 px-4">
-        <div
-          className="pointer-events-none absolute -top-24 left-1/4 h-64 w-96 rounded-full bg-amber-500/20 blur-3xl"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute bottom-0 right-0 h-48 w-72 rounded-full bg-amber-400/10 blur-3xl"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(105deg,transparent_40%,rgba(255,255,255,0.03)_50%,transparent_60%)]"
-          aria-hidden
-        />
+      {/* Main footer — light gray */}
+      <section className="w-full bg-stone-100 text-stone-800">
+        <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
+            <NewsletterFooterForm />
 
-        <div className="relative max-w-7xl mx-auto">
-          <div className="flex flex-col gap-8 pb-10 border-b border-white/10 lg:flex-row lg:items-start lg:justify-between">
-            <div className="space-y-4 max-w-md">
-              <HomescountLogo tone="onDark" size="lg" className="w-fit" />
-              <p className="text-sm leading-relaxed text-stone-400">
-                Find homes to buy and rent across South Africa — trusted sellers,
-                clear listings, and guidance from enquiry to handover.
-              </p>
-            </div>
+            <div className="grid gap-10 sm:grid-cols-3 sm:gap-8">
+              <LinkColumn title="Browse">
+                {browseLinks.map((link) => (
+                  <li key={link.label}>
+                    <FooterLink {...link} />
+                  </li>
+                ))}
+              </LinkColumn>
 
-            <div className="space-y-3">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-400/90">
-                Follow us
-              </p>
-              <FooterSocialLinks />
+              <LinkColumn title="Company">
+                {companyLinks.map((link) => (
+                  <li key={link.label}>
+                    <FooterLink {...link} />
+                  </li>
+                ))}
+              </LinkColumn>
+
+              <LinkColumn title="Legal">
+                {legalLinks.map((link) => (
+                  <li key={link.label}>
+                    <FooterLink {...link} />
+                  </li>
+                ))}
+              </LinkColumn>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-10">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-4">
-                Company
-              </p>
-              <ul className="space-y-2.5">
-                {utilityLinks.company.map((link) => (
-                  <li key={link.label}>
-                    <UtilityLink {...link} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-4">
-                Legal
-              </p>
-              <ul className="space-y-2.5">
-                {utilityLinks.legal.map((link) => (
-                  <li key={link.label}>
-                    <UtilityLink {...link} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-4">
-                For business
-              </p>
-              <ul className="space-y-2.5">
-                {utilityLinks.business.map((link) => (
-                  <li key={link.label}>
-                    <UtilityLink {...link} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-4">
-                Download the app
-              </p>
-              <div className="flex flex-col gap-2 opacity-70">
-                <div
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 cursor-not-allowed backdrop-blur-sm"
-                  title="Mobile app coming soon"
-                >
-                  <Apple className="h-6 w-6 text-white shrink-0" aria-hidden />
-                  <div className="text-left">
-                    <div className="text-[10px] text-stone-500 leading-none">
-                      Download on the
-                    </div>
-                    <div className="text-sm font-semibold text-white leading-tight">
-                      App Store
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 cursor-not-allowed backdrop-blur-sm"
-                  title="Mobile app coming soon"
-                >
-                  <Play className="h-6 w-6 text-white shrink-0 fill-white" aria-hidden />
-                  <div className="text-left">
-                    <div className="text-[10px] text-stone-500 leading-none">GET IT ON</div>
-                    <div className="text-sm font-semibold text-white leading-tight">
-                      Google Play
-                    </div>
-                  </div>
-                </div>
-                <p className="text-xs text-stone-600">Mobile app coming soon</p>
-              </div>
-            </div>
-          </div>
+          <FooterWordmark />
 
-          <p className="text-xs text-stone-600 pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <p className="mt-10 border-t border-stone-200 pt-6 text-center text-xs text-stone-500">
             <span>
               Copyright © {new Date().getFullYear()} {LEGAL.siteName}. All rights reserved.
             </span>
+            <span className="mx-2 hidden sm:inline" aria-hidden>
+              ·
+            </span>
             <Link
               href="/admin/login"
-              className="text-stone-600 hover:text-stone-500 transition"
+              className="mt-2 block transition hover:text-stone-800 sm:mt-0 sm:inline"
             >
               Admin access
             </Link>

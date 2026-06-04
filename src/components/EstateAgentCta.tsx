@@ -18,19 +18,19 @@ export default function EstateAgentCta() {
           </p>
           <Link
             href="/sell"
-            className="mt-8 inline-flex items-center gap-2 rounded-lg border-2 border-amber-500 bg-white px-6 py-3 text-sm font-bold text-stone-900 transition hover:bg-amber-50"
+            className="mt-8 inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-6 py-3 text-sm font-bold text-stone-900 transition hover:border-stone-400 hover:bg-stone-50"
           >
             <Search className="h-4 w-4" aria-hidden />
             List your property
           </Link>
         </div>
 
-        <div className="relative aspect-[4/3] overflow-hidden rounded-2xl sm:rounded-3xl shadow-lg shadow-stone-900/10 lg:aspect-auto lg:min-h-[360px]">
+        <div className="group relative aspect-[4/3] overflow-hidden rounded-2xl sm:rounded-3xl shadow-lg shadow-stone-900/10 lg:aspect-auto lg:min-h-[360px]">
           <Image
             src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=900&q=80"
             alt="Estate agent meeting with a client"
             fill
-            className="object-cover"
+            className="object-cover transition duration-500 group-hover:scale-105"
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
         </div>

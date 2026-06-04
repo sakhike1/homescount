@@ -13,6 +13,7 @@ import {
   getPropertyImageUrl,
   getPublicPropertyById,
 } from '@/lib/properties'
+import { localImageCacheBust } from '@/lib/local-image-url'
 
 export async function generateMetadata({
   params,
@@ -54,13 +55,21 @@ export default async function PropertyDetailPage({
   if (!result) notFound()
 
   const p = result.property
-  const imageUrl = getPropertyImageUrl(p.images, 0)
+  const imageUrl = localImageCacheBust(getPropertyImageUrl(p.images, 0))
   const listingImage =
     imageUrl.startsWith('http')
       ? imageUrl
       : imageUrl.startsWith('/')
         ? `${getSiteUrl()}${imageUrl}`
         : undefined
+
+  const propertyWithFreshImages = {
+    ...result.property,
+    images: result.property.images.map((image) => ({
+      ...image,
+      url: localImageCacheBust(image.url),
+    })),
+  }
 
   return (
     <>
@@ -80,7 +89,7 @@ export default async function PropertyDetailPage({
           imageUrl: listingImage,
         })}
       />
-      <PropertyDetailView property={result.property} isDemo={result.isDemo} />
+      <PropertyDetailView property={propertyWithFreshImages} isDemo={result.isDemo} />
     </>
   )
 }

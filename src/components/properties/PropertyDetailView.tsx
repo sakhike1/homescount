@@ -105,7 +105,7 @@ export default function PropertyDetailView({
 
             {property.images.length > 1 && (
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                {property.images.map((img) => (
+                {property.images.slice(1).map((img) => (
                   <div
                     key={img.id}
                     className="relative aspect-[4/3] rounded-xl overflow-hidden ring-1 ring-stone-200"

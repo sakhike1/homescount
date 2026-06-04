@@ -66,7 +66,7 @@ export default function FeaturedPropertiesGrid({
           }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {properties.map((property) => (
+          {properties.map((property, index) => (
             <motion.article
               key={property.id}
               variants={{
@@ -83,6 +83,7 @@ export default function FeaturedPropertiesGrid({
                     src={property.imageUrl ?? '/property-images/2f8ec23c4d9785a449ea604b22f3d2d8.jpg'}
                     alt={property.title}
                     fill
+                    priority={index < 3}
                     className="object-cover transition duration-500 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />

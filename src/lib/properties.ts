@@ -82,7 +82,7 @@ function buildWhere(filters: PropertyFilters): Prisma.PropertyWhereInput {
 }
 
 const propertyListInclude = {
-  images: { take: 1, orderBy: { createdAt: 'asc' as const } },
+  images: { take: 1, orderBy: [{ createdAt: 'asc' as const }, { id: 'asc' as const }] },
   seller: { select: { name: true } },
 } satisfies Prisma.PropertyInclude
 
@@ -105,7 +105,7 @@ export async function getPropertyById(id: string) {
   return prisma.property.findFirst({
     where: { id, published: true, status: 'AVAILABLE', seller: { active: true } },
     include: {
-      images: { orderBy: { createdAt: 'asc' } },
+      images: { orderBy: [{ createdAt: 'asc' }, { id: 'asc' }] },
       seller: { select: { name: true, email: true } },
     },
   })

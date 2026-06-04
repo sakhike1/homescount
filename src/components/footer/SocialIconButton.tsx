@@ -5,18 +5,26 @@ export default function SocialIconButton({
   label,
   href,
   children,
+  tone = 'dark',
 }: {
   label: string
   href: string
   children: ReactNode
+  tone?: 'light' | 'dark'
 }) {
+  const isLight = tone === 'light'
+
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-amber-100/90 shadow-sm backdrop-blur-sm transition hover:border-amber-400/40 hover:bg-amber-500/20 hover:text-white hover:shadow-[0_0_20px_rgba(251,191,36,0.35)]"
+      className={
+        isLight
+          ? 'group flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 bg-white text-stone-700 shadow-sm transition hover:border-stone-400 hover:bg-stone-50 hover:text-stone-900'
+          : 'group flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-amber-100/90 shadow-sm backdrop-blur-sm transition hover:border-amber-400/40 hover:bg-amber-500/20 hover:text-white hover:shadow-[0_0_20px_rgba(251,191,36,0.35)]'
+      }
     >
       {children}
     </a>
@@ -71,13 +79,13 @@ const socialIcons: Record<SocialId, () => React.JSX.Element> = {
   linkedin: IconLinkedIn,
 }
 
-export function FooterSocialLinks() {
+export function FooterSocialLinks({ tone = 'dark' }: { tone?: 'light' | 'dark' }) {
   return (
     <div className="flex flex-wrap items-center gap-3">
       {SOCIAL_LINKS.map((social) => {
         const Icon = socialIcons[social.id]
         return (
-          <SocialIconButton key={social.id} label={social.label} href={social.href}>
+          <SocialIconButton key={social.id} label={social.label} href={social.href} tone={tone}>
             <Icon />
           </SocialIconButton>
         )

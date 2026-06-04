@@ -4,6 +4,17 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
+  async headers() {
+    if (process.env.NODE_ENV !== 'development') return []
+    return [
+      {
+        source: '/property-images/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' },
+        ],
+      },
+    ]
+  },
   images: {
     remotePatterns: [
       {

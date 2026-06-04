@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import { isBundledLocalImage } from '@/lib/local-image-url.shared'
 
 type SafeImageProps = {
   src: string
@@ -53,6 +54,9 @@ export default function SafeImage({
       sizes={sizes}
       className={className}
       priority={priority}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchPriority={priority ? 'high' : undefined}
+      unoptimized={isBundledLocalImage(src)}
       onError={() => setFailed(true)}
     />
   )
