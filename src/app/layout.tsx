@@ -31,6 +31,7 @@ export default function RootLayout({
     <html lang="en-ZA">
       <body
         className={`${geist.variable} ${geist.className} min-h-full flex flex-col antialiased`}
+        suppressHydrationWarning
       >
         <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
         <AuthSessionProvider>

@@ -46,7 +46,7 @@ export default function ListingLandingHero({
     <HeroThemeProvider key={variant} theme={theme}>
       <section
         key={variant}
-        className="bg-[#faf9f7] px-4 pt-6 sm:pt-8 pb-4"
+        className={`bg-[#faf9f7] px-4 pt-6 sm:pt-8 ${children ? 'pb-6 sm:pb-4' : 'pb-4'}`}
         suppressHydrationWarning
       >
         <div className="max-w-7xl mx-auto">
@@ -85,7 +85,13 @@ export default function ListingLandingHero({
               suppressHydrationWarning
             />
 
-            <div className="relative z-10 flex flex-col justify-center h-full min-h-[300px] sm:min-h-[340px] lg:min-h-[380px] px-6 sm:px-10 lg:px-14 py-10 sm:py-12 max-w-xl">
+            <div
+              className={`relative z-10 flex h-full flex-col px-6 py-8 sm:px-10 sm:py-12 lg:px-14 max-w-xl min-h-[300px] sm:min-h-[340px] lg:min-h-[380px] ${
+                children
+                  ? 'justify-start sm:justify-center pb-6 sm:pb-24 lg:pb-20'
+                  : 'justify-center py-10 sm:py-12'
+              }`}
+            >
               <p className={`text-xs font-bold uppercase tracking-[0.2em] ${theme.eyebrow}`} suppressHydrationWarning>
                 {copy.eyebrow}
               </p>
@@ -108,7 +114,9 @@ export default function ListingLandingHero({
                 </div>
               )}
               <p
-                className={`mt-4 text-sm sm:text-base leading-relaxed max-w-md ${theme.subtitle}`}
+                className={`mt-3 sm:mt-4 text-sm sm:text-base leading-relaxed max-w-md ${theme.subtitle} ${
+                  children ? 'pr-1 sm:pr-0' : ''
+                }`}
                 suppressHydrationWarning
               >
                 {copy.description}
@@ -117,7 +125,7 @@ export default function ListingLandingHero({
           </div>
 
           {children ? (
-            <div className="relative z-20 -mt-14 sm:-mt-16 lg:-mt-20 px-0 sm:px-4 lg:px-8">
+            <div className="relative z-20 mt-5 sm:-mt-14 lg:-mt-18 px-0 sm:px-4 lg:px-8">
               {children}
             </div>
           ) : null}

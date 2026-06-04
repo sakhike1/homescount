@@ -21,7 +21,7 @@ Pick one:
 
 1. Create a PostgreSQL database.
 2. Copy the connection string (for Neon, prefer the **pooled** connection URL for serverless).
-3. Ensure it includes SSL, e.g. `?sslmode=require`.
+3. Use the **pooled** connection string (hostname contains `-pooler`) with SSL, e.g. `?sslmode=verify-full&connect_timeout=30` (avoids pg v9 `sslmode=require` deprecation warnings and reduces `ETIMEDOUT` on cold starts).
 
 ## Step 2 — Prepare the database (from your PC)
 

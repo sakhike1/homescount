@@ -7,12 +7,35 @@ const globalForPrisma = globalThis as unknown as {
   pool: Pool | undefined
 }
 
+/** Prefer Neon pooler + connect_timeout for cold starts and concurrent Next.js cache revalidation. */
+export function resolveDatabaseUrl(raw = process.env.DATABASE_URL): string | undefined {
+  if (!raw) return undefined
+  try {
+    const url = new URL(raw)
+    if (url.hostname.endsWith('.neon.tech') && !url.hostname.includes('-pooler')) {
+      url.hostname = url.hostname.replace(/^([^.]+)\.(c-\d+\.)/, '$1-pooler.$2')
+    }
+    if (!url.searchParams.has('connect_timeout')) {
+      url.searchParams.set('connect_timeout', '30')
+    }
+    return url.toString()
+  } catch {
+    return raw
+  }
+}
+
 function getPool() {
   if (!globalForPrisma.pool) {
-    globalForPrisma.pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
+    const pool = new Pool({
+      connectionString: resolveDatabaseUrl(),
       max: 10,
+      connectionTimeoutMillis: 30_000,
+      idleTimeoutMillis: 20_000,
     })
+    pool.on('error', (err) => {
+      console.error('[db] idle pool client error', err.message)
+    })
+    globalForPrisma.pool = pool
   }
   return globalForPrisma.pool
 }
