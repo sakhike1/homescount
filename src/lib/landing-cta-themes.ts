@@ -41,7 +41,7 @@ export const landingCtaThemes: Record<LandingCtaVariant, LandingCtaTheme> = {
   sell: landingCtaRotations.sell[0],
 }
 
-const STORAGE_PREFIX = 'homescount-cta-index'
+const STORAGE_PREFIX = 'Homescout-cta-index'
 
 function storageKey(variant: LandingCtaVariant) {
   return `${STORAGE_PREFIX}:${variant}`

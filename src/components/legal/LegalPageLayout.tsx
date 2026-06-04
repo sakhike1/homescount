@@ -16,7 +16,7 @@ export default function LegalPageLayout({
           href="/"
           className="text-sm font-semibold text-amber-700 hover:text-amber-800 transition"
         >
-          ← Back to Homescount
+          ← Back to Homescout
         </Link>
         <header className="mt-6 border-b border-stone-200 pb-6">
           <h1 className="text-3xl sm:text-4xl font-bold text-stone-900 tracking-tight">

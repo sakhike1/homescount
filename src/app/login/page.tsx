@@ -4,7 +4,7 @@ import LoginForm from './LoginForm'
 
 export const metadata = buildPageMetadata({
   title: 'Sign in',
-  description: 'Sign in to your Homescount seller or admin account.',
+  description: 'Sign in to your Homescout seller or admin account.',
   path: '/login',
   noIndex: true,
 })

@@ -53,7 +53,7 @@ export default function PublishListingPanel({
       <div className="rounded-2xl border border-green-200 bg-green-50 p-6">
         <p className="font-bold text-green-800 flex items-center gap-2">
           <Globe className="h-5 w-5" />
-          Published — live on Homescount
+          Published — live on Homescout
         </p>
         <p className="mt-2 text-sm text-green-700">
           Buyers and renters can see this listing on the properties page.

@@ -12,15 +12,15 @@ export default function TermsPage() {
   return (
     <LegalPageLayout title="Terms of Use">
       <p>
-        These Terms of Use (&quot;Terms&quot;) govern your access to and use of the Homescount
+        These Terms of Use (&quot;Terms&quot;) govern your access to and use of the Homescout
         website and related services operated by {LEGAL.operatorName} in {LEGAL.country}. By using
-        Homescount, you agree to these Terms. If you do not agree, please do not use the site.
+        Homescout, you agree to these Terms. If you do not agree, please do not use the site.
       </p>
 
       <section>
-        <h2 className="text-lg font-bold text-stone-900">1. About Homescount</h2>
+        <h2 className="text-lg font-bold text-stone-900">1. About Homescout</h2>
         <p className="mt-2">
-          Homescount is an online property marketplace that connects buyers and renters with
+          Homescout is an online property marketplace that connects buyers and renters with
           sellers and landlords. We provide listing tools, search, and messaging features. We are
           not an estate agency, conveyancer, or financial adviser unless explicitly stated
           otherwise.
@@ -50,7 +50,7 @@ export default function TermsPage() {
           <li>You comply with applicable property, consumer, and advertising laws in South Africa.</li>
         </ul>
         <p className="mt-2">
-          Homescount may remove or refuse listings that appear unlawful, misleading, or harmful to
+          Homescout may remove or refuse listings that appear unlawful, misleading, or harmful to
           users.
         </p>
       </section>
@@ -58,7 +58,7 @@ export default function TermsPage() {
       <section>
         <h2 className="text-lg font-bold text-stone-900">4. Buyers and enquiries</h2>
         <p className="mt-2">
-          Enquiries you send through Homescount are passed to the relevant seller. Homescount does
+          Enquiries you send through Homescout are passed to the relevant seller. Homescout does
           not guarantee availability, condition, or legal title of any property. You should conduct
           your own due diligence, inspections, and professional advice before any transaction.
         </p>
@@ -87,7 +87,7 @@ export default function TermsPage() {
       <section>
         <h2 className="text-lg font-bold text-stone-900">7. Intellectual property</h2>
         <p className="mt-2">
-          Homescount branding, software, and site content are owned by us or our licensors. You
+          Homescout branding, software, and site content are owned by us or our licensors. You
           retain ownership of content you upload but grant us a licence to display and operate it on
           the platform.
         </p>
@@ -117,7 +117,7 @@ export default function TermsPage() {
       <section>
         <h2 className="text-lg font-bold text-stone-900">10. Limitation of liability</h2>
         <p className="mt-2">
-          To the extent permitted by South African law, Homescount and its directors, employees, and
+          To the extent permitted by South African law, Homescout and its directors, employees, and
           partners are not liable for indirect, incidental, or consequential damages arising from
           your use of the site or any transaction between users. Our total liability for direct
           damages is limited to the greater of amounts you paid us in the twelve months before the

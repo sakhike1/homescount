@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const SITE = {
-  name: 'Homescount',
+  name: 'Homescout',
   tagline: 'Homes for Sale & Rent in South Africa',
   defaultDescription:
     'Search property for sale and homes to rent across South Africa. Browse houses, apartments, and townhouses in Johannesburg, Cape Town, Durban, Pretoria, Sandton, and all 9 provinces.',
@@ -30,7 +30,7 @@ export const SEO_KEYWORDS = [
   'Gauteng homes for sale',
   'Western Cape property',
   'KwaZulu-Natal rentals',
-  'Homescount',
+  'Homescout',
 ] as const
 
 export function getSiteUrl(): string {

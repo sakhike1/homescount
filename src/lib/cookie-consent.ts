@@ -1,4 +1,4 @@
-export const COOKIE_CONSENT_KEY = 'homescount-cookie-consent'
+export const COOKIE_CONSENT_KEY = 'Homescout-cookie-consent'
 
 export type CookieConsentChoice = {
   essential: true

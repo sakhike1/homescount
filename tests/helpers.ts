@@ -3,11 +3,11 @@ import { expect } from '@playwright/test'
 
 export const TEST_USERS = {
   seller: {
-    email: process.env.E2E_SELLER_EMAIL ?? 'seller@homescount.com',
+    email: process.env.E2E_SELLER_EMAIL ?? 'seller@Homescout.com',
     password: process.env.E2E_SELLER_PASSWORD ?? 'password123',
   },
   admin: {
-    email: process.env.E2E_ADMIN_EMAIL ?? 'admin@homescount.com',
+    email: process.env.E2E_ADMIN_EMAIL ?? 'admin@Homescout.com',
     password: process.env.E2E_ADMIN_PASSWORD ?? 'password123',
   },
 } as const
@@ -60,9 +60,9 @@ export async function loginAsAdmin(page: Page) {
   await page.waitForURL(/\/admin(?!\/login)/, { timeout: 30_000 })
 }
 
-/** HC logo link in the top navbar (not footer). */
+/** HS logo link in the top navbar (not footer). */
 export function navbarLogo(page: Page) {
-  return page.getByRole('navigation').getByRole('link', { name: /homescount/i })
+  return page.getByRole('navigation').getByRole('link', { name: /Homescout/i })
 }
 
 /** Admin portal sidebar navigation. */
@@ -100,7 +100,7 @@ export async function gotoLiveListing(page: Page): Promise<boolean> {
 
 /** Unique email for registration tests — avoids collisions across runs. */
 export function uniqueTestEmail(prefix = 'e2e') {
-  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@homescount.test`
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@Homescout.test`
 }
 
 export async function registerAccount(

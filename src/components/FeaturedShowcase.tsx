@@ -42,7 +42,7 @@ const fallbackProperties: ShowcaseProperty[] = [
     id: '3',
     title: 'Lakeside dome home',
     description:
-      'Discover unique homes across South Africa with Homescount’s verified listings platform.',
+      'Discover unique homes across South Africa with Homescout’s verified listings platform.',
     price: 5120000,
     city: 'Hartbeespoort',
     province: 'North West',

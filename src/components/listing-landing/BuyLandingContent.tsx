@@ -76,7 +76,7 @@ export default function BuyLandingContent({
       )}
 
       <BenefitCards
-        heading="Why buy with Homescount"
+        heading="Why buy with Homescout"
         benefits={[
           {
             title: 'Clear sale prices',
@@ -101,7 +101,7 @@ export default function BuyLandingContent({
 
       <JourneyStepsSection
         title="Your path from search to ownership"
-        subtitle="Homescount guides buyers through each step — from the first enquiry to transfer at the Deeds Office."
+        subtitle="Homescout guides buyers through each step — from the first enquiry to transfer at the Deeds Office."
         steps={buyJourneySteps}
         footnote="When you view a property for sale, you will see this journey on the property page too."
       />

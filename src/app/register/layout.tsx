@@ -2,7 +2,7 @@ import { buildPageMetadata } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
   title: 'Create account',
-  description: 'Register as a Homescount seller to list property for sale or rent in South Africa.',
+  description: 'Register as a Homescout seller to list property for sale or rent in South Africa.',
   path: '/register',
   noIndex: true,
 })

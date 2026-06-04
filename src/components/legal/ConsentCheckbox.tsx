@@ -50,7 +50,7 @@ export default function ConsentCheckbox({
             >
               Privacy Policy
             </Link>{' '}
-            and consent to Homescount processing my personal information to pass this enquiry
+            and consent to Homescout processing my personal information to pass this enquiry
             to the seller and to contact me about this property, in accordance with the
             Protection of Personal Information Act 4 of 2013 (POPIA).
           </>
@@ -67,7 +67,7 @@ export default function ConsentCheckbox({
             >
               Privacy Policy
             </Link>{' '}
-            and consent to Homescount processing my email address to send me property news, tips,
+            and consent to Homescout processing my email address to send me property news, tips,
             and marketing communications. I understand I may withdraw consent or unsubscribe at
             any time.
           </>

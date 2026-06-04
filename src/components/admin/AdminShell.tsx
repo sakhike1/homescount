@@ -1,4 +1,4 @@
-import HomescountLogo from '@/components/brand/HomescountLogo'
+import HomescoutLogo from '@/components/brand/HomescoutLogo'
 import SignOutButton from '@/components/SignOutButton'
 import AdminNav from '@/components/admin/AdminNav'
 
@@ -16,7 +16,7 @@ export default function AdminShell({
       <header className="border-b border-stone-200 bg-stone-900 text-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4">
           <div className="flex items-center gap-4">
-            <HomescountLogo
+            <HomescoutLogo
               href="/admin"
               tone="onDark"
               size="md"

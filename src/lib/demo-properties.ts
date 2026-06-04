@@ -50,7 +50,7 @@ export const demoProperties: DemoProperty[] = [
     listingType: 'SALE',
     featured: true,
     images: [{ id: 'demo-sale-1-0', url: propertyImageAt(0) }],
-    seller: { name: 'Homescount Demo', email: 'demo@homescount.com' },
+    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
   {
     id: 'demo-sale-2',
@@ -70,7 +70,7 @@ export const demoProperties: DemoProperty[] = [
     listingType: 'SALE',
     featured: false,
     images: [{ id: 'demo-sale-2-0', url: propertyImageAt(1) }],
-    seller: { name: 'Homescount Demo', email: 'demo@homescount.com' },
+    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
   {
     id: 'demo-sale-3',
@@ -90,7 +90,7 @@ export const demoProperties: DemoProperty[] = [
     listingType: 'SALE',
     featured: true,
     images: [{ id: 'demo-sale-3-0', url: propertyImageAt(2) }],
-    seller: { name: 'Homescount Demo', email: 'demo@homescount.com' },
+    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
   {
     id: 'demo-sale-4',
@@ -110,7 +110,7 @@ export const demoProperties: DemoProperty[] = [
     listingType: 'SALE',
     featured: false,
     images: [{ id: 'demo-sale-4-0', url: propertyImageAt(3) }],
-    seller: { name: 'Homescount Demo', email: 'demo@homescount.com' },
+    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
   {
     id: 'demo-sale-5',
@@ -130,7 +130,7 @@ export const demoProperties: DemoProperty[] = [
     listingType: 'SALE',
     featured: false,
     images: [{ id: 'demo-sale-5-0', url: propertyImageAt(4) }],
-    seller: { name: 'Homescount Demo', email: 'demo@homescount.com' },
+    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
   {
     id: 'demo-sale-6',
@@ -150,7 +150,7 @@ export const demoProperties: DemoProperty[] = [
     listingType: 'SALE',
     featured: false,
     images: [{ id: 'demo-sale-6-0', url: propertyImageAt(5) }],
-    seller: { name: 'Homescount Demo', email: 'demo@homescount.com' },
+    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
   {
     id: 'demo-rent-1',
@@ -170,7 +170,7 @@ export const demoProperties: DemoProperty[] = [
     listingType: 'RENT',
     featured: true,
     images: [{ id: 'demo-rent-1-0', url: propertyImageAt(1) }],
-    seller: { name: 'Homescount Demo', email: 'demo@homescount.com' },
+    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
   {
     id: 'demo-rent-2',
@@ -190,7 +190,7 @@ export const demoProperties: DemoProperty[] = [
     listingType: 'RENT',
     featured: false,
     images: [{ id: 'demo-rent-2-0', url: propertyImageAt(4) }],
-    seller: { name: 'Homescount Demo', email: 'demo@homescount.com' },
+    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
   {
     id: 'demo-rent-3',
@@ -210,7 +210,7 @@ export const demoProperties: DemoProperty[] = [
     listingType: 'RENT',
     featured: true,
     images: [{ id: 'demo-rent-3-0', url: propertyImageAt(0) }],
-    seller: { name: 'Homescount Demo', email: 'demo@homescount.com' },
+    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
   {
     id: 'demo-rent-4',
@@ -230,7 +230,7 @@ export const demoProperties: DemoProperty[] = [
     listingType: 'RENT',
     featured: false,
     images: [{ id: 'demo-rent-4-0', url: propertyImageAt(2) }],
-    seller: { name: 'Homescount Demo', email: 'demo@homescount.com' },
+    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
   {
     id: 'demo-rent-5',
@@ -250,7 +250,7 @@ export const demoProperties: DemoProperty[] = [
     listingType: 'RENT',
     featured: false,
     images: [{ id: 'demo-rent-5-0', url: propertyImageAt(3) }],
-    seller: { name: 'Homescount Demo', email: 'demo@homescount.com' },
+    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
   {
     id: 'demo-rent-6',
@@ -270,7 +270,7 @@ export const demoProperties: DemoProperty[] = [
     listingType: 'RENT',
     featured: false,
     images: [{ id: 'demo-rent-6-0', url: propertyImageAt(5) }],
-    seller: { name: 'Homescount Demo', email: 'demo@homescount.com' },
+    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
 ]
 

@@ -22,7 +22,7 @@ export default function PropertyJourneyGuide({
         <div>
           <h2 className="text-xl font-bold text-stone-900">{heading}</h2>
           <p className="mt-2 text-sm text-stone-600 leading-relaxed">
-            Homescount will help you through every step of the way — answering your
+            Homescout will help you through every step of the way — answering your
             questions, explaining documents, and guiding you until the process is
             finished. You are never on your own.
           </p>
@@ -54,7 +54,7 @@ export default function PropertyJourneyGuide({
       </ol>
 
       <p className="mt-6 text-sm font-medium text-amber-800 bg-amber-100/60 rounded-xl px-4 py-3">
-        Need help? Message the seller above or contact Homescount — we provide
+        Need help? Message the seller above or contact Homescout — we provide
         clear guides and support so your property journey stays smooth from first
         enquiry to keys in hand.
       </p>

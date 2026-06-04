@@ -16,7 +16,7 @@ export default function CookiePolicyPage() {
     <LegalPageLayout title="Cookie Policy">
       <p>
         This Cookie Policy explains how {LEGAL.operatorName} uses cookies and similar technologies
-        on the Homescount website. It should be read together with our{' '}
+        on the Homescout website. It should be read together with our{' '}
         <Link href="/privacy" className="text-amber-700 font-semibold hover:underline">
           Privacy Policy
         </Link>
@@ -56,12 +56,12 @@ export default function CookiePolicyPage() {
       <section>
         <h2 className="text-lg font-bold text-stone-900">3. Managing your choices</h2>
         <p className="mt-2">
-          When you first visit Homescount, you can accept all cookies or continue with essential
+          When you first visit Homescout, you can accept all cookies or continue with essential
           cookies only. You can change your browser settings to block or delete cookies; note that
           blocking essential cookies may prevent sign-in and other features from working.
         </p>
         <p className="mt-2">
-          To clear your consent choice on this device, remove site data for Homescount in your
+          To clear your consent choice on this device, remove site data for Homescout in your
           browser settings — the cookie banner will appear again on your next visit.
         </p>
       </section>

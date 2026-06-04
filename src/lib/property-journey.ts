@@ -99,7 +99,7 @@ export const sellJourneySteps: JourneyStep[] = [
     step: 1,
     title: 'Create your seller account',
     detail:
-      'Register as a seller on Homescount. It takes a few minutes — name, email, and password.',
+      'Register as a seller on Homescout. It takes a few minutes — name, email, and password.',
   },
   {
     step: 2,
@@ -129,6 +129,6 @@ export const sellJourneySteps: JourneyStep[] = [
     step: 6,
     title: 'Respond to enquiries',
     detail:
-      'Buyers and renters message you through Homescount. Reply promptly to book viewings and close deals.',
+      'Buyers and renters message you through Homescout. Reply promptly to book viewings and close deals.',
   },
 ]

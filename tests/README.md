@@ -55,6 +55,6 @@ npm run test:e2e:chromium
 | `page-metadata.spec.ts` | Document titles, favicon |
 | `journeys.spec.ts` | Buy/rent/sell journey sections |
 | `legal-and-consent.spec.ts` | Privacy/terms/cookies, cookie banner |
-| `branding.spec.ts` | HC logo in navbar and footer |
+| `branding.spec.ts` | HS logo in navbar and Homescout wordmark in footer |
 
 Auth and database tests **skip** automatically when secrets or seed data are missing.

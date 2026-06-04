@@ -6,7 +6,7 @@ const publicRoutes = [
   { path: '/buy', heading: /find a home/i },
   { path: '/rent', heading: /find a rental/i },
   { path: '/sell', heading: /list your property/i },
-  { path: '/properties', heading: /search in|homescount listings/i },
+  { path: '/properties', heading: /search in|Homescout listings/i },
   { path: '/login', heading: /welcome back/i },
   { path: '/register', heading: /create an account/i },
   { path: '/privacy', heading: /privacy policy/i },

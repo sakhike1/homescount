@@ -21,7 +21,7 @@ export default function SellLandingContent() {
       </ListingLandingHero>
 
       <BenefitCards
-        heading="Why list on Homescount"
+        heading="Why list on Homescout"
         benefits={[
           {
             title: 'Sale or rent',

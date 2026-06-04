@@ -42,22 +42,22 @@ async function main() {
   const password = await bcrypt.hash('password123', 10)
 
   const seller = await prisma.user.upsert({
-    where: { email: 'seller@homescount.com' },
+    where: { email: 'seller@Homescout.com' },
     update: {},
     create: {
-      email: 'seller@homescount.com',
-      name: 'Homescount Demo Seller',
+      email: 'seller@Homescout.com',
+      name: 'Homescout Demo Seller',
       password,
       role: 'SELLER',
     },
   })
 
   await prisma.user.upsert({
-    where: { email: 'admin@homescount.com' },
+    where: { email: 'admin@Homescout.com' },
     update: { role: 'ADMIN', active: true },
     create: {
-      email: 'admin@homescount.com',
-      name: 'Homescount Admin',
+      email: 'admin@Homescout.com',
+      name: 'Homescout Admin',
       password,
       role: 'ADMIN',
     },
@@ -106,10 +106,10 @@ async function main() {
   }
 
   await prisma.newsletterSubscriber.upsert({
-    where: { email: 'demo.subscriber@homescount.com' },
+    where: { email: 'demo.subscriber@Homescout.com' },
     update: {},
     create: {
-      email: 'demo.subscriber@homescount.com',
+      email: 'demo.subscriber@Homescout.com',
       privacyConsentAt: new Date(),
     },
   })
@@ -130,8 +130,8 @@ async function main() {
       },
       {
         type: 'NEWSLETTER_SUBSCRIBED',
-        message: 'Newsletter subscription: demo.subscriber@homescount.com',
-        metadata: { email: 'demo.subscriber@homescount.com' },
+        message: 'Newsletter subscription: demo.subscriber@Homescout.com',
+        metadata: { email: 'demo.subscriber@Homescout.com' },
         read: false,
       },
       ...(firstProperty
@@ -149,8 +149,8 @@ async function main() {
   })
 
   console.log('\nSeed complete!')
-  console.log('Seller login: seller@homescount.com / password123')
-  console.log('Admin login:  admin@homescount.com / password123  → /admin/login')
+  console.log('Seller login: seller@Homescout.com / password123')
+  console.log('Admin login:  admin@Homescout.com / password123  → /admin/login')
   console.log(`${listings.length} published properties created.`)
   console.log('Admin portal: sample newsletter + activity records added.')
 }

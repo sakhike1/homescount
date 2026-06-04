@@ -1,4 +1,4 @@
-# Deploy Homescount to Netlify (interview demo)
+# Deploy Homescout to Netlify (interview demo)
 
 Your app is **not static HTML** — it needs a **hosted PostgreSQL database** and **environment variables** for auth. Netlify can run Next.js API routes and server actions, but the database cannot live on your laptop once the site is public.
 
@@ -34,8 +34,8 @@ npm run db:seed
 
 This creates tables and demo users:
 
-- Seller: `seller@homescount.com` / `password123`
-- Admin: `admin@homescount.com` / `password123` → `/admin/login`
+- Seller: `seller@Homescout.com` / `password123`
+- Admin: `admin@Homescout.com` / `password123` → `/admin/login`
 
 **Before a public interview link:** change these passwords in the seed or create new users via Register.
 

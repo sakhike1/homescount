@@ -187,7 +187,7 @@ export default function PropertyDetailView({
                   </div>
                 </div>
                 <p className="mt-4 text-sm text-stone-600">
-                  Verified Homescount seller. Reach out to arrange a viewing or ask
+                  Verified Homescout seller. Reach out to arrange a viewing or ask
                   questions about this {property.listingType === 'RENT' ? 'rental' : 'home'}.
                 </p>
                 <a
@@ -199,7 +199,7 @@ export default function PropertyDetailView({
                 </a>
                 <div className="mt-4 flex items-center gap-2 rounded-xl bg-stone-50 px-3 py-2 text-xs text-stone-500">
                   <Home className="h-4 w-4 text-amber-500" />
-                  Homescount guides you from enquiry to handover
+                  Homescout guides you from enquiry to handover
                 </div>
               </div>
 

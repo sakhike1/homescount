@@ -1,10 +1,10 @@
 import { buildPageMetadata } from '@/lib/seo'
-import HomescountLogo from '@/components/brand/HomescountLogo'
+import HomescoutLogo from '@/components/brand/HomescoutLogo'
 import { requireSeller } from '@/lib/seller'
 
 export const metadata = buildPageMetadata({
   title: 'Seller dashboard',
-  description: 'Manage your property listings and enquiries on Homescount.',
+  description: 'Manage your property listings and enquiries on Homescout.',
   noIndex: true,
 })
 import SignOutButton from '@/components/SignOutButton'
@@ -27,7 +27,7 @@ export default async function DashboardLayout({
       <header className="border-b border-gray-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4">
           <div className="flex items-center gap-6">
-            <HomescountLogo href="/" size="md" />
+            <HomescoutLogo href="/" size="md" />
             <span className="hidden sm:inline text-sm font-semibold text-gray-500">
               Seller Portal
             </span>

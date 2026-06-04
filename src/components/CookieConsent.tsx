@@ -12,7 +12,7 @@ import {
 
 function saveConsent(choice: CookieConsentChoice) {
   localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(choice))
-  window.dispatchEvent(new CustomEvent('homescount-cookie-consent', { detail: choice }))
+  window.dispatchEvent(new CustomEvent('Homescout-cookie-consent', { detail: choice }))
 }
 
 export default function CookieConsent() {
@@ -61,7 +61,7 @@ export default function CookieConsent() {
           Cookies &amp; privacy
         </h2>
         <p id="cookie-consent-desc" className="mt-2 text-sm text-stone-600 leading-relaxed">
-          We use essential cookies to keep you signed in and run Homescount.
+          We use essential cookies to keep you signed in and run Homescout.
           {analyticsAvailable
             ? ' With your permission, we also use analytics cookies to understand how the site is used.'
             : ' We do not use advertising cookies.'}{' '}

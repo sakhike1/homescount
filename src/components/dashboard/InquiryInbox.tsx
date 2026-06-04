@@ -146,7 +146,7 @@ export default function InquiryInbox({ inquiries }: { inquiries: InquiryItem[] }
             )}
             {inq.phone && (
               <a
-                href={`https://wa.me/${toWhatsAppNumber(inq.phone)}?text=${encodeURIComponent(`Hi ${inq.name}, thanks for your enquiry about ${inq.property.title} on Homescount.`)}`}
+                href={`https://wa.me/${toWhatsAppNumber(inq.phone)}?text=${encodeURIComponent(`Hi ${inq.name}, thanks for your enquiry about ${inq.property.title} on Homescout.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}

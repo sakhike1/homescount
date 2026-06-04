@@ -77,7 +77,7 @@ export default function RentLandingContent({
       )}
 
       <BenefitCards
-        heading="Why rent with Homescount"
+        heading="Why rent with Homescout"
         benefits={[
           {
             title: 'Clear monthly prices',
@@ -102,7 +102,7 @@ export default function RentLandingContent({
 
       <JourneyStepsSection
         title="Your path from search to move-in"
-        subtitle="Homescount guides renters through each step — from the first enquiry to settling in."
+        subtitle="Homescout guides renters through each step — from the first enquiry to settling in."
         steps={rentJourneySteps}
         footnote="When you view a rental, you will see this journey on the property page too — so you always know what comes next."
       />

@@ -112,7 +112,7 @@ export const landingHeroThemes: Record<LandingHeroVariant, LandingHeroTheme> = {
   sell: landingHeroRotations.sell[0],
 }
 
-const STORAGE_PREFIX = 'homescount-hero-index'
+const STORAGE_PREFIX = 'Homescout-hero-index'
 
 function storageKey(variant: LandingHeroVariant) {
   return `${STORAGE_PREFIX}:${variant}`
@@ -168,7 +168,7 @@ export function getLandingHeroCopy(
 
   if (variant === 'buy') {
     return {
-      eyebrow: 'Buy on Homescount',
+      eyebrow: 'Buy on Homescout',
       title: 'Find a home',
       highlight: 'to buy',
       showLocation: true,
@@ -179,7 +179,7 @@ export function getLandingHeroCopy(
 
   if (variant === 'rent') {
     return {
-      eyebrow: 'Rent on Homescount',
+      eyebrow: 'Rent on Homescout',
       title: 'Find a rental',
       highlight: "you'll love",
       showLocation: true,
@@ -190,7 +190,7 @@ export function getLandingHeroCopy(
 
   if (variant === 'sell') {
     return {
-      eyebrow: 'Sell on Homescount',
+      eyebrow: 'Sell on Homescout',
       title: 'List your property',
       highlight: 'reach more buyers',
       showLocation: false,
@@ -207,7 +207,7 @@ export function getLandingHeroCopy(
         : 'properties across South Africa'
 
   return {
-    eyebrow: 'Homescount listings',
+    eyebrow: 'Homescout listings',
     title: 'Search in',
     showLocation: true,
     description: `Find ${browseDesc} — filter by area, suburb, and budget in one place.`,

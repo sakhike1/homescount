@@ -12,7 +12,7 @@ export default function PrivacyPolicyPage() {
   return (
     <LegalPageLayout title="Privacy Policy">
       <p>
-        This Privacy Policy explains how {LEGAL.operatorName} (&quot;Homescount&quot;, &quot;we&quot;,
+        This Privacy Policy explains how {LEGAL.operatorName} (&quot;Homescout&quot;, &quot;we&quot;,
         &quot;us&quot;) processes personal information when you use our website and services in{' '}
         {LEGAL.country}. We aim to comply with the Protection of Personal Information Act 4 of 2013
         (POPIA) and the Promotion of Access to Information Act 2 of 2000 (PAIA) where applicable.
@@ -144,7 +144,7 @@ export default function PrivacyPolicyPage() {
       <section>
         <h2 className="text-lg font-bold text-stone-900">9. Children</h2>
         <p className="mt-2">
-          Homescount is not directed at children under 18. We do not knowingly collect personal
+          Homescout is not directed at children under 18. We do not knowingly collect personal
           information from children without appropriate consent.
         </p>
       </section>

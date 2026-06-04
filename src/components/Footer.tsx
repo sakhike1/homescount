@@ -190,7 +190,7 @@ function FooterWordmark() {
   return (
     <Link
       href="/"
-      aria-label="Homescount home"
+      aria-label="Homescout home"
       className="mt-14 block select-none sm:mt-20"
     >
       <span
@@ -198,7 +198,7 @@ function FooterWordmark() {
         style={{ fontSize: 'clamp(3.5rem, 16vw, 10rem)' }}
       >
         <span className="text-stone-900">Homes</span>
-        <span className="text-amber-500">count</span>
+        <span className="text-amber-500">scout</span>
         <sup className="ml-1 align-super text-[0.12em] font-bold text-stone-400">®</sup>
       </span>
     </Link>

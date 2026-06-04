@@ -43,7 +43,7 @@ export async function sendSellerInquirySms({
     return { ok: false, skipped: true as const }
   }
 
-  const body = `Homescount: New enquiry from ${buyerName} about "${propertyTitle.slice(0, 40)}${propertyTitle.length > 40 ? '…' : ''}". View in your seller portal.`
+  const body = `Homescout: New enquiry from ${buyerName} about "${propertyTitle.slice(0, 40)}${propertyTitle.length > 40 ? '…' : ''}". View in your seller portal.`
 
   try {
     const res = await fetch(

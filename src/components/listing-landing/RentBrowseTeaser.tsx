@@ -45,8 +45,8 @@ export default function RentBrowseTeaser({
       ? 'Sample listings to explore the site — real homes appear once sellers publish.'
       : 'Sample rentals to explore the site — real listings appear once sellers publish.'
     : isBuy
-      ? 'A sample of homes currently for sale on Homescount.'
-      : 'A sample of homes currently available to rent on Homescount.'
+      ? 'A sample of homes currently for sale on Homescout.'
+      : 'A sample of homes currently available to rent on Homescout.'
   const viewAllLabel = isBuy ? 'View all for sale' : 'View all rentals'
 
   if (properties.length === 0) {

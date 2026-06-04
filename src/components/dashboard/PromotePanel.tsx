@@ -61,7 +61,7 @@ export default function PromotePanel({
         <div>
           <h3 className="text-lg font-bold text-gray-900">Advertise this listing</h3>
           <p className="text-sm text-gray-600">
-            Boost visibility on Homescount. Demo checkout — no real payment yet.
+            Boost visibility on Homescout. Demo checkout — no real payment yet.
           </p>
         </div>
       </div>

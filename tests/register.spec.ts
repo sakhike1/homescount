@@ -39,9 +39,9 @@ test.describe('Registration', () => {
     await expect(page).toHaveURL('/login')
   })
 
-  test('shows Homescount logo on register page', async ({ page }) => {
+  test('shows Homescout logo on register page', async ({ page }) => {
     await page.goto('/register')
     await acceptCookies(page)
-    await expect(page.getByRole('link', { name: /homescount/i }).first()).toBeVisible()
+    await expect(page.getByRole('link', { name: /Homescout/i }).first()).toBeVisible()
   })
 })

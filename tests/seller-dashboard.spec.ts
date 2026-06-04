@@ -27,7 +27,7 @@ import { acceptCookies, loginAsSeller } from './helpers'
   })
 
   test('logo links back to public site', async ({ page }) => {
-    await page.getByRole('link', { name: /homescount/i }).first().click()
+    await page.getByRole('link', { name: /Homescout/i }).first().click()
     await expect(page).toHaveURL('/')
   })
 

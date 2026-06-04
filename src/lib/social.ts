@@ -2,28 +2,28 @@
 export const SOCIAL_LINKS = [
   {
     id: 'instagram',
-    label: 'Homescount on Instagram',
-    href: 'https://www.instagram.com/homescount',
+    label: 'Homescout on Instagram',
+    href: 'https://www.instagram.com/Homescout',
   },
   {
     id: 'facebook',
-    label: 'Homescount on Facebook',
-    href: 'https://www.facebook.com/homescount',
+    label: 'Homescout on Facebook',
+    href: 'https://www.facebook.com/Homescout',
   },
   {
     id: 'x',
-    label: 'Homescount on X',
-    href: 'https://x.com/homescount',
+    label: 'Homescout on X',
+    href: 'https://x.com/Homescout',
   },
   {
     id: 'youtube',
-    label: 'Homescount on YouTube',
-    href: 'https://www.youtube.com/@homescount',
+    label: 'Homescout on YouTube',
+    href: 'https://www.youtube.com/@Homescout',
   },
   {
     id: 'linkedin',
-    label: 'Homescount on LinkedIn',
-    href: 'https://www.linkedin.com/company/homescount',
+    label: 'Homescout on LinkedIn',
+    href: 'https://www.linkedin.com/company/Homescout',
   },
 ] as const
 

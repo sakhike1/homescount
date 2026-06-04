@@ -7,7 +7,7 @@ import { getUnreadActivityCount } from '@/lib/activity'
 
 export const metadata = buildPageMetadata({
   title: 'Admin portal',
-  description: 'Homescount administration.',
+  description: 'Homescout administration.',
   noIndex: true,
 })
 

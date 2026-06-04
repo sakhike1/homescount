@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import HomescountLogo from '@/components/brand/HomescountLogo'
+import HomescoutLogo from '@/components/brand/HomescoutLogo'
 import { signOut } from 'next-auth/react'
 import type { Session } from 'next-auth'
 import {
@@ -84,7 +84,7 @@ export default function MobileNavDrawer({
         aria-label="Navigation menu"
       >
         <header className="flex h-[3.25rem] shrink-0 items-center justify-between border-b border-stone-200/90 px-4">
-          <HomescountLogo tone="default" size="sm" />
+          <HomescoutLogo tone="default" size="sm" />
           <button
             type="button"
             onClick={onClose}

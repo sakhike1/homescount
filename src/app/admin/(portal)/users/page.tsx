@@ -20,7 +20,7 @@ export default async function AdminUsersPage() {
       <div>
         <h1 className="text-2xl font-black text-stone-900">Buyers</h1>
         <p className="mt-1 text-sm text-stone-600">
-          {buyers.length} registered buyer{buyers.length === 1 ? '' : 's'} on Homescount.
+          {buyers.length} registered buyer{buyers.length === 1 ? '' : 's'} on Homescout.
         </p>
       </div>
 

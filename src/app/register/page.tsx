@@ -3,7 +3,7 @@
 import { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import HomescountLogo from '@/components/brand/HomescountLogo'
+import HomescoutLogo from '@/components/brand/HomescoutLogo'
 import {
   formButtonPrimaryFullClass,
   formErrorClass,
@@ -61,10 +61,10 @@ function RegisterForm() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       <div className="w-full max-w-md rounded-2xl border border-gray-200/60 bg-white p-8 shadow-md">
         <div className="mb-6 flex justify-center">
-          <HomescountLogo href="/" size="lg" className="justify-center" />
+          <HomescoutLogo href="/" size="lg" className="justify-center" />
         </div>
         <h1 className="text-2xl font-bold text-gray-800 mb-2">Create an account</h1>
-        <p className="text-gray-500 mb-6">Join Homescount today</p>
+        <p className="text-gray-500 mb-6">Join Homescout today</p>
 
         {error && <div className={`mb-4 ${formErrorClass}`}>{error}</div>}
 

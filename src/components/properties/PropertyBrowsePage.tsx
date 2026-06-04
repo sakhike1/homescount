@@ -108,7 +108,7 @@ export default function PropertyBrowsePage({
 
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-amber-400">
 
-            Homescount listings
+            Homescout listings
 
           </p>
 

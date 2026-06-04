@@ -61,7 +61,7 @@ export default function HeroSearch() {
         {tab === 'sell' ? (
           <>
             <p className="text-base sm:text-lg font-bold text-white tracking-tight">
-              List your property on Homescount
+              List your property on Homescout
             </p>
             <p className="mt-2 text-xs sm:text-sm text-white/80">
               Reach buyers and renters across South Africa. Upload photos, set

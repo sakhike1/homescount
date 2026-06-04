@@ -80,12 +80,12 @@ export default function PropertyContactForm({
       {disabled ? (
         <p className={`mt-4 ${formNoticeClass}`}>
           Messaging is unavailable for sample listings. Browse live properties once
-          sellers publish on Homescount.
+          sellers publish on Homescout.
         </p>
       ) : status === 'success' ? (
         <p className="mt-4 rounded-2xl border border-green-100/80 bg-green-50 px-4 py-3 text-sm font-medium text-green-800">
           Thanks! Your message was sent. The seller will get back to you soon — and
-          Homescount is here if you need guidance on next steps.
+          Homescout is here if you need guidance on next steps.
         </p>
       ) : (
         <form onSubmit={handleSubmit} className="mt-5 space-y-3">

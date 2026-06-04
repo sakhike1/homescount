@@ -15,7 +15,7 @@ export async function generateMetadata({
   if (q?.trim()) {
     return buildPageMetadata({
       title: `Properties matching “${q.trim()}”`,
-      description: `Search results for “${q.trim()}” — homes and apartments for ${isRent ? 'rent' : 'sale'} on Homescount across South Africa.`,
+      description: `Search results for “${q.trim()}” — homes and apartments for ${isRent ? 'rent' : 'sale'} on Homescout across South Africa.`,
       path: `/properties?q=${encodeURIComponent(q.trim())}`,
     })
   }
@@ -24,7 +24,7 @@ export async function generateMetadata({
     return buildPageMetadata({
       title: 'Rental Property Search',
       description:
-        'Search all rental listings on Homescount. Filter by price, suburb, and city to find apartments and houses to rent.',
+        'Search all rental listings on Homescout. Filter by price, suburb, and city to find apartments and houses to rent.',
       path: '/properties?type=rent',
       keywords: ['rental property search', 'apartments to rent', 'lease homes South Africa'],
     })

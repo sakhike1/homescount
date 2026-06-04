@@ -32,7 +32,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             <div className="lg:col-span-7">
               <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 ring-1 ring-white/15 backdrop-blur">
-                Homescount
+                Homescout
                 <span className="h-1 w-1 rounded-full bg-white/60" />
                 South Africa
               </p>

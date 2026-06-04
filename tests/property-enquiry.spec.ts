@@ -8,7 +8,7 @@ test.describe('Property enquiry', () => {
     test.skip(!found, 'No live listings — run npm run db:seed')
 
     await page.getByPlaceholder(/your name/i).fill('Test Buyer')
-    await page.getByPlaceholder(/email address/i).fill('buyer-e2e@homescount.test')
+    await page.getByPlaceholder(/email address/i).fill('buyer-e2e@Homescout.test')
     await page.locator('#inq-message').fill('I would like to arrange a viewing please.')
     await page.locator('input[type="checkbox"][name="privacyConsent"]').check()
     await page.getByRole('button', { name: /send message/i }).click()
@@ -23,7 +23,7 @@ test.describe('Property enquiry', () => {
     test.skip(!found, 'No live listings available')
 
     await page.getByPlaceholder(/your name/i).fill('Test Buyer')
-    await page.getByPlaceholder(/email address/i).fill('buyer-e2e@homescount.test')
+    await page.getByPlaceholder(/email address/i).fill('buyer-e2e@Homescout.test')
     await page.locator('#inq-message').fill('Quick question about the property.')
     await page.getByRole('button', { name: /send message/i }).click()
 

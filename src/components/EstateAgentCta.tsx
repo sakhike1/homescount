@@ -12,7 +12,7 @@ export default function EstateAgentCta() {
           </h2>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-stone-600 sm:text-lg">
             Search our property database and contact estate agents directly. On
-            Homescount you can refine your search to areas where you would like
+            Homescout you can refine your search to areas where you would like
             to live and then contact the most suitable estate agent for that
             area directly.
           </p>

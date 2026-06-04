@@ -21,10 +21,10 @@ export default function AnalyticsScripts() {
     }
 
     check()
-    window.addEventListener('homescount-cookie-consent', check)
+    window.addEventListener('Homescout-cookie-consent', check)
     window.addEventListener('storage', check)
     return () => {
-      window.removeEventListener('homescount-cookie-consent', check)
+      window.removeEventListener('Homescout-cookie-consent', check)
       window.removeEventListener('storage', check)
     }
   }, [])

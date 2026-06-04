@@ -11,9 +11,9 @@ const pagesWithTitles = [
 ] as const
 
 test.describe('Page metadata', () => {
-  test('site has Homescount document title', async ({ page }) => {
+  test('site has Homescout document title', async ({ page }) => {
     await page.goto('/')
-    await expect(page).toHaveTitle(/homescount/i)
+    await expect(page).toHaveTitle(/Homescout/i)
   })
 
   test('home page has SEO meta description', async ({ page }) => {

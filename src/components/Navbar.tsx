@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import HomescountLogo from '@/components/brand/HomescountLogo'
+import HomescoutLogo from '@/components/brand/HomescoutLogo'
 import { useSession, signOut } from 'next-auth/react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -111,7 +111,7 @@ export default function Navbar({
                 : ''
             }`}
           >
-            <HomescountLogo tone={isHero ? 'hero' : 'default'} size="md" />
+            <HomescoutLogo tone={isHero ? 'hero' : 'default'} size="md" />
 
             {/* Desktop center links */}
             <div className={`hidden md:flex items-center gap-1 rounded-full px-2 py-1 ${pillShell}`}>

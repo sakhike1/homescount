@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useActionState } from 'react'
-import HomescountLogo from '@/components/brand/HomescountLogo'
+import HomescoutLogo from '@/components/brand/HomescoutLogo'
 import { authenticateAdmin } from '@/app/admin/login/actions'
 import {
   formButtonPrimaryDarkClass,
@@ -16,7 +16,7 @@ export default function AdminLoginForm() {
     <main className="min-h-screen bg-stone-950 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="flex justify-center">
-          <HomescountLogo href="/" tone="onDark" size="lg" className="justify-center" />
+          <HomescoutLogo href="/" tone="onDark" size="lg" className="justify-center" />
         </div>
         <h1 className="mt-6 text-2xl font-bold text-white text-center">Admin access</h1>
         <p className="mt-2 text-sm text-stone-400 text-center">
