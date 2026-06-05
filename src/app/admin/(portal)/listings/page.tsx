@@ -80,6 +80,11 @@ export default async function AdminListingsPage() {
                           Hidden
                         </span>
                       )}
+                      {p.verified && (
+                        <span className="ml-1 rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-bold text-emerald-800">
+                          Verified
+                        </span>
+                      )}
                       <p className="mt-1 text-xs text-stone-500">{p.status}</p>
                     </td>
                     <td className="px-4 py-4 text-stone-600">{p._count.inquiries}</td>
@@ -91,6 +96,7 @@ export default async function AdminListingsPage() {
                         status={p.status}
                         sellerActive={p.seller.active}
                         featured={p.featured}
+                        verified={p.verified}
                       />
                     </td>
                   </tr>

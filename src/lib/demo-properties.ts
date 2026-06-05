@@ -8,6 +8,7 @@ export type DemoPropertyFilters = {
   address?: string
   minPrice?: number
   maxPrice?: number
+  minBedrooms?: number
 }
 
 /** Sample listings — hidden automatically once sellers publish real properties. */
@@ -27,6 +28,8 @@ export type DemoProperty = {
   type: string
   listingType: ListingType
   featured: boolean
+  verified: boolean
+  virtualTourUrl?: string | null
   images: { id: string; url: string }[]
   seller: { name: string; email: string }
 }
@@ -49,6 +52,7 @@ export const demoProperties: DemoProperty[] = [
     type: 'HOUSE',
     listingType: 'SALE',
     featured: true,
+    verified: true,
     images: [{ id: 'demo-sale-1-0', url: propertyImageAt(0) }],
     seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
@@ -69,6 +73,7 @@ export const demoProperties: DemoProperty[] = [
     type: 'TOWNHOUSE',
     listingType: 'SALE',
     featured: false,
+    verified: true,
     images: [{ id: 'demo-sale-2-0', url: propertyImageAt(1) }],
     seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
@@ -89,6 +94,7 @@ export const demoProperties: DemoProperty[] = [
     type: 'HOUSE',
     listingType: 'SALE',
     featured: true,
+    verified: true,
     images: [{ id: 'demo-sale-3-0', url: propertyImageAt(2) }],
     seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
@@ -109,6 +115,7 @@ export const demoProperties: DemoProperty[] = [
     type: 'HOUSE',
     listingType: 'SALE',
     featured: false,
+    verified: false,
     images: [{ id: 'demo-sale-4-0', url: propertyImageAt(3) }],
     seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
@@ -129,6 +136,7 @@ export const demoProperties: DemoProperty[] = [
     type: 'APARTMENT',
     listingType: 'SALE',
     featured: false,
+    verified: false,
     images: [{ id: 'demo-sale-5-0', url: propertyImageAt(4) }],
     seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
@@ -149,6 +157,7 @@ export const demoProperties: DemoProperty[] = [
     type: 'HOUSE',
     listingType: 'SALE',
     featured: false,
+    verified: false,
     images: [{ id: 'demo-sale-6-0', url: propertyImageAt(5) }],
     seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
@@ -169,6 +178,7 @@ export const demoProperties: DemoProperty[] = [
     type: 'APARTMENT',
     listingType: 'RENT',
     featured: true,
+    verified: true,
     images: [{ id: 'demo-rent-1-0', url: propertyImageAt(1) }],
     seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
@@ -189,6 +199,7 @@ export const demoProperties: DemoProperty[] = [
     type: 'APARTMENT',
     listingType: 'RENT',
     featured: false,
+    verified: false,
     images: [{ id: 'demo-rent-2-0', url: propertyImageAt(4) }],
     seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
@@ -209,6 +220,7 @@ export const demoProperties: DemoProperty[] = [
     type: 'APARTMENT',
     listingType: 'RENT',
     featured: true,
+    verified: false,
     images: [{ id: 'demo-rent-3-0', url: propertyImageAt(0) }],
     seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
@@ -229,6 +241,7 @@ export const demoProperties: DemoProperty[] = [
     type: 'HOUSE',
     listingType: 'RENT',
     featured: false,
+    verified: false,
     images: [{ id: 'demo-rent-4-0', url: propertyImageAt(2) }],
     seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
@@ -249,6 +262,7 @@ export const demoProperties: DemoProperty[] = [
     type: 'HOUSE',
     listingType: 'RENT',
     featured: false,
+    verified: false,
     images: [{ id: 'demo-rent-5-0', url: propertyImageAt(3) }],
     seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
@@ -269,6 +283,7 @@ export const demoProperties: DemoProperty[] = [
     type: 'HOUSE',
     listingType: 'RENT',
     featured: false,
+    verified: false,
     images: [{ id: 'demo-rent-6-0', url: propertyImageAt(5) }],
     seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
   },
@@ -321,6 +336,10 @@ export function filterDemoProperties(
     results = results.filter((p) => p.price <= filters.maxPrice!)
   }
 
+  if (filters.minBedrooms && filters.minBedrooms > 0) {
+    results = results.filter((p) => p.bedrooms >= filters.minBedrooms!)
+  }
+
   return results.sort((a, b) => {
     if (a.featured !== b.featured) return a.featured ? -1 : 1
     return 0
@@ -343,6 +362,7 @@ export function demoToBrowseProperty(d: DemoProperty) {
     type: d.type,
     listingType: d.listingType,
     featured: d.featured,
+    verified: d.verified,
     images: d.images.map((img) => ({ url: img.url })),
   }
 }

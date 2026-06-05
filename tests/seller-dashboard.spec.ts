@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { acceptCookies, loginAsSeller } from './helpers'
+
+test.describe('Seller dashboard', () => {
   test.beforeEach(async ({ page }) => {
     test.skip(!process.env.AUTH_SECRET && !process.env.NEXTAUTH_SECRET, 'Auth secrets required')
     try {
@@ -37,5 +39,17 @@ import { acceptCookies, loginAsSeller } from './helpers'
     await expect(page.getByText(/^price$/i)).toBeVisible()
     await expect(page.getByRole('button', { name: /for sale/i })).toBeVisible()
     await expect(page.getByRole('button', { name: /for rent/i })).toBeVisible()
+  })
+
+  test('manage listing shows photo upload section', async ({ page }) => {
+    await page.goto('/dashboard')
+    const manageLink = page.getByRole('link', { name: /manage listing/i }).first()
+    if (!(await manageLink.isVisible().catch(() => false))) {
+      test.skip(true, 'No listings — run npm run db:seed')
+    }
+    await manageLink.click()
+    await expect(page.getByRole('heading', { name: /property photos/i })).toBeVisible()
+    await expect(page.getByTestId('property-photo-upload')).toBeAttached()
+    await expect(page.getByRole('button', { name: /add photos/i })).toBeVisible()
   })
 })

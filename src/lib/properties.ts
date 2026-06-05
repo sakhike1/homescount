@@ -30,6 +30,7 @@ export type PropertyFilters = {
   address?: string
   minPrice?: number
   maxPrice?: number
+  minBedrooms?: number
   /** Public browse pages only show published listings */
   publishedOnly?: boolean
 }
@@ -65,6 +66,10 @@ function buildWhere(filters: PropertyFilters): Prisma.PropertyWhereInput {
       { location: { contains: q, mode: 'insensitive' } },
       { title: { contains: q, mode: 'insensitive' } },
     ]
+  }
+
+  if (filters.minBedrooms && filters.minBedrooms > 0) {
+    where.bedrooms = { gte: filters.minBedrooms }
   }
 
   const priceFilter: Prisma.FloatFilter = {}
@@ -138,6 +143,7 @@ function filtersCacheKey(filters: PropertyFilters): string {
     address: filters.address?.trim() ?? '',
     minPrice: filters.minPrice ?? null,
     maxPrice: filters.maxPrice ?? null,
+    minBedrooms: filters.minBedrooms ?? null,
   })
 }
 

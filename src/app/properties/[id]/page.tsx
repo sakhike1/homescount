@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
 import PropertyDetailView from '@/components/properties/PropertyDetailView'
+import ListingViewTracker from '@/components/properties/ListingViewTracker'
 import JsonLd from '@/components/seo/JsonLd'
 import {
   buildPageMetadata,
@@ -73,6 +74,7 @@ export default async function PropertyDetailPage({
 
   return (
     <>
+      <ListingViewTracker propertyId={p.id} isDemo={result.isDemo} />
       <JsonLd
         data={realEstateListingJsonLd({
           id: p.id,

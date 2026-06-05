@@ -49,9 +49,22 @@ model Property {
   featuredUntil DateTime?
   adPlan        AdPlan         @default(NONE)
   adPayments    AdPayment[]
-  inquiries     Inquiry[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  inquiries      Inquiry[]
+  listingViews   ListingView[]
+  verified       Boolean        @default(false)
+  verifiedAt     DateTime?
+  virtualTourUrl String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model ListingView {
+  id         String   @id @default(cuid())
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId String
+  viewedAt   DateTime @default(now())
+
+  @@index([propertyId, viewedAt])
 }
 
 model Inquiry {
@@ -158,4 +171,6 @@ enum ActivityType {
   LISTING_SUSPENDED
   LISTING_REMOVED
   LISTING_REPUBLISHED
+  LISTING_VERIFIED
+  LISTING_UNVERIFIED
 }

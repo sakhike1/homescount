@@ -53,6 +53,7 @@ export default async function PropertiesPage({
     minPrice?: string
     maxPrice?: string
     price?: string
+    minBedrooms?: string
   }>
 }) {
   const params = await searchParams
@@ -68,6 +69,7 @@ export default async function PropertiesPage({
       : params.price
         ? Number(params.price)
         : undefined,
+    minBedrooms: params.minBedrooms ? Number(params.minBedrooms) : undefined,
   }
 
   const filterKey = JSON.stringify({ type, ...params })

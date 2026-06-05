@@ -63,6 +63,10 @@ export async function PATCH(
         type: body.type ?? existing.type,
         listingType: body.listingType ?? existing.listingType,
         status: body.status ?? existing.status,
+        virtualTourUrl:
+          body.virtualTourUrl !== undefined
+            ? String(body.virtualTourUrl).trim() || null
+            : existing.virtualTourUrl,
       },
       include: { images: true },
     })

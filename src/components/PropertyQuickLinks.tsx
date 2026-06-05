@@ -6,9 +6,9 @@ import {
   BookOpen,
   Calculator,
   ChevronRight,
-  MapPin,
   MessageSquareText,
   Sparkles,
+  TrendingUp,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -34,16 +34,16 @@ const links: QuickLink[] = [
     icon: Calculator,
   },
   {
+    label: 'Valuation estimator',
+    description: 'Price range from comparables',
+    href: '/tools/valuation-estimator',
+    icon: TrendingUp,
+  },
+  {
     label: 'Property guides',
     description: 'Buy, sell & rent help',
     href: '/buy',
     icon: BookOpen,
-  },
-  {
-    label: 'Neighbourhoods',
-    description: 'Explore areas near you',
-    href: '/properties',
-    icon: MapPin,
   },
 ]
 
@@ -147,8 +147,8 @@ export default function PropertyQuickLinks() {
               </h3>
             </div>
             <p className="text-sm text-stone-600 max-w-md leading-relaxed lg:text-right">
-              Guides, area search, and seller tools — with more features launching soon
-              for buyers and agents.
+              Guides, calculators, and seller tools to help buyers and agents make
+              informed property decisions.
             </p>
           </div>
 

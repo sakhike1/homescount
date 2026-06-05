@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Bath, BedDouble, Car, MapPin, Maximize2 } from 'lucide-react'
 import SafeImage from '@/components/SafeImage'
+import VerifiedBadge from '@/components/badges/VerifiedBadge'
 import { formatPrice } from '@/lib/properties'
 
 type Props = {
@@ -19,6 +20,7 @@ type Props = {
   listingType: string
   imageUrl: string
   featured?: boolean
+  verified?: boolean
   isDemo?: boolean
 }
 
@@ -37,6 +39,7 @@ export default function PropertyListingCard({
   listingType,
   imageUrl,
   featured,
+  verified,
   isDemo,
 }: Props) {
   const areaLabel = suburb || location
@@ -73,6 +76,7 @@ export default function PropertyListingCard({
               Featured
             </span>
           )}
+          {verified && <VerifiedBadge />}
         </div>
       </div>
 

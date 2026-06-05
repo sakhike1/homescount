@@ -11,6 +11,7 @@ export default function ListingManageActions({
   status,
   sellerActive,
   featured,
+  verified,
 }: {
   propertyId: string
   title: string
@@ -18,6 +19,7 @@ export default function ListingManageActions({
   status: string
   sellerActive: boolean
   featured: boolean
+  verified: boolean
 }) {
   const router = useRouter()
   const [loading, setLoading] = useState<string | null>(null)
@@ -75,6 +77,15 @@ export default function ListingManageActions({
     await callApi('expire', `/api/admin/properties/${propertyId}/expire-ad`, 'POST')
   }
 
+  async function toggleVerified() {
+    const action = verified ? 'Remove verification from' : 'Verify'
+    if (!window.confirm(`${action} "${title}"?`)) return
+    const url = verified
+      ? `/api/admin/properties/${propertyId}/unverify`
+      : `/api/admin/properties/${propertyId}/verify`
+    await callApi('verify', url, 'POST')
+  }
+
   return (
     <div className="flex flex-col gap-1.5 min-w-[9rem]">
       {error && <p className="text-[10px] text-red-600 font-medium">{error}</p>}
@@ -118,6 +129,18 @@ export default function ListingManageActions({
           {loading === 'expire' ? '…' : 'End ad'}
         </button>
       )}
+      <button
+        type="button"
+        onClick={toggleVerified}
+        disabled={!!loading}
+        className={`rounded-lg border px-2.5 py-1.5 text-xs font-bold disabled:opacity-50 ${
+          verified
+            ? 'border-stone-200 bg-stone-50 text-stone-700 hover:bg-stone-100'
+            : 'border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-emerald-100'
+        }`}
+      >
+        {loading === 'verify' ? '…' : verified ? 'Unverify' : 'Verify listing'}
+      </button>
       <Link
         href={`/properties/${propertyId}`}
         target="_blank"

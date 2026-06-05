@@ -91,6 +91,8 @@ async function main() {
         published: true,
         publishedAt: new Date(),
         featured: i < 4,
+        verified: i < 6,
+        verifiedAt: i < 6 ? new Date() : null,
         sellerId: seller.id,
         images: {
           create: [

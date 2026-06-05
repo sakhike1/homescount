@@ -11,7 +11,9 @@ import {
   UserRound,
 } from 'lucide-react'
 import SafeImage from '@/components/SafeImage'
+import VerifiedBadge from '@/components/badges/VerifiedBadge'
 import { formatPrice } from '@/lib/properties'
+import { getMatterportEmbedUrl } from '@/lib/virtual-tour'
 import PropertyContactForm from '@/components/properties/PropertyContactForm'
 import PropertyJourneyGuide from '@/components/properties/PropertyJourneyGuide'
 
@@ -30,6 +32,8 @@ type Property = {
   size: number
   type: string
   listingType: string
+  verified?: boolean
+  virtualTourUrl?: string | null
   images: { id: string; url: string }[]
   seller: { name: string; email: string }
 }
@@ -49,6 +53,9 @@ export default function PropertyDetailView({
   const isRent = property.listingType === 'RENT'
   const backHref = isRent ? '/properties?type=rent' : '/properties?type=buy'
   const backLabel = isRent ? 'Back to rentals' : 'Back to homes for sale'
+  const tourEmbedUrl = property.virtualTourUrl
+    ? getMatterportEmbedUrl(property.virtualTourUrl)
+    : null
 
   return (
     <main className="min-h-screen bg-[#faf9f7]">
@@ -130,6 +137,7 @@ export default function PropertyDetailView({
                 <span className="rounded-full bg-stone-100 px-3 py-1 text-xs font-bold text-stone-700">
                   {property.type.replace('_', ' ')}
                 </span>
+                {property.verified && <VerifiedBadge size="md" />}
               </div>
 
               <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-stone-900 tracking-tight">
@@ -167,6 +175,21 @@ export default function PropertyDetailView({
                   {property.description}
                 </p>
               </div>
+
+              {tourEmbedUrl && (
+                <div className="mt-8">
+                  <h2 className="text-lg font-bold text-stone-900">Virtual tour</h2>
+                  <div className="mt-4 relative aspect-video rounded-2xl overflow-hidden ring-1 ring-stone-200 bg-stone-100">
+                    <iframe
+                      src={tourEmbedUrl}
+                      title={`Virtual tour of ${property.title}`}
+                      className="absolute inset-0 h-full w-full border-0"
+                      allow="fullscreen; vr"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
 
             <PropertyJourneyGuide listingType={property.listingType} />
@@ -187,8 +210,10 @@ export default function PropertyDetailView({
                   </div>
                 </div>
                 <p className="mt-4 text-sm text-stone-600">
-                  Verified Homescout seller. Reach out to arrange a viewing or ask
-                  questions about this {property.listingType === 'RENT' ? 'rental' : 'home'}.
+                  {property.verified
+                    ? 'Admin-verified Homescout listing. Reach out to arrange a viewing or ask questions about this '
+                    : 'Homescout seller. Reach out to arrange a viewing or ask questions about this '}
+                  {property.listingType === 'RENT' ? 'rental' : 'home'}.
                 </p>
                 <a
                   href={`mailto:${property.seller.email}?subject=${encodeURIComponent(`Enquiry: ${property.title}`)}`}

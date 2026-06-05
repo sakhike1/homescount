@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
+import SafeImage from '@/components/SafeImage'
 import { useRouter } from 'next/navigation'
 import { ImagePlus, Trash2 } from 'lucide-react'
 import { formButtonPrimaryClass, formErrorClass } from '@/lib/form-styles'
@@ -75,11 +75,12 @@ export default function ImageUploader({
           {uploading ? 'Uploading...' : 'Add photos'}
           <input
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/webp,image/*"
             multiple
             className="hidden"
             disabled={uploading}
             onChange={handleUpload}
+            data-testid="property-photo-upload"
           />
         </label>
       </div>
@@ -101,9 +102,9 @@ export default function ImageUploader({
               key={img.id}
               className="group relative aspect-[4/3] overflow-hidden rounded-xl bg-gray-100"
             >
-              <Image
+              <SafeImage
                 src={img.url}
-                alt=""
+                alt="Property photo"
                 fill
                 className="object-cover"
                 sizes="200px"

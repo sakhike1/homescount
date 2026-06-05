@@ -38,6 +38,7 @@ export async function POST(req: Request) {
       size,
       type,
       listingType,
+      virtualTourUrl,
     } = body
 
     if (
@@ -75,6 +76,7 @@ export async function POST(req: Request) {
         listingType,
         published: false,
         sellerId: session.user.id,
+        virtualTourUrl: virtualTourUrl?.trim() || null,
       },
       include: { images: true },
     })

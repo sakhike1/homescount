@@ -112,6 +112,8 @@ const browseLinks = [
   { label: 'Rentals', href: '/rent' },
   { label: 'List your property', href: '/sell' },
   { label: 'Bond calculator', href: '/tools/bond-calculator' },
+  { label: 'Valuation estimator', href: '/tools/valuation-estimator' },
+  { label: 'Property news', href: '/news' },
 ] as const
 
 const companyLinks = [

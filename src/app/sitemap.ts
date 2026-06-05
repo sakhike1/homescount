@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import prisma from '@/lib/prisma'
 import { getSiteUrl } from '@/lib/seo'
+import { propertyNewsArticles } from '@/lib/property-news-articles'
 
 const staticPaths = [
   { path: '', priority: 1, changeFrequency: 'daily' as const },
@@ -8,6 +9,8 @@ const staticPaths = [
   { path: '/rent', priority: 0.9, changeFrequency: 'daily' as const },
   { path: '/sell', priority: 0.85, changeFrequency: 'weekly' as const },
   { path: '/tools/bond-calculator', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/tools/valuation-estimator', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/news', priority: 0.75, changeFrequency: 'weekly' as const },
   // Admin is noindex — omitted from sitemap
   { path: '/properties', priority: 0.95, changeFrequency: 'daily' as const },
   { path: '/properties?type=buy', priority: 0.85, changeFrequency: 'daily' as const },
@@ -45,6 +48,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   } catch {
     // Build-time or missing DATABASE_URL — static URLs only
+  }
+
+  for (const article of propertyNewsArticles) {
+    entries.push({
+      url: `${siteUrl}/news/${article.slug}`,
+      lastModified: new Date(article.publishedAt),
+      changeFrequency: 'monthly',
+      priority: 0.65,
+    })
   }
 
   return entries

@@ -66,6 +66,7 @@ export default async function PropertiesBrowseResults({ filters, type }: Props) 
               listingType={p.listingType}
               imageUrl={getPropertyImageUrl(p.images, i)}
               featured={p.featured}
+              verified={p.verified}
               isDemo={isDemo}
             />
           ))}

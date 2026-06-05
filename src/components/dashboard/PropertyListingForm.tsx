@@ -39,6 +39,7 @@ export type ListingFormValues = {
   size: string
   type: string
   listingType: string
+  virtualTourUrl: string
 }
 
 const defaultValues: ListingFormValues = {
@@ -55,6 +56,7 @@ const defaultValues: ListingFormValues = {
   size: '',
   type: 'HOUSE',
   listingType: 'SALE',
+  virtualTourUrl: '',
 }
 
 type Props = {
@@ -102,7 +104,7 @@ export default function PropertyListingForm({
         return
       }
 
-      router.push(`/dashboard/listings/${data.id}`)
+      router.push(`/dashboard/listings/${data.id}#property-photos`)
       router.refresh()
     } catch {
       setError('Something went wrong')
@@ -253,14 +255,16 @@ export default function PropertyListingForm({
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Size (m²)
+            Size (m²) <span className="text-red-500">*</span>
           </label>
           <input
+            required
             type="number"
-            min="0"
+            min="1"
             value={values.size}
             onChange={(e) => update('size', e.target.value)}
             className={formInputClass}
+            placeholder="180"
           />
         </div>
 
@@ -302,6 +306,21 @@ export default function PropertyListingForm({
             className={formInputClass}
           />
         </div>
+
+        <div className="sm:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Virtual tour URL <span className="font-normal text-gray-400">(optional)</span>
+          </label>
+          <input
+            value={values.virtualTourUrl}
+            onChange={(e) => update('virtualTourUrl', e.target.value)}
+            className={formInputClass}
+            placeholder="https://my.matterport.com/show/?m=..."
+          />
+          <p className="mt-1 text-xs text-gray-500">
+            Paste a Matterport link to show a 360° tour on your listing page.
+          </p>
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-3">
@@ -313,7 +332,7 @@ export default function PropertyListingForm({
           {loading
             ? 'Saving...'
             : mode === 'create'
-              ? 'Create listing'
+              ? 'Save & add photos'
               : 'Save changes'}
         </button>
         <Link

@@ -6,7 +6,9 @@ import ImageUploader from '@/components/dashboard/ImageUploader'
 import PromotePanel from '@/components/dashboard/PromotePanel'
 import PublishListingPanel from '@/components/dashboard/PublishListingPanel'
 import DeleteListingButton from '@/components/dashboard/DeleteListingButton'
+import ListingAnalyticsPanel from '@/components/dashboard/ListingAnalyticsPanel'
 import { canPublishListing } from '@/lib/publish'
+import { getListingAnalytics } from '@/lib/listing-analytics'
 
 export default async function EditListingPage({
   params,
@@ -24,6 +26,7 @@ export default async function EditListingPage({
   if (!property) notFound()
 
   const publishCheck = canPublishListing(property)
+  const analytics = await getListingAnalytics(property.id, session.user.id)
 
   return (
     <div className="space-y-8">
@@ -62,13 +65,25 @@ export default async function EditListingPage({
             size: String(property.size),
             type: property.type,
             listingType: property.listingType,
+            virtualTourUrl: property.virtualTourUrl ?? '',
           }}
         />
       </div>
 
-      <div className="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8">
+      <div
+        id="property-photos"
+        className="scroll-mt-24 rounded-2xl border border-gray-200 bg-white p-6 sm:p-8"
+      >
+        {property.images.length === 0 && (
+          <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            <strong>Step 2 — Add photos.</strong> Upload at least one image before
+            you can publish this listing to the properties page.
+          </div>
+        )}
         <ImageUploader propertyId={property.id} images={property.images} />
       </div>
+
+      {analytics && <ListingAnalyticsPanel analytics={analytics} />}
 
       <PromotePanel
         propertyId={property.id}
