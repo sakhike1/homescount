@@ -1,5 +1,7 @@
-import PropertyServices from '@/components/PropertyServices'
-import PropertyQuickLinks from '@/components/PropertyQuickLinks'
+import dynamic from 'next/dynamic'
+
+const PropertyServices = dynamic(() => import('@/components/PropertyServices'))
+const PropertyQuickLinks = dynamic(() => import('@/components/PropertyQuickLinks'))
 import { BadgeCheck, Building2, MapPinned, type LucideIcon } from 'lucide-react'
 import { formatStatCount } from '@/lib/format-stats'
 

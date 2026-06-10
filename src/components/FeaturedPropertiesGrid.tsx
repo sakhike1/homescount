@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight, BedDouble, MapPin } from 'lucide-react'
 import SafeImage from '@/components/SafeImage'
+import { formatPrice } from '@/lib/format-price'
 
 export type GridProperty = {
   id: string
@@ -14,11 +15,6 @@ export type GridProperty = {
   bedrooms: number
   listingType: string
   imageUrl: string | null
-}
-
-function formatPrice(price: number, listingType: string) {
-  const formatted = price.toLocaleString('en-ZA')
-  return listingType === 'RENT' ? `R ${formatted}/mo` : `R ${formatted}`
 }
 
 export default function FeaturedPropertiesGrid({

@@ -16,7 +16,7 @@ export function resolveDatabaseUrl(raw = process.env.DATABASE_URL): string | und
       url.hostname = url.hostname.replace(/^([^.]+)\.(c-\d+\.)/, '$1-pooler.$2')
     }
     if (!url.searchParams.has('connect_timeout')) {
-      url.searchParams.set('connect_timeout', '30')
+      url.searchParams.set('connect_timeout', '10')
     }
     return url.toString()
   } catch {
@@ -29,7 +29,7 @@ function getPool() {
     const pool = new Pool({
       connectionString: resolveDatabaseUrl(),
       max: 10,
-      connectionTimeoutMillis: 30_000,
+      connectionTimeoutMillis: 10_000,
       idleTimeoutMillis: 20_000,
     })
     pool.on('error', (err) => {

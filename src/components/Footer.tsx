@@ -79,7 +79,7 @@ function CityList({ cities }: { cities: string[] }) {
         <li key={city}>
           <Link
             href={cityHref(city)}
-            className="text-sm text-white/90 transition hover:text-white"
+            className="text-sm text-white/80 transition-colors duration-200 hover:text-white"
           >
             {city}
           </Link>
@@ -99,7 +99,7 @@ function CityColumn({
   return (
     <div className="min-w-0">
       {title && (
-        <h3 className="mb-3 text-sm font-bold leading-snug text-white">{title}</h3>
+        <h3 className="mb-4 text-sm font-semibold leading-snug text-white">{title}</h3>
       )}
       <CityList cities={cities} />
     </div>
@@ -146,15 +146,15 @@ function FooterLink({
 }) {
   if (comingSoon) {
     return (
-      <span className="text-sm text-stone-500 cursor-default" title="Coming soon">
+      <span className="text-sm text-white/30 cursor-default" title="Coming soon">
         {label}
       </span>
     )
   }
 
   const className = highlight
-    ? 'text-sm font-medium text-amber-600 transition hover:text-amber-700'
-    : 'text-sm text-stone-600 transition hover:text-stone-900'
+    ? 'text-sm font-medium text-amber-400 transition-colors duration-200 hover:text-amber-300'
+    : 'text-sm text-white/60 transition-colors duration-200 hover:text-white'
 
   const isExternal = href?.startsWith('mailto:') || href?.startsWith('http')
 
@@ -182,7 +182,7 @@ function LinkColumn({
 }) {
   return (
     <div className="min-w-0">
-      <h3 className="text-base font-bold text-stone-900">{title}</h3>
+      <h3 className="text-sm font-semibold text-white tracking-wide">{title}</h3>
       <ul className="mt-5 space-y-3">{children}</ul>
     </div>
   )
@@ -193,15 +193,15 @@ function FooterWordmark() {
     <Link
       href="/"
       aria-label="Homescout home"
-      className="mt-14 block select-none sm:mt-20"
+      className="mt-16 block select-none sm:mt-20"
     >
       <span
         className="block font-black leading-[0.88] tracking-tighter"
-        style={{ fontSize: 'clamp(3.5rem, 16vw, 10rem)' }}
+        style={{ fontSize: 'clamp(3rem, 14vw, 8rem)' }}
       >
-        <span className="text-stone-900">Homes</span>
-        <span className="text-amber-500">scout</span>
-        <sup className="ml-1 align-super text-[0.12em] font-bold text-stone-400">®</sup>
+        <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Home</span>
+        <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">scout</span>
+        <sup className="ml-1 align-super text-[0.12em] font-bold text-white/30">®</sup>
       </span>
     </Link>
   )
@@ -215,7 +215,7 @@ export default function Footer() {
   return (
     <footer className="mt-auto w-full">
       {/* City links — amber band */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800 text-white">
+      <section className="relative w-full overflow-hidden bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 text-white">
         <div
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_20%_0%,rgba(255,255,255,0.22),transparent_55%)]"
           aria-hidden
@@ -224,8 +224,8 @@ export default function Footer() {
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_100%_100%,rgba(253,230,138,0.25),transparent_50%)]"
           aria-hidden
         />
-        <div className="relative mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <p className="mb-8 text-xs font-bold uppercase tracking-[0.2em] text-amber-50/90">
+        <div className="relative mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <p className="mb-8 text-xs font-bold uppercase tracking-[0.2em] text-white/80">
             Properties by area
           </p>
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-8">
@@ -238,9 +238,13 @@ export default function Footer() {
         </div>
       </section>
 
-      {/* Main footer — light gray */}
-      <section className="w-full bg-stone-100 text-stone-800">
-        <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+      {/* Main footer — dark premium */}
+      <section className="relative w-full bg-stone-950 text-white overflow-hidden">
+        {/* Subtle gradient orbs */}
+        <div className="pointer-events-none absolute -top-40 -left-40 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl" aria-hidden />
+        <div className="pointer-events-none absolute -bottom-40 -right-40 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl" aria-hidden />
+        
+        <div className="relative mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
             <NewsletterFooterForm />
 
@@ -273,20 +277,17 @@ export default function Footer() {
 
           <FooterWordmark />
 
-          <p className="mt-10 border-t border-stone-200 pt-6 text-center text-xs text-stone-500">
-            <span>
+          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/[0.08] pt-8 sm:flex-row">
+            <p className="text-xs text-white/40">
               Copyright © {new Date().getFullYear()} {LEGAL.siteName}. All rights reserved.
-            </span>
-            <span className="mx-2 hidden sm:inline" aria-hidden>
-              ·
-            </span>
+            </p>
             <Link
               href="/admin/login"
-              className="mt-2 block transition hover:text-stone-800 sm:mt-0 sm:inline"
+              className="text-xs text-white/30 transition-colors duration-200 hover:text-white/60"
             >
               Admin access
             </Link>
-          </p>
+          </div>
         </div>
       </section>
     </footer>

@@ -9,6 +9,7 @@ import {
   filterDemoProperties,
   getDemoPropertyById,
 } from '@/lib/demo-properties'
+export { formatPrice, formatZaNumber } from '@/lib/format-price'
 
 export function parseListingTypeFromParam(
   type?: string
@@ -16,11 +17,6 @@ export function parseListingTypeFromParam(
   if (type === 'buy') return 'SALE'
   if (type === 'rent') return 'RENT'
   return undefined
-}
-
-export function formatPrice(price: number, listingType: string) {
-  const formatted = price.toLocaleString('en-ZA')
-  return listingType === 'RENT' ? `R ${formatted}/mo` : `R ${formatted}`
 }
 
 export type PropertyFilters = {
@@ -149,8 +145,13 @@ function filtersCacheKey(filters: PropertyFilters): string {
 
 const getBrowseListingsFromDb = unstable_cache(
   async (key: string) => {
-    const filters = JSON.parse(key) as PropertyFilters
-    return getProperties(filters)
+    try {
+      const filters = JSON.parse(key) as PropertyFilters
+      return await getProperties(filters)
+    } catch (err) {
+      console.error('[browse-listings] db unavailable', err)
+      return null
+    }
   },
   ['browse-listings'],
   { revalidate: 30, tags: ['properties'] }
@@ -160,8 +161,14 @@ export async function getBrowseListings(filters: PropertyFilters = {}) {
   const useReal = await hasPublishedListings()
 
   if (useReal) {
-    const properties = await getBrowseListingsFromDb(filtersCacheKey(filters))
-    return { properties, isDemo: false as const }
+    try {
+      const properties = await getBrowseListingsFromDb(filtersCacheKey(filters))
+      if (properties) {
+        return { properties, isDemo: false as const }
+      }
+    } catch (err) {
+      console.error('[browse-listings] fallback to demo', err)
+    }
   }
 
   const demos = filterDemoProperties(filters).map(demoToBrowseProperty)
@@ -183,17 +190,22 @@ export async function getPublicPropertyById(id: string) {
 
 const getFeaturedListingsFromDb = unstable_cache(
   async (limit: number) => {
-    const properties = await getProperties({}, limit)
-    return properties.map((p, i) => ({
-      id: p.id,
-      title: p.title,
-      price: p.price,
-      city: p.city,
-      province: p.province,
-      bedrooms: p.bedrooms,
-      listingType: p.listingType,
-      imageUrl: getPropertyImageUrl(p.images, i),
-    }))
+    try {
+      const properties = await getProperties({}, limit)
+      return properties.map((p, i) => ({
+        id: p.id,
+        title: p.title,
+        price: p.price,
+        city: p.city,
+        province: p.province,
+        bedrooms: p.bedrooms,
+        listingType: p.listingType,
+        imageUrl: getPropertyImageUrl(p.images, i),
+      }))
+    } catch (err) {
+      console.error('[featured-listings] db unavailable', err)
+      return null
+    }
   },
   ['featured-listings'],
   { revalidate: 30, tags: ['properties'] }
@@ -203,8 +215,14 @@ export async function getFeaturedListings(limit = 6) {
   const useReal = await hasPublishedListings()
 
   if (useReal) {
-    const items = await getFeaturedListingsFromDb(limit)
-    return { isDemo: false as const, items }
+    try {
+      const items = await getFeaturedListingsFromDb(limit)
+      if (items) {
+        return { isDemo: false as const, items }
+      }
+    } catch (err) {
+      console.error('[featured-listings] fallback to demo', err)
+    }
   }
 
   const demos = filterDemoProperties().slice(0, limit)

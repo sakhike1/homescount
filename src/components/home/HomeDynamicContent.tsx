@@ -1,6 +1,10 @@
+import dynamic from 'next/dynamic'
 import HomePlatform from '@/components/HomePlatform'
-import FeaturedPropertiesGrid from '@/components/FeaturedPropertiesGrid'
 import PropertyNews from '@/components/PropertyNews'
+
+const FeaturedPropertiesGrid = dynamic(
+  () => import('@/components/FeaturedPropertiesGrid')
+)
 import EstateAgentCta from '@/components/EstateAgentCta'
 import { getFeaturedListings, getPlatformStats } from '@/lib/properties'
 import { localImageCacheBust } from '@/lib/local-image-url'

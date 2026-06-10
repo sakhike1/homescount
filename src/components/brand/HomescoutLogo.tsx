@@ -73,7 +73,7 @@ export default function HomescoutLogo({
         <span
           className={`hidden sm:inline font-bold tracking-tight truncate ${wordmarkSize} ${colors.homes}`}
         >
-          Homes<span className={colors.scout}>scout</span>
+          Home<span className={colors.scout}>scout</span>
         </span>
       )}
       {suffix}
