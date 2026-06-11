@@ -35,12 +35,12 @@ export default function FeaturedPropertiesGrid({
               Featured listings
             </p>
             <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-stone-900 text-section-title">
-              Homes across South Africa
+              Homes for sale across South Africa
             </h2>
             <p className="mt-2 text-stone-600 max-w-xl">
               {isDemo
-                ? 'Sample homes for sale and rent across South Africa — real seller listings will replace these once published.'
-                : 'Browse verified properties for sale and rent — from city apartments to family homes in every province.'}
+                ? 'Sample homes for sale — each listing includes bond calculator, property features, and seller contact details.'
+                : 'Featured properties for sale — open any listing for bond costs, full features, and direct seller contact.'}
             </p>
           </div>
           <Link

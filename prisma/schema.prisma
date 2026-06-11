@@ -13,6 +13,10 @@ model User {
   password        String
   name            String
   phone           String?
+  companyName     String?
+  companyAddress  String?
+  companyLogoUrl  String?
+  showPhone       Boolean        @default(true)
   role            Role           @default(BUYER)
   active          Boolean        @default(true)
   suspendedAt     DateTime?
@@ -54,8 +58,24 @@ model Property {
   verified       Boolean        @default(false)
   verifiedAt     DateTime?
   virtualTourUrl String?
+  features       Json           @default("{}")
+  qualityScore   Int            @default(0)
+  reports        ListingReport[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
+}
+
+model ListingReport {
+  id            String   @id @default(cuid())
+  property      Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId    String
+  reason        String
+  details       String
+  reporterName  String?
+  reporterEmail String?
+  createdAt     DateTime @default(now())
+
+  @@index([propertyId, createdAt])
 }
 
 model ListingView {

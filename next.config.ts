@@ -4,6 +4,13 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
+  /** Dev-only: webpack pack cache can exhaust RAM on Windows (Array buffer allocation failed). */
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.cache = false
+    }
+    return config
+  },
   async headers() {
     if (process.env.NODE_ENV !== 'development') return []
     return [

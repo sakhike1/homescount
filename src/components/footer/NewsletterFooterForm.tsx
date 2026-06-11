@@ -58,9 +58,9 @@ export default function NewsletterFooterForm() {
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 shadow-lg shadow-amber-500/20">
           <Mail className="h-5 w-5 text-white" aria-hidden />
         </div>
-        <h3 className="text-lg font-semibold text-white">Stay in the loop</h3>
+        <h3 className="text-lg font-semibold text-slate-100">Stay in the loop</h3>
       </div>
-      <p className="max-w-md text-sm leading-relaxed text-white/50">
+      <p className="max-w-md text-sm leading-relaxed text-slate-400">
         Join our newsletter to stay up to date on property news, market updates, and
         buying advice across South Africa.
       </p>
@@ -78,7 +78,7 @@ export default function NewsletterFooterForm() {
               required
               placeholder="Enter your email"
               disabled={status === 'loading'}
-              className="w-full rounded-xl border border-white/[0.1] bg-white/[0.05] px-4 py-3.5 text-sm text-white placeholder:text-white/40 outline-none transition-all duration-300 focus:border-amber-500/50 focus:bg-white/[0.08] focus:ring-2 focus:ring-amber-500/20 disabled:opacity-60"
+              className="w-full rounded-xl border border-slate-600/50 bg-slate-800/50 px-4 py-3.5 text-sm text-slate-100 placeholder:text-slate-500 outline-none transition-all duration-300 focus:border-amber-500/50 focus:bg-slate-800/80 focus:ring-2 focus:ring-amber-500/20 disabled:opacity-60"
             />
           </div>
           <button
@@ -112,8 +112,8 @@ export default function NewsletterFooterForm() {
         <p className="mt-4 text-sm font-medium text-red-400">{errorMessage}</p>
       )}
       
-      <div className="mt-10 pt-8 border-t border-white/[0.08]">
-        <p className="text-xs text-white/40 mb-4">Follow us</p>
+      <div className="mt-10 pt-8 border-t border-slate-700/60">
+        <p className="text-xs text-slate-500 mb-4">Follow us</p>
         <FooterSocialLinks tone="dark" />
       </div>
     </div>

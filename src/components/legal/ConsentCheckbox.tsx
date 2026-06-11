@@ -20,7 +20,7 @@ export default function ConsentCheckbox({
       htmlFor={id}
       className={
         isDark
-          ? 'flex gap-3 cursor-pointer rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-xs text-white/50 transition-colors duration-200 hover:border-white/[0.12] hover:bg-white/[0.05] sm:text-sm'
+          ? 'flex gap-3 cursor-pointer rounded-xl border border-slate-600/40 bg-slate-800/30 px-4 py-3 text-xs text-slate-400 transition-colors duration-200 hover:border-slate-500/50 hover:bg-slate-800/50 sm:text-sm'
           : 'flex gap-3 cursor-pointer rounded-xl border border-gray-200/60 bg-stone-50/50 px-4 py-3 text-xs sm:text-sm text-stone-600'
       }
     >
@@ -32,7 +32,7 @@ export default function ConsentCheckbox({
         required
         className={
           isDark
-            ? 'mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-white/5 text-amber-500 focus:ring-amber-500/30 focus:ring-offset-0 focus:ring-offset-transparent'
+            ? 'mt-0.5 h-4 w-4 shrink-0 rounded border-slate-500/50 bg-slate-700/50 text-amber-500 focus:ring-amber-500/30 focus:ring-offset-0 focus:ring-offset-transparent'
             : 'mt-0.5 h-4 w-4 shrink-0 rounded border-gray-200 text-amber-600 focus:ring-gray-200/80'
         }
       />

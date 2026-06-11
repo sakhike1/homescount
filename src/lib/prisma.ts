@@ -16,7 +16,13 @@ export function resolveDatabaseUrl(raw = process.env.DATABASE_URL): string | und
       url.hostname = url.hostname.replace(/^([^.]+)\.(c-\d+\.)/, '$1-pooler.$2')
     }
     if (!url.searchParams.has('connect_timeout')) {
-      url.searchParams.set('connect_timeout', '10')
+      url.searchParams.set('connect_timeout', '5')
+    }
+    if (!url.searchParams.has('pool_timeout')) {
+      url.searchParams.set('pool_timeout', '5')
+    }
+    if (!url.searchParams.has('sslmode')) {
+      url.searchParams.set('sslmode', 'require')
     }
     return url.toString()
   } catch {
@@ -29,7 +35,7 @@ function getPool() {
     const pool = new Pool({
       connectionString: resolveDatabaseUrl(),
       max: 10,
-      connectionTimeoutMillis: 10_000,
+      connectionTimeoutMillis: 5_000,
       idleTimeoutMillis: 20_000,
     })
     pool.on('error', (err) => {

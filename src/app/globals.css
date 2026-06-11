@@ -53,6 +53,28 @@ body {
   }
 }
 
+@keyframes imageShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.image-shimmer {
+  background: linear-gradient(
+    90deg,
+    #e7e5e4 0%,
+    #f5f5f4 35%,
+    #ffffff 50%,
+    #f5f5f4 65%,
+    #e7e5e4 100%
+  );
+  background-size: 200% 100%;
+  animation: imageShimmer 1.35s ease-in-out infinite;
+}
+
 .platform-mesh {
   background-image:
     radial-gradient(at 40% 20%, rgba(245, 158, 11, 0.08) 0px, transparent 50%),

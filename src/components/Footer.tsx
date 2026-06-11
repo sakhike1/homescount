@@ -146,7 +146,7 @@ function FooterLink({
 }) {
   if (comingSoon) {
     return (
-      <span className="text-sm text-white/30 cursor-default" title="Coming soon">
+      <span className="text-sm text-slate-500 cursor-default" title="Coming soon">
         {label}
       </span>
     )
@@ -154,7 +154,7 @@ function FooterLink({
 
   const className = highlight
     ? 'text-sm font-medium text-amber-400 transition-colors duration-200 hover:text-amber-300'
-    : 'text-sm text-white/60 transition-colors duration-200 hover:text-white'
+    : 'text-sm text-slate-400 transition-colors duration-200 hover:text-slate-100'
 
   const isExternal = href?.startsWith('mailto:') || href?.startsWith('http')
 
@@ -182,7 +182,7 @@ function LinkColumn({
 }) {
   return (
     <div className="min-w-0">
-      <h3 className="text-sm font-semibold text-white tracking-wide">{title}</h3>
+      <h3 className="text-sm font-semibold text-slate-100 tracking-wide">{title}</h3>
       <ul className="mt-5 space-y-3">{children}</ul>
     </div>
   )
@@ -199,9 +199,9 @@ function FooterWordmark() {
         className="block font-black leading-[0.88] tracking-tighter"
         style={{ fontSize: 'clamp(3rem, 14vw, 8rem)' }}
       >
-        <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Home</span>
+        <span className="bg-gradient-to-r from-slate-100 to-slate-400 bg-clip-text text-transparent">Home</span>
         <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">scout</span>
-        <sup className="ml-1 align-super text-[0.12em] font-bold text-white/30">®</sup>
+        <sup className="ml-1 align-super text-[0.12em] font-bold text-slate-500">®</sup>
       </span>
     </Link>
   )
@@ -238,11 +238,14 @@ export default function Footer() {
         </div>
       </section>
 
-      {/* Main footer — dark premium */}
-      <section className="relative w-full bg-stone-950 text-white overflow-hidden">
-        {/* Subtle gradient orbs */}
-        <div className="pointer-events-none absolute -top-40 -left-40 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl" aria-hidden />
-        <div className="pointer-events-none absolute -bottom-40 -right-40 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl" aria-hidden />
+      {/* Main footer — slate blue-gray */}
+      <section className="relative w-full overflow-hidden bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950 text-slate-100">
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent"
+          aria-hidden
+        />
+        <div className="pointer-events-none absolute -top-32 -left-32 h-72 w-72 rounded-full bg-sky-500/10 blur-3xl" aria-hidden />
+        <div className="pointer-events-none absolute -bottom-32 -right-32 h-72 w-72 rounded-full bg-amber-500/8 blur-3xl" aria-hidden />
         
         <div className="relative mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
@@ -277,13 +280,13 @@ export default function Footer() {
 
           <FooterWordmark />
 
-          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/[0.08] pt-8 sm:flex-row">
-            <p className="text-xs text-white/40">
+          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-700/60 pt-8 sm:flex-row">
+            <p className="text-xs text-slate-500">
               Copyright © {new Date().getFullYear()} {LEGAL.siteName}. All rights reserved.
             </p>
             <Link
               href="/admin/login"
-              className="text-xs text-white/30 transition-colors duration-200 hover:text-white/60"
+              className="text-xs text-slate-500 transition-colors duration-200 hover:text-slate-300"
             >
               Admin access
             </Link>

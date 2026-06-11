@@ -8,6 +8,7 @@ import {
   getSellerSession,
   unauthorized,
 } from '@/lib/api-auth'
+import { refreshPropertyQualityScore } from '@/lib/property-quality-sync'
 
 export async function POST(
   req: Request,
@@ -65,6 +66,7 @@ export async function POST(
       )
     }
 
+    await refreshPropertyQualityScore(id)
     return NextResponse.json(created, { status: 201 })
   } catch (error) {
     console.error('Image upload error:', error)
@@ -100,5 +102,6 @@ export async function DELETE(
   if (!image) return forbidden()
 
   await prisma.image.delete({ where: { id: imageId } })
+  await refreshPropertyQualityScore(id)
   return NextResponse.json({ success: true })
 }

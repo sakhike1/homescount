@@ -5,6 +5,8 @@ import {
   getSellerSession,
   unauthorized,
 } from '@/lib/api-auth'
+import { computeListingQualityScore } from '@/lib/listing-quality'
+import { parsePropertyFeatures } from '@/lib/property-features'
 
 async function getOwnedProperty(id: string, sellerId: string) {
   return prisma.property.findFirst({
@@ -43,30 +45,44 @@ export async function PATCH(
 
   try {
     const body = await req.json()
+    const parsedFeatures =
+      body.features !== undefined
+        ? parsePropertyFeatures(body.features)
+        : parsePropertyFeatures(existing.features)
+
+    const next = {
+      title: body.title ?? existing.title,
+      description: body.description ?? existing.description,
+      price: body.price != null ? Number(body.price) : existing.price,
+      location: body.location ?? existing.location,
+      suburb: body.suburb ?? existing.suburb,
+      city: body.city ?? existing.city,
+      province: body.province ?? existing.province,
+      bedrooms:
+        body.bedrooms != null ? Number(body.bedrooms) : existing.bedrooms,
+      bathrooms:
+        body.bathrooms != null ? Number(body.bathrooms) : existing.bathrooms,
+      parkings:
+        body.parkings != null ? Number(body.parkings) : existing.parkings,
+      size: body.size != null ? Number(body.size) : existing.size,
+      type: body.type ?? existing.type,
+      listingType: body.listingType ?? existing.listingType,
+      status: body.status ?? existing.status,
+      virtualTourUrl:
+        body.virtualTourUrl !== undefined
+          ? String(body.virtualTourUrl).trim() || null
+          : existing.virtualTourUrl,
+      features: parsedFeatures,
+      images: existing.images,
+    }
+
+    const { images: _images, ...propertyData } = next
+
     const property = await prisma.property.update({
       where: { id },
       data: {
-        title: body.title ?? existing.title,
-        description: body.description ?? existing.description,
-        price: body.price != null ? Number(body.price) : existing.price,
-        location: body.location ?? existing.location,
-        suburb: body.suburb ?? existing.suburb,
-        city: body.city ?? existing.city,
-        province: body.province ?? existing.province,
-        bedrooms:
-          body.bedrooms != null ? Number(body.bedrooms) : existing.bedrooms,
-        bathrooms:
-          body.bathrooms != null ? Number(body.bathrooms) : existing.bathrooms,
-        parkings:
-          body.parkings != null ? Number(body.parkings) : existing.parkings,
-        size: body.size != null ? Number(body.size) : existing.size,
-        type: body.type ?? existing.type,
-        listingType: body.listingType ?? existing.listingType,
-        status: body.status ?? existing.status,
-        virtualTourUrl:
-          body.virtualTourUrl !== undefined
-            ? String(body.virtualTourUrl).trim() || null
-            : existing.virtualTourUrl,
+        ...propertyData,
+        qualityScore: computeListingQualityScore(next),
       },
       include: { images: true },
     })

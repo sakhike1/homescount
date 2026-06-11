@@ -1,5 +1,7 @@
 import { propertyImageAt } from '@/lib/property-images'
 import type { ListingType } from '@/generated/prisma/client'
+import { computeListingQualityScore } from '@/lib/listing-quality'
+import type { PropertyFeatures } from '@/lib/property-features'
 
 export type DemoPropertyFilters = {
   listingType?: ListingType
@@ -30,8 +32,170 @@ export type DemoProperty = {
   featured: boolean
   verified: boolean
   virtualTourUrl?: string | null
+  createdAt?: string
+  features?: PropertyFeatures
+  qualityScore?: number
   images: { id: string; url: string }[]
-  seller: { name: string; email: string }
+  seller: {
+    name: string
+    email: string
+    phone?: string | null
+    companyName?: string | null
+    companyAddress?: string | null
+    companyLogoUrl?: string | null
+    showPhone?: boolean
+  }
+}
+
+function demoImages(idPrefix: string, count: number, startIndex = 0) {
+  return Array.from({ length: count }, (_, i) => ({
+    id: `${idPrefix}-${i}`,
+    url: propertyImageAt(startIndex + i),
+  }))
+}
+
+function saleDemoImageStart(id: string): number {
+  const n = Number.parseInt(id.replace('demo-sale-', ''), 10)
+  return Number.isNaN(n) ? 0 : n - 1
+}
+
+const DEMO_SALE_SELLERS: Record<string, DemoProperty['seller']> = {
+  'demo-sale-1': {
+    name: 'Thandi Mokoena',
+    email: 'demo@homescout.com',
+    phone: '082 555 1234',
+    companyName: 'Sandton Property Group',
+    companyAddress: 'Shop 4, Sandton City, Johannesburg',
+    showPhone: true,
+  },
+  'demo-sale-2': {
+    name: 'Nomsa Dlamini',
+    email: 'demo@homescout.com',
+    phone: '083 212 4567',
+    companyName: 'Coastal Living Realty',
+    companyAddress: '14 Lighthouse Road, Umhlanga, Durban',
+    showPhone: true,
+  },
+  'demo-sale-3': {
+    name: 'Pieter Botha',
+    email: 'demo@homescout.com',
+    phone: '082 901 3344',
+    companyName: 'Pretoria Estate Agents',
+    companyAddress: 'Block C, Menlyn Maine, Pretoria',
+    showPhone: true,
+  },
+  'demo-sale-4': {
+    name: 'Johan van Wyk',
+    email: 'demo@homescout.com',
+    phone: '021 555 8899',
+    companyName: 'Winelands Property Co.',
+    companyAddress: '22 Dorp Street, Stellenbosch',
+    showPhone: true,
+  },
+  'demo-sale-5': {
+    name: 'Lerato Molefe',
+    email: 'demo@homescout.com',
+    phone: '011 555 2211',
+    companyName: 'Sandton Urban Homes',
+    companyAddress: 'Maude Street, Sandton CBD, Johannesburg',
+    showPhone: true,
+  },
+  'demo-sale-6': {
+    name: 'Sarah Naidoo',
+    email: 'demo@homescout.com',
+    phone: '041 555 6677',
+    companyName: 'Eastern Cape Coastal',
+    companyAddress: 'Marine Drive, Summerstrand, Gqeberha',
+    showPhone: true,
+  },
+}
+
+function defaultSaleFeatures(p: DemoProperty): PropertyFeatures {
+  const features: PropertyFeatures = {
+    kitchen: true,
+    paving: p.type === 'HOUSE' || p.type === 'TOWNHOUSE',
+    aircon: p.type === 'APARTMENT' || p.type === 'TOWNHOUSE',
+  }
+
+  if (p.bedrooms >= 2) {
+    features.lounges = p.bedrooms >= 4 ? 2 : 1
+    features.diningAreas = 1
+  }
+  if (p.bathrooms >= 2) {
+    features.ensuites = Math.min(Math.max(p.bathrooms - 1, 1), 3)
+    features.guestToilet = p.bathrooms >= 3
+  }
+  if (p.bedrooms >= 3) {
+    features.familyTvRoom = p.type === 'HOUSE'
+    features.study = p.bedrooms >= 4
+  }
+  if (p.type === 'HOUSE') {
+    features.garden = true
+    features.builtInBrai = true
+    if (p.description.toLowerCase().includes('pool')) features.pool = true
+  }
+  if (p.type === 'APARTMENT' || p.type === 'TOWNHOUSE') {
+    features.balcony = true
+  }
+  if (p.type === 'TOWNHOUSE') {
+    features.pool = true
+    features.petFriendly = true
+  }
+  if (p.parkings >= 2) {
+    features.paving = true
+  }
+
+  return features
+}
+
+function isRichSaleDemo(p: DemoProperty): boolean {
+  return (
+    p.listingType === 'SALE' &&
+    p.id.startsWith('demo-sale-') &&
+    p.images.length >= 5 &&
+    Boolean(p.features && Object.keys(p.features).length > 0) &&
+    Boolean(p.seller.phone)
+  )
+}
+
+const DEFAULT_DEMO_SELLER: DemoProperty['seller'] = {
+  name: 'Homescout Demo',
+  email: 'demo@homescout.com',
+  phone: '082 555 0100',
+  companyName: 'Homescout Property Group',
+  companyAddress: '1 Sandton Drive, Sandton, Johannesburg',
+  showPhone: true,
+}
+
+function applyDemoListingDefaults(p: DemoProperty): DemoProperty {
+  if (!p.id.startsWith('demo-')) return p
+
+  let next = { ...p }
+
+  if (p.listingType === 'SALE' && p.id.startsWith('demo-sale-') && !isRichSaleDemo(p)) {
+    const index = saleDemoImageStart(p.id)
+    next = {
+      ...next,
+      createdAt: next.createdAt ?? `2026-0${Math.min(index + 1, 9)}-15T10:00:00.000Z`,
+      images: next.images.length >= 5 ? next.images : demoImages(next.id, 6, index),
+      features:
+        next.features && Object.keys(next.features).length > 0
+          ? next.features
+          : defaultSaleFeatures(next),
+    }
+  }
+
+  if (!next.seller.phone) {
+    next = {
+      ...next,
+      seller: DEMO_SALE_SELLERS[next.id] ?? DEFAULT_DEMO_SELLER,
+    }
+  }
+
+  return {
+    ...next,
+    verified: true,
+  }
 }
 
 export const demoProperties: DemoProperty[] = [
@@ -46,21 +210,45 @@ export const demoProperties: DemoProperty[] = [
     city: 'Johannesburg',
     province: 'Gauteng',
     bedrooms: 4,
-    bathrooms: 3,
-    parkings: 2,
+    bathrooms: 4,
+    parkings: 3,
     size: 220,
     type: 'HOUSE',
     listingType: 'SALE',
     featured: true,
     verified: true,
-    images: [{ id: 'demo-sale-1-0', url: propertyImageAt(0) }],
-    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
+    createdAt: '2026-01-15T10:00:00.000Z',
+    features: {
+      ensuites: 3,
+      lounges: 2,
+      diningAreas: 1,
+      petFriendly: true,
+      balcony: true,
+      pool: true,
+      study: true,
+      kitchen: true,
+      garden: true,
+      familyTvRoom: true,
+      paving: true,
+      guestToilet: true,
+      builtInBrai: true,
+      aircon: true,
+    },
+    images: demoImages('demo-sale-1', 6, 0),
+    seller: {
+      name: 'Thandi Mokoena',
+      email: 'demo@homescout.com',
+      phone: '082 555 1234',
+      companyName: 'Sandton Property Group',
+      companyAddress: 'Shop 4, Sandton City, Johannesburg',
+      showPhone: true,
+    },
   },
   {
     id: 'demo-sale-2',
     title: 'Suburban townhouse with patio',
     description:
-      'Low-maintenance townhouse in a secure complex with communal pool and 24-hour access control. Ideal for young families.',
+      'Low-maintenance townhouse in a secure complex with communal pool and 24-hour access control. Open-plan living opens to a covered patio, ideal for young families. The kitchen offers ample cupboard space, and both bedrooms include built-in wardrobes. Walk to Umhlanga beach and local schools.',
     price: 1650000,
     location: 'Umhlanga Ridge',
     suburb: 'Umhlanga',
@@ -81,7 +269,7 @@ export const demoProperties: DemoProperty[] = [
     id: 'demo-sale-3',
     title: 'Estate living with pool',
     description:
-      'Executive home in a gated estate featuring a heated pool, study, and landscaped garden. Premium finishes throughout.',
+      'Executive home in a gated estate featuring a heated pool, study, and landscaped garden. Premium finishes throughout. Double-volume entrance, pyjama lounge, and staff quarters complete this family residence. Easy access to highways and top schools in the east of Pretoria.',
     price: 4250000,
     location: 'Silver Lakes',
     suburb: 'Silver Lakes',
@@ -102,7 +290,7 @@ export const demoProperties: DemoProperty[] = [
     id: 'demo-sale-4',
     title: 'Winelands villa with views',
     description:
-      'Stunning villa overlooking vineyards with high ceilings, fireplace, and outdoor entertainment area. Minutes from the town centre.',
+      'Stunning villa overlooking vineyards with high ceilings, fireplace, and outdoor entertainment area. Minutes from the Stellenbosch town centre. Four generous bedrooms, a gourmet kitchen, and a covered braai patio make this ideal for entertainers. Mountain views from the main suite.',
     price: 5120000,
     location: 'Devon Valley Road',
     suburb: 'Devon Valley',
@@ -123,7 +311,7 @@ export const demoProperties: DemoProperty[] = [
     id: 'demo-sale-5',
     title: 'City apartment near offices',
     description:
-      'Bright two-bedroom apartment with balcony, concierge, and gym in the building. Walk to Sandton City and Gautrain.',
+      'Bright two-bedroom apartment with balcony, concierge, and gym in the building. Walk to Sandton City and Gautrain. Floor-to-ceiling windows flood the open-plan living area with natural light. Secure parking, backup water, and 24-hour security included in the levy.',
     price: 1890000,
     location: 'Maude Street',
     suburb: 'Sandton CBD',
@@ -144,7 +332,7 @@ export const demoProperties: DemoProperty[] = [
     id: 'demo-sale-6',
     title: 'Coastal family home',
     description:
-      'Relaxed beach-side living with sea glimpses, open deck, and generous living spaces. Perfect weekend retreat or full-time home.',
+      'Relaxed beach-side living with sea glimpses, open deck, and generous living spaces. Perfect weekend retreat or full-time home. Four bedrooms include a main en-suite, with a separate TV room and study. Landscaped garden with built-in braai and double garage.',
     price: 3100000,
     location: 'Marine Drive',
     suburb: 'Summerstrand',
@@ -165,7 +353,7 @@ export const demoProperties: DemoProperty[] = [
     id: 'demo-rent-1',
     title: 'Sea-facing apartment',
     description:
-      'Furnished two-bedroom apartment with Atlantic views, secure parking, and walking distance to the promenade and restaurants.',
+      'SOLE MANDATE — Furnished two-bedroom apartment with Atlantic views, secure parking, and walking distance to the promenade and restaurants. Open-plan living flows to a balcony overlooking the ocean. The kitchen is fully fitted with modern appliances. Both bedrooms have built-in cupboards; the main bedroom enjoys an en-suite shower. The complex offers 24-hour security, a communal pool, and visitor parking. Ideal for professionals or a lock-up-and-go coastal lifestyle. Available immediately — book a viewing today.',
     price: 18500,
     location: 'Beach Road',
     suburb: 'Sea Point',
@@ -179,8 +367,9 @@ export const demoProperties: DemoProperty[] = [
     listingType: 'RENT',
     featured: true,
     verified: true,
-    images: [{ id: 'demo-rent-1-0', url: propertyImageAt(1) }],
-    seller: { name: 'Homescout Demo', email: 'demo@Homescout.com' },
+    createdAt: '2026-02-10',
+    images: demoImages('demo-rent-1', 9, 0),
+    seller: { name: 'Thandi Mokoena', email: 'demo@homescout.co.za' },
   },
   {
     id: 'demo-rent-2',
@@ -289,8 +478,34 @@ export const demoProperties: DemoProperty[] = [
   },
 ]
 
+function enrichDemoProperty(p: DemoProperty): DemoProperty {
+  const withDefaults = applyDemoListingDefaults(p)
+  return {
+    ...withDefaults,
+    qualityScore:
+      withDefaults.qualityScore ??
+      computeListingQualityScore({
+        title: withDefaults.title,
+        description: withDefaults.description,
+        price: withDefaults.price,
+        location: withDefaults.location,
+        suburb: withDefaults.suburb,
+        city: withDefaults.city,
+        province: withDefaults.province,
+        bedrooms: withDefaults.bedrooms,
+        bathrooms: withDefaults.bathrooms,
+        parkings: withDefaults.parkings,
+        size: withDefaults.size,
+        virtualTourUrl: withDefaults.virtualTourUrl,
+        images: withDefaults.images,
+        features: withDefaults.features,
+      }),
+  }
+}
+
 export function getDemoPropertyById(id: string): DemoProperty | undefined {
-  return demoProperties.find((p) => p.id === id)
+  const found = demoProperties.find((p) => p.id === id)
+  return found ? enrichDemoProperty(found) : undefined
 }
 
 export function filterDemoProperties(
@@ -340,10 +555,12 @@ export function filterDemoProperties(
     results = results.filter((p) => p.bedrooms >= filters.minBedrooms!)
   }
 
-  return results.sort((a, b) => {
-    if (a.featured !== b.featured) return a.featured ? -1 : 1
-    return 0
-  })
+  return results
+    .sort((a, b) => {
+      if (a.featured !== b.featured) return a.featured ? -1 : 1
+      return 0
+    })
+    .map(enrichDemoProperty)
 }
 
 export function demoToBrowseProperty(d: DemoProperty) {
@@ -368,14 +585,15 @@ export function demoToBrowseProperty(d: DemoProperty) {
 }
 
 export function demoToFeaturedGrid(d: DemoProperty) {
+  const enriched = enrichDemoProperty(d)
   return {
-    id: d.id,
-    title: d.title,
-    price: d.price,
-    city: d.city,
-    province: d.province,
-    bedrooms: d.bedrooms,
-    listingType: d.listingType,
-    imageUrl: d.images[0]?.url ?? propertyImageAt(0),
+    id: enriched.id,
+    title: enriched.title,
+    price: enriched.price,
+    city: enriched.city,
+    province: enriched.province,
+    bedrooms: enriched.bedrooms,
+    listingType: enriched.listingType,
+    imageUrl: enriched.images[0]?.url ?? propertyImageAt(0),
   }
 }

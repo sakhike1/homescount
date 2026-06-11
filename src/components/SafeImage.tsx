@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { isBundledLocalImage } from '@/lib/local-image-url.shared'
 
 type SafeImageProps = {
@@ -14,6 +14,8 @@ type SafeImageProps = {
   className?: string
   priority?: boolean
   fallbackClassName?: string
+  /** Animated shimmer while the image loads (default on). */
+  showShimmer?: boolean
 }
 
 export default function SafeImage({
@@ -23,11 +25,22 @@ export default function SafeImage({
   width,
   height,
   sizes,
-  className,
+  className = '',
   priority,
-  fallbackClassName = 'bg-gray-200',
+  fallbackClassName = 'bg-stone-200',
+  showShimmer = true,
 }: SafeImageProps) {
   const [failed, setFailed] = useState(false)
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    setFailed(false)
+    setLoaded(false)
+    if (!src?.trim()) return
+    const probe = new window.Image()
+    probe.src = src
+    if (probe.complete) setLoaded(true)
+  }, [src])
 
   if (!src?.trim() || failed) {
     return (
@@ -44,20 +57,34 @@ export default function SafeImage({
     )
   }
 
+  const shimmerVisible = showShimmer && !loaded
+
   return (
-    <Image
-      src={src}
-      alt={alt}
-      fill={fill}
-      width={!fill ? width : undefined}
-      height={!fill ? height : undefined}
-      sizes={sizes}
-      className={className}
-      priority={priority}
-      loading={priority ? 'eager' : 'lazy'}
-      fetchPriority={priority ? 'high' : undefined}
-      unoptimized={isBundledLocalImage(src)}
-      onError={() => setFailed(true)}
-    />
+    <>
+      {shimmerVisible && (
+        <div
+          className={`image-shimmer ${fill ? 'absolute inset-0' : ''} ${fallbackClassName}`}
+          style={!fill && width && height ? { width, height } : undefined}
+          aria-hidden
+        />
+      )}
+      <Image
+        src={src}
+        alt={alt}
+        fill={fill}
+        width={!fill ? width : undefined}
+        height={!fill ? height : undefined}
+        sizes={sizes}
+        className={`${className} transition-opacity duration-500 ${
+          loaded ? 'opacity-100' : 'opacity-0'
+        }`}
+        priority={priority}
+        loading={priority ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : undefined}
+        unoptimized={isBundledLocalImage(src)}
+        onLoad={() => setLoaded(true)}
+        onError={() => setFailed(true)}
+      />
+    </>
   )
 }

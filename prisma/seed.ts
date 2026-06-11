@@ -2,6 +2,8 @@ import 'dotenv/config'
 import bcrypt from 'bcryptjs'
 import { PrismaClient } from '../src/generated/prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
+import { computeListingQualityScore } from '../src/lib/listing-quality'
+import type { PropertyFeatures } from '../src/lib/property-features'
 
 const propertyImages = [
   '/property-images/2f8ec23c4d9785a449ea604b22f3d2d8.jpg',
@@ -33,6 +35,32 @@ const listings = [
   { title: 'Secure complex townhouse', suburb: 'Midrand', city: 'Midrand', province: 'Gauteng', price: 16800, listingType: 'RENT' as const, beds: 3, baths: 2, park: 2, size: 130 },
 ]
 
+function seedFeatures(L: (typeof listings)[number]): PropertyFeatures {
+  const isApartment = L.beds <= 2 && L.size < 120
+  const features: PropertyFeatures = {
+    kitchen: true,
+    aircon: true,
+    lounges: L.beds >= 3 ? 2 : 1,
+    diningAreas: 1,
+  }
+  if (L.baths >= 2) features.ensuites = 1
+  if (L.park >= 2) features.paving = true
+  if (isApartment) {
+    features.balcony = true
+  } else {
+    features.garden = true
+    features.builtInBrai = L.listingType === 'SALE'
+    features.pool = L.beds >= 4
+    features.petFriendly = L.listingType === 'RENT'
+  }
+  if (L.beds >= 4) {
+    features.familyTvRoom = true
+    features.study = true
+    features.guestToilet = true
+  }
+  return features
+}
+
 async function main() {
   const adapter = new PrismaPg({
     connectionString: process.env.DATABASE_URL!,
@@ -43,12 +71,21 @@ async function main() {
 
   const seller = await prisma.user.upsert({
     where: { email: 'seller@Homescout.com' },
-    update: {},
+    update: {
+      phone: '082 555 0100',
+      companyName: 'Homescout Property Group',
+      companyAddress: '1 Sandton Drive, Sandton, Johannesburg',
+      showPhone: true,
+    },
     create: {
       email: 'seller@Homescout.com',
       name: 'Homescout Demo Seller',
       password,
       role: 'SELLER',
+      phone: '082 555 0100',
+      companyName: 'Homescout Property Group',
+      companyAddress: '1 Sandton Drive, Sandton, Johannesburg',
+      showPhone: true,
     },
   })
 
@@ -72,10 +109,36 @@ async function main() {
     const L = listings[i]
     const imgBase = i % propertyImages.length
 
+    const features = seedFeatures(L)
+    const imageRows = [
+      { url: propertyImages[imgBase] },
+      { url: propertyImages[(imgBase + 1) % propertyImages.length] },
+      { url: propertyImages[(imgBase + 2) % propertyImages.length] },
+      { url: propertyImages[(imgBase + 3) % propertyImages.length] },
+      { url: propertyImages[(imgBase + 4) % propertyImages.length] },
+      { url: propertyImages[(imgBase + 5) % propertyImages.length] },
+    ]
+    const description = `Beautiful ${L.listingType === 'RENT' ? 'rental' : 'home'} in ${L.suburb}, ${L.city}. Open-plan living, modern finishes, and great access to schools, shops, and transport. Ideal for families or professionals seeking comfort and convenience in ${L.province}.`
+    const qualityScore = computeListingQualityScore({
+      title: L.title,
+      description,
+      price: L.price,
+      location: `${10 + i} Main Road`,
+      suburb: L.suburb,
+      city: L.city,
+      province: L.province,
+      bedrooms: L.beds,
+      bathrooms: L.baths,
+      parkings: L.park,
+      size: L.size,
+      images: imageRows,
+      features,
+    })
+
     const property = await prisma.property.create({
       data: {
         title: L.title,
-        description: `Beautiful ${L.listingType === 'RENT' ? 'rental' : 'home'} in ${L.suburb}, ${L.city}. Open-plan living, modern finishes, and great access to schools, shops, and transport. Ideal for families or professionals seeking comfort and convenience in ${L.province}.`,
+        description,
         price: L.price,
         location: `${10 + i} Main Road`,
         suburb: L.suburb,
@@ -91,16 +154,12 @@ async function main() {
         published: true,
         publishedAt: new Date(),
         featured: i < 4,
-        verified: i < 6,
-        verifiedAt: i < 6 ? new Date() : null,
+        verified: true,
+        verifiedAt: new Date(),
         sellerId: seller.id,
-        images: {
-          create: [
-            { url: propertyImages[imgBase] },
-            { url: propertyImages[(imgBase + 1) % propertyImages.length] },
-            { url: propertyImages[(imgBase + 2) % propertyImages.length] },
-          ],
-        },
+        features,
+        qualityScore,
+        images: { create: imageRows },
       },
     })
 
@@ -148,6 +207,31 @@ async function main() {
           ]
         : []),
     ],
+  })
+
+  await prisma.user.updateMany({
+    where: {
+      role: 'SELLER',
+      OR: [{ phone: null }, { phone: '' }],
+    },
+    data: {
+      phone: '082 555 0100',
+      companyName: 'Homescout Property Group',
+      companyAddress: '1 Sandton Drive, Sandton, Johannesburg',
+      showPhone: true,
+    },
+  })
+
+  await prisma.user.updateMany({
+    where: {
+      role: 'SELLER',
+      companyName: null,
+    },
+    data: {
+      companyName: 'Homescout Property Group',
+      companyAddress: '1 Sandton Drive, Sandton, Johannesburg',
+      showPhone: true,
+    },
   })
 
   console.log('\nSeed complete!')

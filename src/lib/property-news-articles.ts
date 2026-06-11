@@ -227,6 +227,16 @@ export function getSideNewsArticles() {
   return propertyNewsArticles.filter((a) => !a.featured)
 }
 
+export function getRelatedNewsArticles(slug: string, limit = 3) {
+  const current = getNewsArticle(slug)
+  const others = propertyNewsArticles.filter((a) => a.slug !== slug)
+  if (!current) return others.slice(0, limit)
+
+  const sameCategory = others.filter((a) => a.category === current.category)
+  const rest = others.filter((a) => a.category !== current.category)
+  return [...sameCategory, ...rest].slice(0, limit)
+}
+
 export function formatNewsDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-ZA', {
     day: 'numeric',

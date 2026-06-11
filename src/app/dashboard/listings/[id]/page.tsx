@@ -9,6 +9,7 @@ import DeleteListingButton from '@/components/dashboard/DeleteListingButton'
 import ListingAnalyticsPanel from '@/components/dashboard/ListingAnalyticsPanel'
 import { canPublishListing } from '@/lib/publish'
 import { getListingAnalytics } from '@/lib/listing-analytics'
+import { parsePropertyFeatures } from '@/lib/property-features'
 
 export default async function EditListingPage({
   params,
@@ -18,10 +19,23 @@ export default async function EditListingPage({
   const session = await requireSeller()
   const { id } = await params
 
-  const property = await prisma.property.findFirst({
-    where: { id, sellerId: session.user.id },
-    include: { images: { orderBy: { createdAt: 'asc' } } },
-  })
+  const [property, user] = await Promise.all([
+    prisma.property.findFirst({
+      where: { id, sellerId: session.user.id },
+      include: { images: { orderBy: { createdAt: 'asc' } } },
+    }),
+    prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: {
+        name: true,
+        phone: true,
+        companyName: true,
+        companyAddress: true,
+        companyLogoUrl: true,
+        showPhone: true,
+      },
+    }),
+  ])
 
   if (!property) notFound()
 
@@ -51,6 +65,9 @@ export default async function EditListingPage({
         <PropertyListingForm
           mode="edit"
           propertyId={property.id}
+          listerName={user?.name ?? session.user.name ?? 'Seller'}
+          imageCount={property.images.length}
+          initialFeatures={parsePropertyFeatures(property.features)}
           initialValues={{
             title: property.title,
             description: property.description,
@@ -66,6 +83,11 @@ export default async function EditListingPage({
             type: property.type,
             listingType: property.listingType,
             virtualTourUrl: property.virtualTourUrl ?? '',
+            phone: user?.phone ?? '',
+            companyName: user?.companyName ?? '',
+            companyAddress: user?.companyAddress ?? '',
+            companyLogoUrl: user?.companyLogoUrl ?? '',
+            showPhone: user?.showPhone ?? true,
           }}
         />
       </div>

@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { getSellerSession, unauthorized } from '@/lib/api-auth'
+import { computeListingQualityScore } from '@/lib/listing-quality'
+import { parsePropertyFeatures } from '@/lib/property-features'
 
 export async function GET() {
   const session = await getSellerSession()
@@ -39,6 +41,7 @@ export async function POST(req: Request) {
       type,
       listingType,
       virtualTourUrl,
+      features,
     } = body
 
     if (
@@ -59,24 +62,34 @@ export async function POST(req: Request) {
       )
     }
 
+    const parsedFeatures = parsePropertyFeatures(features)
+    const draft = {
+      title,
+      description,
+      price: Number(price),
+      location,
+      suburb: suburb?.trim() || '',
+      city,
+      province,
+      bedrooms: Number(bedrooms),
+      bathrooms: Number(bathrooms),
+      parkings: Number(parkings ?? 0),
+      size: Number(size ?? 0),
+      virtualTourUrl: virtualTourUrl?.trim() || null,
+      images: [] as { url: string }[],
+      features: parsedFeatures,
+    }
+
+    const { images: _images, ...propertyData } = draft
+
     const property = await prisma.property.create({
       data: {
-        title,
-        description,
-        price: Number(price),
-        location,
-        suburb: suburb?.trim() || '',
-        city,
-        province,
-        bedrooms: Number(bedrooms),
-        bathrooms: Number(bathrooms),
-        parkings: Number(parkings ?? 0),
-        size: Number(size ?? 0),
+        ...propertyData,
         type,
         listingType,
         published: false,
         sellerId: session.user.id,
-        virtualTourUrl: virtualTourUrl?.trim() || null,
+        qualityScore: computeListingQualityScore(draft),
       },
       include: { images: true },
     })

@@ -15,6 +15,7 @@ import {
   getPublicPropertyById,
 } from '@/lib/properties'
 import { localImageCacheBust } from '@/lib/local-image-url'
+import { parsePropertyFeatures } from '@/lib/property-features'
 
 export async function generateMetadata({
   params,
@@ -64,9 +65,18 @@ export default async function PropertyDetailPage({
         ? `${getSiteUrl()}${imageUrl}`
         : undefined
 
+  const raw = result.property
   const propertyWithFreshImages = {
-    ...result.property,
-    images: result.property.images.map((image) => ({
+    ...raw,
+    createdAt: 'createdAt' in raw && raw.createdAt ? raw.createdAt : undefined,
+    qualityScore:
+      'qualityScore' in raw && typeof raw.qualityScore === 'number'
+        ? raw.qualityScore
+        : undefined,
+    features: parsePropertyFeatures(
+      'features' in raw ? raw.features : undefined
+    ),
+    images: raw.images.map((image) => ({
       ...image,
       url: localImageCacheBust(image.url),
     })),

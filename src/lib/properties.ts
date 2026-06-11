@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma'
 import type { ListingType, Prisma } from '@/generated/prisma/client'
 import { propertyImageAt } from '@/lib/property-images'
+import { withDbTimeout } from '@/lib/db-timeout'
 import { cache } from 'react'
 import { unstable_cache } from 'next/cache'
 import {
@@ -9,6 +10,11 @@ import {
   filterDemoProperties,
   getDemoPropertyById,
 } from '@/lib/demo-properties'
+import {
+  normalizeListingSeller,
+  normalizeListingVerified,
+} from '@/lib/listing-seller-display'
+import { parsePropertyFeatures } from '@/lib/property-features'
 export { formatPrice, formatZaNumber } from '@/lib/format-price'
 
 export function parseListingTypeFromParam(
@@ -94,30 +100,46 @@ const propertyOrderBy = [
 ]
 
 export async function getProperties(filters: PropertyFilters = {}, limit?: number) {
-  return prisma.property.findMany({
-    where: buildWhere({ publishedOnly: true, ...filters }),
-    include: propertyListInclude,
-    orderBy: propertyOrderBy,
-    ...(limit ? { take: limit } : {}),
-  })
+  return withDbTimeout(
+    prisma.property.findMany({
+      where: buildWhere({ publishedOnly: true, ...filters }),
+      include: propertyListInclude,
+      orderBy: propertyOrderBy,
+      ...(limit ? { take: limit } : {}),
+    })
+  )
 }
 
 export async function getPropertyById(id: string) {
-  return prisma.property.findFirst({
-    where: { id, published: true, status: 'AVAILABLE', seller: { active: true } },
-    include: {
-      images: { orderBy: [{ createdAt: 'asc' }, { id: 'asc' }] },
-      seller: { select: { name: true, email: true } },
-    },
-  })
+  return withDbTimeout(
+    prisma.property.findFirst({
+      where: { id, published: true, status: 'AVAILABLE', seller: { active: true } },
+      include: {
+        images: { orderBy: [{ createdAt: 'asc' }, { id: 'asc' }] },
+        seller: {
+          select: {
+            name: true,
+            email: true,
+            phone: true,
+            companyName: true,
+            companyAddress: true,
+            companyLogoUrl: true,
+            showPhone: true,
+          },
+        },
+      },
+    })
+  )
 }
 
 const getHasPublishedListingsCached = unstable_cache(
   async () => {
     try {
-      const count = await prisma.property.count({
-        where: { published: true, status: 'AVAILABLE', seller: { active: true } },
-      })
+      const count = await withDbTimeout(
+        prisma.property.count({
+          where: { published: true, status: 'AVAILABLE', seller: { active: true } },
+        })
+      )
       return count > 0
     } catch {
       return false
@@ -145,13 +167,8 @@ function filtersCacheKey(filters: PropertyFilters): string {
 
 const getBrowseListingsFromDb = unstable_cache(
   async (key: string) => {
-    try {
-      const filters = JSON.parse(key) as PropertyFilters
-      return await getProperties(filters)
-    } catch (err) {
-      console.error('[browse-listings] db unavailable', err)
-      return null
-    }
+    const filters = JSON.parse(key) as PropertyFilters
+    return getProperties(filters)
   },
   ['browse-listings'],
   { revalidate: 30, tags: ['properties'] }
@@ -163,11 +180,9 @@ export async function getBrowseListings(filters: PropertyFilters = {}) {
   if (useReal) {
     try {
       const properties = await getBrowseListingsFromDb(filtersCacheKey(filters))
-      if (properties) {
-        return { properties, isDemo: false as const }
-      }
-    } catch (err) {
-      console.error('[browse-listings] fallback to demo', err)
+      return { properties, isDemo: false as const }
+    } catch {
+      // Neon cold start / timeout — show demo listings instead of hanging or erroring.
     }
   }
 
@@ -175,37 +190,81 @@ export async function getBrowseListings(filters: PropertyFilters = {}) {
   return { properties: demos, isDemo: true as const }
 }
 
-export async function getPublicPropertyById(id: string) {
-  const property = await getPropertyById(id)
-  if (property) return { property, isDemo: false as const }
+function normalizePublicProperty<T extends {
+  location: string
+  suburb: string
+  city: string
+  province: string
+  verified?: boolean
+  qualityScore?: number
+  features?: unknown
+  seller: {
+    name: string
+    email: string
+    phone?: string | null
+    companyName?: string | null
+    companyAddress?: string | null
+    companyLogoUrl?: string | null
+    showPhone?: boolean
+  }
+}>(property: T, isDemo: boolean) {
+  return {
+    ...property,
+    verified: normalizeListingVerified(property, isDemo),
+    features: parsePropertyFeatures(property.features),
+    seller: normalizeListingSeller(property.seller, property),
+  }
+}
 
-  const useReal = await hasPublishedListings()
-  if (useReal) return null
+export const getPublicPropertyById = cache(async (id: string) => {
+  // Demo listings never touch the database (avoids Neon timeouts on sample pages).
+  if (id.startsWith('demo-')) {
+    const demo = getDemoPropertyById(id)
+    return demo
+      ? { property: normalizePublicProperty(demo, true), isDemo: true as const }
+      : null
+  }
 
   const demo = getDemoPropertyById(id)
-  if (!demo) return null
+  if (demo) {
+    return { property: normalizePublicProperty(demo, true), isDemo: true as const }
+  }
 
-  return { property: demo, isDemo: true as const }
-}
+  try {
+    const property = await getPropertyById(id)
+    if (property) {
+      return {
+        property: normalizePublicProperty(
+          {
+            ...property,
+            qualityScore: property.qualityScore,
+            features: property.features,
+          },
+          false
+        ),
+        isDemo: false as const,
+      }
+    }
+  } catch {
+    // DB unreachable — page falls through to 404 for live IDs; demos already returned above.
+  }
+
+  return null
+})
 
 const getFeaturedListingsFromDb = unstable_cache(
   async (limit: number) => {
-    try {
-      const properties = await getProperties({}, limit)
-      return properties.map((p, i) => ({
-        id: p.id,
-        title: p.title,
-        price: p.price,
-        city: p.city,
-        province: p.province,
-        bedrooms: p.bedrooms,
-        listingType: p.listingType,
-        imageUrl: getPropertyImageUrl(p.images, i),
-      }))
-    } catch (err) {
-      console.error('[featured-listings] db unavailable', err)
-      return null
-    }
+    const properties = await getProperties({}, limit)
+    return properties.map((p, i) => ({
+      id: p.id,
+      title: p.title,
+      price: p.price,
+      city: p.city,
+      province: p.province,
+      bedrooms: p.bedrooms,
+      listingType: p.listingType,
+      imageUrl: getPropertyImageUrl(p.images, i),
+    }))
   },
   ['featured-listings'],
   { revalidate: 30, tags: ['properties'] }
@@ -216,16 +275,24 @@ export async function getFeaturedListings(limit = 6) {
 
   if (useReal) {
     try {
-      const items = await getFeaturedListingsFromDb(limit)
-      if (items) {
-        return { isDemo: false as const, items }
+      const saleItems = await getFeaturedListingsFromDb(limit)
+      if (saleItems.length > 0) {
+        const sales = saleItems.filter((p) => p.listingType === 'SALE')
+        const items =
+          sales.length >= limit
+            ? sales.slice(0, limit)
+            : [
+                ...sales,
+                ...saleItems.filter((p) => p.listingType !== 'SALE').slice(0, limit - sales.length),
+              ]
+        return { isDemo: false as const, items: items.slice(0, limit) }
       }
-    } catch (err) {
-      console.error('[featured-listings] fallback to demo', err)
+    } catch {
+      // fall through to demo featured listings
     }
   }
 
-  const demos = filterDemoProperties().slice(0, limit)
+  const demos = filterDemoProperties({ listingType: 'SALE' }).slice(0, limit)
   return {
     isDemo: true as const,
     items: demos.map(demoToFeaturedGrid),
@@ -244,21 +311,28 @@ async function computePlatformStats(): Promise<PlatformStats> {
     const useReal = await hasPublishedListings()
 
     if (useReal) {
+      const publishedWhere = {
+        published: true,
+        status: 'AVAILABLE' as const,
+        seller: { active: true },
+      }
       const [listingCount, sellerCount, provinceRows] = await Promise.all([
-        prisma.property.count({
-          where: { published: true, status: 'AVAILABLE', seller: { active: true } },
-        }),
-        prisma.user.count({
-          where: {
-            role: 'SELLER',
-            properties: { some: { published: true, status: 'AVAILABLE' } },
-          },
-        }),
-        prisma.property.findMany({
-          where: { published: true, status: 'AVAILABLE', seller: { active: true } },
-          select: { province: true },
-          distinct: ['province'],
-        }),
+        withDbTimeout(prisma.property.count({ where: publishedWhere })),
+        withDbTimeout(
+          prisma.user.count({
+            where: {
+              role: 'SELLER',
+              properties: { some: { published: true, status: 'AVAILABLE' } },
+            },
+          })
+        ),
+        withDbTimeout(
+          prisma.property.findMany({
+            where: publishedWhere,
+            select: { province: true },
+            distinct: ['province'],
+          })
+        ),
       ])
 
       return {

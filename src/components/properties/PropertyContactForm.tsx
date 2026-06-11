@@ -71,7 +71,10 @@ export default function PropertyContactForm({
   }
 
   return (
-    <div className="rounded-2xl border border-gray-200/60 bg-white p-6 shadow-sm ring-1 ring-stone-900/[0.03]">
+    <div
+      id="property-contact"
+      className="scroll-mt-24 rounded-2xl border border-gray-200/60 bg-white p-6 shadow-sm ring-1 ring-stone-900/[0.03]"
+    >
       <h3 className="text-lg font-bold text-stone-900">Message {sellerName}</h3>
       <p className="mt-1 text-sm text-stone-500">
         Ask about <span className="font-medium text-stone-700">{propertyTitle}</span>
