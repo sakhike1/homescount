@@ -33,15 +33,15 @@ export default function NewsArticleShare({ title }: { title: string }) {
       <button
         type="button"
         onClick={nativeShare}
-        className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-semibold text-stone-700 shadow-sm transition hover:border-amber-200 hover:bg-amber-50"
+        className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-semibold text-stone-700 shadow-sm transition hover:border-violet-200 hover:bg-violet-50"
       >
-        <Share2 className="h-4 w-4 text-amber-600" aria-hidden />
+        <Share2 className="h-4 w-4 text-violet-600" aria-hidden />
         Share
       </button>
       <button
         type="button"
         onClick={copyLink}
-        className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-semibold text-stone-700 shadow-sm transition hover:border-amber-200 hover:bg-amber-50"
+        className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-semibold text-stone-700 shadow-sm transition hover:border-violet-200 hover:bg-violet-50"
       >
         {copied ? (
           <Check className="h-4 w-4 text-emerald-600" aria-hidden />

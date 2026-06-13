@@ -16,6 +16,9 @@ import {
   X,
   type LucideIcon,
 } from 'lucide-react'
+import {
+  signupMobileButtonClass,
+} from '@/components/auth/auth-styles'
 
 const navLinks: { href: string; label: string; icon: LucideIcon }[] = [
   { href: '/', label: 'Home', icon: Home },
@@ -84,7 +87,7 @@ export default function MobileNavDrawer({
         aria-label="Navigation menu"
       >
         <header className="flex h-[3.25rem] shrink-0 items-center justify-between border-b border-stone-200/90 px-4">
-          <HomescoutLogo tone="default" size="sm" />
+          <HomescoutLogo tone="home" size="sm" />
           <button
             type="button"
             onClick={onClose}
@@ -98,7 +101,7 @@ export default function MobileNavDrawer({
         {session ? (
           <div className="shrink-0 border-b border-stone-200/90 px-4 py-3">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-sm font-black text-white">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-700 text-sm font-black text-white">
                 {session.user.name?.charAt(0).toUpperCase()}
               </span>
               <div className="min-w-0 flex-1">
@@ -130,14 +133,14 @@ export default function MobileNavDrawer({
                   >
                     <Icon
                       className={`h-[18px] w-[18px] shrink-0 ${
-                        active ? 'text-amber-600' : 'text-stone-400 group-hover:text-stone-600'
+                        active ? 'text-violet-700' : 'text-stone-400 group-hover:text-stone-600'
                       }`}
                       strokeWidth={2}
                       aria-hidden
                     />
                     <span className="flex-1">{link.label}</span>
                     {active ? (
-                      <ChevronRight className="h-4 w-4 shrink-0 text-amber-600" aria-hidden />
+                      <ChevronRight className="h-4 w-4 shrink-0 text-violet-700" aria-hidden />
                     ) : null}
                   </Link>
                 </li>
@@ -157,7 +160,7 @@ export default function MobileNavDrawer({
                   <LayoutDashboard
                     className={`h-[18px] w-[18px] shrink-0 ${
                       pathname.startsWith('/dashboard')
-                        ? 'text-amber-600'
+                        ? 'text-violet-700'
                         : 'text-stone-400 group-hover:text-stone-600'
                     }`}
                     strokeWidth={2}
@@ -217,7 +220,7 @@ export default function MobileNavDrawer({
               <Link
                 href="/register"
                 onClick={onClose}
-                className="flex w-full items-center justify-center rounded-full bg-amber-500 py-3 text-sm font-bold text-white shadow-sm shadow-amber-500/20 transition hover:bg-amber-600"
+                className={signupMobileButtonClass}
               >
                 Get started
               </Link>

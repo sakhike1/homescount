@@ -1,24 +1,23 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Sparkles } from 'lucide-react'
+import { Star } from 'lucide-react'
 
 export default function HeroBadge() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="flex items-center gap-2"
     >
-      <span className="inline-flex items-center gap-2.5 rounded-full bg-white/[0.08] px-4 py-2 text-sm font-medium text-white/90 ring-1 ring-white/[0.12] backdrop-blur-xl">
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-orange-500">
-          <Sparkles className="h-3 w-3 text-white" aria-hidden />
-        </span>
-        <span className="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent font-semibold">
-          Homescout
-        </span>
-        <span className="h-1 w-1 rounded-full bg-white/40" />
-        <span className="text-white/60">South Africa</span>
+      <div className="flex items-center gap-0.5" aria-hidden>
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Star key={i} className="h-4 w-4 fill-violet-200 text-violet-200" />
+        ))}
+      </div>
+      <span className="text-sm font-medium text-violet-200/90">
+        Trusted property search across South Africa
       </span>
     </motion.div>
   )

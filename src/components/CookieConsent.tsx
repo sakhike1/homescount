@@ -66,11 +66,11 @@ export default function CookieConsent() {
             ? ' With your permission, we also use analytics cookies to understand how the site is used.'
             : ' We do not use advertising cookies.'}{' '}
           See our{' '}
-          <Link href="/cookies" className="font-semibold text-amber-700 hover:underline">
+          <Link href="/cookies" className="font-semibold text-violet-700 hover:underline">
             Cookie Policy
           </Link>{' '}
           and{' '}
-          <Link href="/privacy" className="font-semibold text-amber-700 hover:underline">
+          <Link href="/privacy" className="font-semibold text-violet-700 hover:underline">
             Privacy Policy
           </Link>
           .
@@ -79,7 +79,7 @@ export default function CookieConsent() {
           <button
             type="button"
             onClick={acceptAll}
-            className="rounded-full bg-amber-500 px-5 py-2.5 text-sm font-bold text-white hover:bg-amber-600 transition"
+            className="rounded-full bg-violet-700 px-5 py-2.5 text-sm font-bold text-white hover:bg-violet-800 transition"
           >
             {analyticsAvailable ? 'Accept all' : 'Accept & continue'}
           </button>

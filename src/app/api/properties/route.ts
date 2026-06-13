@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { getSellerSession, unauthorized } from '@/lib/api-auth'
+import { propertyImageOrderBy } from '@/lib/property-image-order'
 import { computeListingQualityScore } from '@/lib/listing-quality'
 import { parsePropertyFeatures } from '@/lib/property-features'
 
@@ -11,7 +12,7 @@ export async function GET() {
   const properties = await prisma.property.findMany({
     where: { sellerId: session.user.id },
     include: {
-      images: { orderBy: { createdAt: 'asc' } },
+      images: { orderBy: propertyImageOrderBy },
       adPayments: { orderBy: { createdAt: 'desc' }, take: 3 },
     },
     orderBy: { updatedAt: 'desc' },

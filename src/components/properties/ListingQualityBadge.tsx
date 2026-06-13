@@ -3,7 +3,7 @@ import { listingQualityLabel, listingQualityTier } from '@/lib/listing-quality'
 const tierStyles = {
   excellent: 'bg-emerald-50 text-emerald-800 ring-emerald-200',
   good: 'bg-sky-50 text-sky-800 ring-sky-200',
-  fair: 'bg-amber-50 text-amber-800 ring-amber-200',
+  fair: 'bg-stone-100 text-stone-700 ring-stone-200',
   'needs-work': 'bg-stone-100 text-stone-700 ring-stone-200',
 } as const
 

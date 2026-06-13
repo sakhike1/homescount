@@ -6,7 +6,8 @@ import { auth, signIn, signOut } from '@/lib/auth'
 export async function authenticate(
   email: string,
   password: string,
-  accountType: 'BUYER' | 'SELLER'
+  accountType: 'BUYER' | 'SELLER',
+  callbackUrl?: string
 ) {
   try {
     await signIn('credentials', {
@@ -31,10 +32,12 @@ export async function authenticate(
       }
     }
 
+    const fallback = session.user.role === 'SELLER' ? '/dashboard' : '/'
+
     return {
       ok: true as const,
       role: session.user.role,
-      redirectTo: session.user.role === 'SELLER' ? '/dashboard' : '/',
+      redirectTo: safeCallbackUrl(callbackUrl, fallback),
     }
   } catch (error) {
     if (error instanceof AuthError) {
@@ -42,4 +45,9 @@ export async function authenticate(
     }
     return { ok: false as const, error: 'Something went wrong' }
   }
+}
+
+function safeCallbackUrl(url: string | undefined, fallback: string) {
+  if (!url || !url.startsWith('/') || url.startsWith('//')) return fallback
+  return url
 }

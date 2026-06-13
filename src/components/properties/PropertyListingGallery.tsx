@@ -126,7 +126,7 @@ export default function PropertyListingGallery({
               <button
                 type="button"
                 onClick={() => openLightbox(0)}
-                className="text-sm font-semibold text-amber-700 hover:text-amber-800 hover:underline"
+                className="text-sm font-semibold text-violet-700 hover:text-violet-800 hover:underline"
               >
                 View all ({photos.length})
               </button>
@@ -138,7 +138,7 @@ export default function PropertyListingGallery({
                 key={img.id}
                 type="button"
                 onClick={() => openLightbox(i)}
-                className="relative aspect-[4/3] overflow-hidden rounded-xl bg-stone-100 ring-1 ring-stone-200/80 transition hover:ring-amber-300/60"
+                className="relative aspect-[4/3] overflow-hidden rounded-xl bg-stone-100 ring-1 ring-stone-200/80 transition hover:ring-stone-300"
               >
                 <SafeImage
                   src={img.url}
@@ -173,7 +173,7 @@ export default function PropertyListingGallery({
           <button
             type="button"
             onClick={goPrev}
-            className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20 sm:left-6"
+            className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-violet-700/90 p-3 text-white shadow-lg transition hover:bg-violet-800 sm:left-6"
             aria-label="Previous photo"
           >
             <ChevronLeft className="h-6 w-6" />
@@ -193,7 +193,7 @@ export default function PropertyListingGallery({
           <button
             type="button"
             onClick={goNext}
-            className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20 sm:right-6"
+            className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-violet-700/90 p-3 text-white shadow-lg transition hover:bg-violet-800 sm:right-6"
             aria-label="Next photo"
           >
             <ChevronRight className="h-6 w-6" />

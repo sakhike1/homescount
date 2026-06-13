@@ -96,7 +96,7 @@ export default function PropertyServices() {
         className="pointer-events-none absolute inset-0 platform-mesh opacity-60"
         aria-hidden
       />
-      <div className="pointer-events-none absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-amber-400/20 blur-3xl" aria-hidden />
+      <div className="pointer-events-none absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-violet-400/15 blur-3xl" aria-hidden />
       <div className="pointer-events-none absolute top-1/2 -right-20 h-80 w-80 rounded-full bg-violet-400/15 blur-3xl" aria-hidden />
       <div className="pointer-events-none absolute bottom-0 left-0 h-64 w-64 rounded-full bg-emerald-400/10 blur-3xl" aria-hidden />
 
@@ -108,13 +108,13 @@ export default function PropertyServices() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl"
         >
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-sm px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-amber-700 ring-1 ring-amber-500/20 shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" />
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-sm px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-violet-700 ring-1 ring-violet-500/20 shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-violet-600 animate-pulse" />
             What we offer
           </span>
           <h2 className="mt-5 text-3xl sm:text-4xl lg:text-[2.75rem] font-bold text-stone-900 text-display leading-[1.08]">
             Everything property,{' '}
-            <span className="bg-gradient-to-r from-amber-500 via-amber-600 to-orange-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-violet-600 via-violet-700 to-violet-800 bg-clip-text text-transparent">
               all in one place
             </span>
           </h2>
@@ -169,7 +169,7 @@ export default function PropertyServices() {
                       >
                         <Icon className="h-8 w-8" strokeWidth={1.5} aria-hidden />
                       </div>
-                      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-amber-500 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg shadow-amber-500/30">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-violet-700 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg shadow-violet-700/30">
                         <ArrowUpRight className="h-5 w-5" aria-hidden />
                       </span>
                     </div>

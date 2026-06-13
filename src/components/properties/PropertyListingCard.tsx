@@ -48,7 +48,7 @@ export default function PropertyListingCard({
   return (
     <Link
       href={`/properties/${id}`}
-      className="group block rounded-2xl border border-stone-200/80 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-amber-200/60 hover:-translate-y-1 transition-all duration-300"
+      className="group block rounded-2xl border border-stone-200/80 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-stone-300 hover:-translate-y-1 transition-all duration-300"
     >
       <div className="relative aspect-[4/3] bg-stone-100 overflow-hidden">
         <SafeImage
@@ -61,7 +61,7 @@ export default function PropertyListingCard({
         <div className="absolute top-3 left-3 flex flex-wrap gap-2">
           <span
             className={`rounded-full px-2.5 py-1 text-xs font-bold ${
-              isRent ? 'bg-sky-600 text-white' : 'bg-amber-500 text-white'
+              isRent ? 'bg-sky-600 text-white' : 'bg-stone-700 text-white'
             }`}
           >
             {isRent ? 'For rent' : 'For sale'}
@@ -72,7 +72,7 @@ export default function PropertyListingCard({
             </span>
           )}
           {featured && (
-            <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-bold text-amber-900 ring-1 ring-amber-200">
+            <span className="rounded-full bg-stone-100 px-2.5 py-1 text-xs font-bold text-stone-700 ring-1 ring-stone-200">
               Featured
             </span>
           )}
@@ -81,10 +81,10 @@ export default function PropertyListingCard({
       </div>
 
       <div className="p-4 sm:p-5">
-        <p className="text-xl font-bold text-amber-600">
+        <p className="text-xl font-bold text-stone-900">
           {formatPrice(price, listingType)}
         </p>
-        <h3 className="mt-1 font-bold text-stone-900 line-clamp-1 group-hover:text-amber-800 transition-colors">
+        <h3 className="mt-1 font-bold text-stone-900 line-clamp-1 group-hover:text-stone-700 transition-colors">
           {title}
         </h3>
         <p className="mt-2 flex items-start gap-1.5 text-sm text-stone-500">

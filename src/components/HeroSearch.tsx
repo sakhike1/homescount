@@ -40,29 +40,28 @@ export default function HeroSearch() {
   }
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="mt-10 w-full max-w-2xl"
+      className="mt-8 w-full max-w-xl"
     >
-      {/* Tabs */}
-      <div className="inline-flex rounded-2xl bg-white/[0.08] p-1.5 ring-1 ring-white/[0.12] backdrop-blur-xl">
+      <div className="inline-flex rounded-2xl bg-white/10 p-1.5 ring-1 ring-white/15">
         {tabs.map((t) => (
           <button
             key={t.id}
             type="button"
             onClick={() => setTab(t.id)}
-            className={`relative rounded-xl px-6 py-2.5 text-sm font-semibold transition-all duration-300 ${
+            className={`relative rounded-xl px-5 py-2 text-sm font-semibold transition-all duration-300 ${
               tab === t.id
-                ? 'text-white'
-                : 'text-white/60 hover:text-white/90'
+                ? 'text-violet-900'
+                : 'text-white/70 hover:text-white'
             }`}
           >
             {tab === t.id && (
               <motion.div
                 layoutId="activeTab"
-                className="absolute inset-0 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 shadow-lg shadow-amber-500/25"
+                className="absolute inset-0 rounded-xl bg-white shadow-md"
                 transition={{ type: 'spring', stiffness: 400, damping: 30 }}
               />
             )}
@@ -71,24 +70,12 @@ export default function HeroSearch() {
         ))}
       </div>
 
-      <motion.div 
+      <motion.div
         layout
-        className={`mt-5 relative rounded-3xl bg-white/[0.08] backdrop-blur-xl border transition-all duration-500 p-6 sm:p-7 overflow-hidden ${
-          isFocused ? 'border-amber-500/30 shadow-2xl shadow-amber-500/10' : 'border-white/[0.12]'
+        className={`mt-4 relative rounded-2xl bg-white/10 ring-1 transition-all duration-500 p-5 sm:p-6 overflow-hidden ${
+          isFocused ? 'ring-violet-300/40 shadow-lg shadow-violet-900/20' : 'ring-white/15'
         }`}
       >
-        {/* Subtle glow when focused */}
-        <AnimatePresence>
-          {isFocused && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute -top-20 -left-20 w-60 h-60 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"
-            />
-          )}
-        </AnimatePresence>
-
         <AnimatePresence mode="wait">
           {tab === 'sell' ? (
             <motion.div
@@ -99,14 +86,14 @@ export default function HeroSearch() {
               transition={{ duration: 0.3 }}
             >
               <div className="flex items-start gap-3">
-                <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 grid place-items-center shadow-lg shadow-amber-500/25">
-                  <Sparkles className="h-5 w-5 text-white" aria-hidden />
+                <div className="h-10 w-10 rounded-2xl bg-white grid place-items-center shadow-md">
+                  <Sparkles className="h-5 w-5 text-violet-700" aria-hidden />
                 </div>
                 <div>
-                  <p className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                  <p className="text-lg font-bold text-white tracking-tight">
                     List your property on Homescout
                   </p>
-                  <p className="mt-2 text-sm text-white/60 leading-relaxed">
+                  <p className="mt-2 text-sm text-violet-100/70 leading-relaxed">
                     Reach buyers and renters across South Africa. Upload photos, set
                     your price, and promote your listing.
                   </p>
@@ -114,10 +101,12 @@ export default function HeroSearch() {
               </div>
               <Link
                 href="/sell"
-                className="group mt-6 inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 px-7 py-4 text-sm font-bold text-white hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-xl shadow-amber-500/25 hover:shadow-amber-500/40 hover:scale-[1.02]"
+                className="group mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-bold text-violet-900 hover:bg-violet-50 transition-all duration-300 shadow-md hover:shadow-lg"
               >
                 Learn how to sell
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-violet-900 text-white">
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
+                </span>
               </Link>
             </motion.div>
           ) : (
@@ -128,23 +117,23 @@ export default function HeroSearch() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <p className="text-lg sm:text-xl font-bold text-white tracking-tight">
+              <p className="text-base font-bold text-white tracking-tight">
                 {tab === 'rent'
-                  ? 'Find a rental you\'ll love'
+                  ? "Find a rental you'll love"
                   : 'Find your next home'}
               </p>
-              <p className="mt-2 text-sm text-white/50">
+              <p className="mt-1.5 text-sm text-violet-100/60">
                 Search by city, suburb or address across all 9 provinces.
               </p>
 
               <form
                 onSubmit={handleSearch}
-                className="mt-6 bg-white rounded-2xl p-2 flex flex-col sm:flex-row gap-2 shadow-2xl ring-1 ring-black/5"
+                className="mt-4 bg-white rounded-xl p-1.5 flex flex-col sm:flex-row gap-1.5 shadow-lg ring-1 ring-black/5"
               >
                 <div className="relative flex-1">
                   <MapPin
-                    className={`pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 transition-colors duration-300 ${
-                      isFocused ? 'text-amber-500' : 'text-stone-400'
+                    className={`pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 transition-colors duration-300 ${
+                      isFocused ? 'text-violet-600' : 'text-stone-400'
                     }`}
                     aria-hidden
                   />
@@ -155,13 +144,13 @@ export default function HeroSearch() {
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                     placeholder="City, suburb or address..."
-                    className="w-full pl-12 pr-4 py-4 text-stone-800 rounded-xl outline-none text-sm focus:ring-2 focus:ring-amber-400/50 transition-shadow duration-300 placeholder:text-stone-400"
+                    className="w-full pl-10 pr-3 py-3 text-stone-800 rounded-lg outline-none text-sm focus:ring-2 focus:ring-violet-400/50 transition-shadow duration-300 placeholder:text-stone-400"
                   />
                 </div>
                 <select
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
-                  className="px-4 py-4 text-stone-600 rounded-xl outline-none text-sm bg-stone-50 border-0 focus:ring-2 focus:ring-amber-400/50 transition-shadow duration-300 cursor-pointer hover:bg-stone-100"
+                  className="px-3 py-3 text-stone-600 rounded-lg outline-none text-sm bg-stone-50 border-0 focus:ring-2 focus:ring-violet-400/50 transition-shadow duration-300 cursor-pointer hover:bg-stone-100"
                 >
                   <option value="">Any price</option>
                   <option value="500000">Under R500k</option>
@@ -171,21 +160,21 @@ export default function HeroSearch() {
                 </select>
                 <button
                   type="submit"
-                  className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-7 py-4 rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 text-sm shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 hover:scale-[1.02] active:scale-[0.98]"
+                  className="group inline-flex items-center justify-center gap-2 bg-violet-900 text-white px-5 py-3 rounded-lg font-semibold hover:bg-violet-800 transition-all duration-300 text-sm shadow-md active:scale-[0.98]"
                 >
                   <Search className="h-4 w-4" aria-hidden />
                   Search
                 </button>
               </form>
 
-              <div className="mt-5 flex flex-wrap gap-2">
-                <span className="text-xs text-white/40 self-center mr-1">Popular:</span>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="text-xs text-violet-100/50 self-center mr-1">Popular:</span>
                 {popularAreas.map((area) => (
                   <button
                     key={area}
                     type="button"
                     onClick={() => setQuery(area)}
-                    className="rounded-full bg-white/[0.08] px-4 py-1.5 text-xs font-medium text-white/70 ring-1 ring-white/[0.1] hover:bg-white/[0.15] hover:text-white transition-all duration-300 hover:ring-white/20"
+                    className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-violet-100/80 ring-1 ring-white/15 hover:bg-white/20 hover:text-white transition-all duration-300"
                   >
                     {area}
                   </button>

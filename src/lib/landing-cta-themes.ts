@@ -4,35 +4,35 @@ export type LandingCtaTheme = {
   gradient: string
 }
 
-/** Horizontal gradient washes — amber stays in every palette (brand). */
-const charcoalAmberViolet: LandingCtaTheme = {
-  gradient: 'bg-gradient-to-r from-gray-800 via-amber-200 to-violet-400',
+/** Purple gradient washes — aligned with site violet accent. */
+const violetDeep: LandingCtaTheme = {
+  gradient: 'bg-gradient-to-br from-violet-950 via-violet-800 to-violet-600',
 }
 
-const stoneAmberSky: LandingCtaTheme = {
-  gradient: 'bg-gradient-to-r from-stone-800 via-amber-300 to-sky-400',
+const violetRoyal: LandingCtaTheme = {
+  gradient: 'bg-gradient-to-r from-violet-900 via-violet-700 to-purple-500',
 }
 
-const violetAmberRose: LandingCtaTheme = {
-  gradient: 'bg-gradient-to-r from-violet-900 via-amber-200 to-rose-300',
+const violetGlow: LandingCtaTheme = {
+  gradient: 'bg-gradient-to-br from-purple-950 via-violet-800 to-violet-500',
 }
 
-const charcoalAmberTeal: LandingCtaTheme = {
-  gradient: 'bg-gradient-to-r from-gray-800 via-amber-200 to-teal-400',
+const violetSunset: LandingCtaTheme = {
+  gradient: 'bg-gradient-to-r from-violet-950 via-violet-700 to-fuchsia-600',
 }
 
-const skyAmberViolet: LandingCtaTheme = {
-  gradient: 'bg-gradient-to-r from-sky-900 via-amber-200 to-violet-400',
+const violetIndigo: LandingCtaTheme = {
+  gradient: 'bg-gradient-to-br from-indigo-950 via-violet-800 to-violet-600',
 }
 
-const stoneAmberRose: LandingCtaTheme = {
-  gradient: 'bg-gradient-to-r from-stone-800 via-amber-300 to-rose-300',
+const violetPlum: LandingCtaTheme = {
+  gradient: 'bg-gradient-to-r from-violet-950 via-purple-800 to-violet-500',
 }
 
 export const landingCtaRotations: Record<LandingCtaVariant, LandingCtaTheme[]> = {
-  buy: [charcoalAmberViolet, stoneAmberSky, violetAmberRose],
-  rent: [charcoalAmberViolet, skyAmberViolet, charcoalAmberTeal],
-  sell: [charcoalAmberViolet, violetAmberRose, stoneAmberRose],
+  buy: [violetDeep, violetRoyal, violetGlow],
+  rent: [violetRoyal, violetIndigo, violetSunset],
+  sell: [violetDeep, violetPlum, violetGlow],
 }
 
 export const landingCtaThemes: Record<LandingCtaVariant, LandingCtaTheme> = {

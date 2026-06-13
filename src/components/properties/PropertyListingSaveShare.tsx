@@ -68,7 +68,7 @@ export default function PropertyListingSaveShare({
         aria-pressed={saved}
         className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold shadow-lg ring-1 backdrop-blur transition ${
           saved
-            ? 'bg-amber-500 text-white ring-amber-600/30 hover:bg-amber-600'
+            ? 'bg-violet-700 text-white ring-violet-600/30 hover:bg-violet-800'
             : 'bg-white/95 text-stone-800 ring-stone-900/10 hover:bg-white'
         }`}
       >

@@ -24,9 +24,9 @@ export default async function PropertiesBrowseResults({ filters, type }: Props) 
   return (
     <div className="mt-6 sm:mt-8">
       {isDemo && (
-        <div className="mb-8 flex gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 sm:px-5 sm:py-4">
-          <Info className="h-5 w-5 shrink-0 text-amber-600 mt-0.5" aria-hidden />
-          <p className="text-sm text-amber-900 leading-relaxed">
+        <div className="mb-8 flex gap-3 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 sm:px-5 sm:py-4">
+          <Info className="h-5 w-5 shrink-0 text-stone-500 mt-0.5" aria-hidden />
+          <p className="text-sm text-stone-700 leading-relaxed">
             These are <strong>sample listings</strong> so you can explore the site.
             Once sellers publish real properties, only live listings will appear here.
           </p>

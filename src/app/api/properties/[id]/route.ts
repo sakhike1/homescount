@@ -6,13 +6,14 @@ import {
   unauthorized,
 } from '@/lib/api-auth'
 import { computeListingQualityScore } from '@/lib/listing-quality'
+import { propertyImageOrderBy } from '@/lib/property-image-order'
 import { parsePropertyFeatures } from '@/lib/property-features'
 
 async function getOwnedProperty(id: string, sellerId: string) {
   return prisma.property.findFirst({
     where: { id, sellerId },
     include: {
-      images: { orderBy: { createdAt: 'asc' } },
+      images: { orderBy: propertyImageOrderBy },
       adPayments: { orderBy: { createdAt: 'desc' }, take: 5 },
     },
   })

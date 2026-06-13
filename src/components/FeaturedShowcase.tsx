@@ -142,7 +142,7 @@ export default function FeaturedShowcase({
                 type="button"
                 onClick={goPrev}
                 aria-label="Previous property"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 text-gray-700 hover:border-amber-400 hover:text-amber-600 transition"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-700 text-white shadow-md shadow-violet-900/20 transition hover:bg-violet-800"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
@@ -150,7 +150,7 @@ export default function FeaturedShowcase({
                 type="button"
                 onClick={goNext}
                 aria-label="Next property"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 text-gray-700 hover:border-amber-400 hover:text-amber-600 transition"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-700 text-white shadow-md shadow-violet-900/20 transition hover:bg-violet-800"
               >
                 <ChevronRight className="h-5 w-5" />
               </button>
@@ -178,7 +178,7 @@ export default function FeaturedShowcase({
 
                   <p className="text-lg font-black text-gray-900">
                     Price starts at{' '}
-                    <span className="text-amber-600">{formatPrice(current.price)}</span>
+                    <span className="text-stone-900">{formatPrice(current.price)}</span>
                   </p>
                   <p className="mt-2 text-sm text-gray-600 line-clamp-2">
                     {current.description}

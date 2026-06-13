@@ -86,7 +86,7 @@ export default function PropertyDetailView({
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-2 px-4 py-3 text-sm">
           <Link
             href={backHref}
-            className="inline-flex items-center gap-1.5 font-semibold text-amber-700 hover:text-amber-800"
+            className="inline-flex items-center gap-1.5 font-semibold text-violet-700 hover:text-violet-800"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden />
             {backLabel}
@@ -108,7 +108,7 @@ export default function PropertyDetailView({
 
       <div className="mx-auto max-w-7xl px-4 py-6 sm:py-8">
         {isDemo && (
-          <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+          <div className="mb-6 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700">
             <strong>Sample listing</strong> — sellers upload their own photos when they list on
             Homescout. Contact forms are disabled on demos.
           </div>
@@ -134,14 +134,14 @@ export default function PropertyDetailView({
                   {!isRent && (
                     <a
                       href="#bond-calculator"
-                      className="mt-1 inline-block text-sm font-semibold text-amber-700 hover:text-amber-800 hover:underline"
+                      className="mt-1 inline-block text-sm font-semibold text-violet-700 hover:text-violet-800 hover:underline"
                     >
                       Calculate bond costs
                     </a>
                   )}
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full bg-amber-500 px-3 py-1 text-xs font-bold text-white">
+                  <span className="rounded-full bg-stone-700 px-3 py-1 text-xs font-bold text-white">
                     {isRent ? 'For rent' : 'For sale'}
                   </span>
                   <span className="rounded-full bg-stone-100 px-3 py-1 text-xs font-bold text-stone-700">
@@ -159,7 +159,7 @@ export default function PropertyDetailView({
                 {property.suburb || property.city}
               </h1>
               <p className="mt-2 flex items-center gap-2 text-stone-600">
-                <MapPin className="h-4 w-4 shrink-0 text-amber-500" aria-hidden />
+                <MapPin className="h-4 w-4 shrink-0 text-stone-500" aria-hidden />
                 <span>
                   {address}, {property.city}, {property.province}
                 </span>
@@ -169,7 +169,7 @@ export default function PropertyDetailView({
               <div className="mt-6 flex flex-wrap gap-4 border-y border-stone-100 py-5">
                 {stats.map(({ icon: Icon, label }) => (
                   <div key={label} className="flex items-center gap-2 text-sm font-semibold text-stone-700">
-                    <Icon className="h-5 w-5 text-amber-600" aria-hidden />
+                    <Icon className="h-5 w-5 text-stone-500" aria-hidden />
                     {label}
                   </div>
                 ))}

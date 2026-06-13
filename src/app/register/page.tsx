@@ -3,13 +3,15 @@
 import { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import HomescoutLogo from '@/components/brand/HomescoutLogo'
-import {
-  formButtonPrimaryFullClass,
-  formErrorClass,
-  formInputClass,
-  formSelectClass,
-} from '@/lib/form-styles'
+import AuthShell, {
+  authButtonPrimaryClass,
+  authInputClass,
+  authSelectClass,
+  authSigninLinkClass,
+} from '@/components/auth/AuthShell'
+import { UserPlus } from 'lucide-react'
+import { signInAfterRegister } from './actions'
+import { formErrorClass } from '@/lib/form-styles'
 
 function RegisterForm() {
   const router = useRouter()
@@ -45,11 +47,14 @@ function RegisterForm() {
         return
       }
 
-      router.push(
-        formData.role === 'SELLER'
-          ? '/login?intent=seller'
-          : '/login'
+      const signIn = await signInAfterRegister(
+        formData.email,
+        formData.password,
+        formData.role
       )
+
+      router.push(signIn.redirectTo)
+      router.refresh()
     } catch {
       setError('Something went wrong')
     } finally {
@@ -58,79 +63,100 @@ function RegisterForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="w-full max-w-md rounded-2xl border border-gray-200/60 bg-white p-8 shadow-md">
-        <div className="mb-6 flex justify-center">
-          <HomescoutLogo href="/" size="lg" className="justify-center" />
+    <AuthShell mode="register">
+      <h1 className="text-2xl sm:text-[1.75rem] font-bold tracking-tight text-stone-900">
+        Create an account
+      </h1>
+      <p className="mt-2 text-sm text-stone-500">
+        Join Homescout to browse, save, or list property across South Africa.
+      </p>
+
+      {error && <div className={`mt-6 ${formErrorClass}`}>{error}</div>}
+
+      <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+        <div>
+          <label htmlFor="register-name" className="block text-sm font-medium text-stone-700 mb-1.5">
+            Full name
+          </label>
+          <input
+            id="register-name"
+            type="text"
+            required
+            placeholder="Enter your full name"
+            className={authInputClass}
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          />
         </div>
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">Create an account</h1>
-        <p className="text-gray-500 mb-6">Join Homescout today</p>
 
-        {error && <div className={`mb-4 ${formErrorClass}`}>{error}</div>}
+        <div>
+          <label htmlFor="register-email" className="block text-sm font-medium text-stone-700 mb-1.5">
+            Email address
+          </label>
+          <input
+            id="register-email"
+            type="email"
+            required
+            placeholder="Enter your email address"
+            className={authInputClass}
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          />
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-            <input
-              type="text"
-              required
-              className={formInputClass}
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            />
-          </div>
+        <div>
+          <label htmlFor="register-password" className="block text-sm font-medium text-stone-700 mb-1.5">
+            Password
+          </label>
+          <input
+            id="register-password"
+            type="password"
+            required
+            placeholder="Create a password"
+            className={authInputClass}
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+          />
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              required
-              className={formInputClass}
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              required
-              className={formInputClass}
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">I am a</label>
-            <select
-              className={formSelectClass}
-              value={formData.role}
-              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-            >
-              <option value="BUYER">Buyer — I want to find a property</option>
-              <option value="SELLER">Seller — I want to list a property</option>
-            </select>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className={formButtonPrimaryFullClass}
+        <div>
+          <label htmlFor="register-role" className="block text-sm font-medium text-stone-700 mb-1.5">
+            I am a
+          </label>
+          <select
+            id="register-role"
+            className={authSelectClass}
+            value={formData.role}
+            onChange={(e) => setFormData({ ...formData, role: e.target.value })}
           >
-            {loading ? 'Creating account...' : 'Create Account'}
-          </button>
-        </form>
+            <option value="BUYER">Buyer — I want to find a property</option>
+            <option value="SELLER">Seller — I want to list a property</option>
+          </select>
+        </div>
 
-        <p className="text-center text-sm text-gray-500 mt-4">
-          Already have an account?{' '}
-          <Link href="/login" className="text-amber-700 hover:underline">
-            Sign in
-          </Link>
-        </p>
-      </div>
-    </div>
+        <button
+          type="submit"
+          disabled={loading}
+          className={authButtonPrimaryClass}
+        >
+          {loading ? (
+            'Creating account...'
+          ) : (
+            <>
+              <UserPlus className="h-4 w-4" aria-hidden />
+              Create account
+            </>
+          )}
+        </button>
+      </form>
+
+      <p className="mt-6 text-center text-sm text-stone-500">
+        Already have an account?{' '}
+        <Link href="/login" className={authSigninLinkClass}>
+          Sign in
+        </Link>
+      </p>
+    </AuthShell>
   )
 }
 
@@ -138,8 +164,8 @@ export default function RegisterPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <p className="text-gray-500">Loading...</p>
+        <div className="min-h-screen bg-stone-100 flex items-center justify-center">
+          <p className="text-stone-500">Loading...</p>
         </div>
       }
     >

@@ -1,9 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, ArrowRight, CheckCircle2 } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Mail } from 'lucide-react'
 import ConsentCheckbox from '@/components/legal/ConsentCheckbox'
-import { FooterSocialLinks } from '@/components/footer/SocialIconButton'
+
+const NEWSLETTER_IMAGE = '/property-images/59f7a7ad7ff6f13afbfc384144a0628d.jpg'
 
 export default function NewsletterFooterForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -53,68 +56,87 @@ export default function NewsletterFooterForm() {
   }
 
   return (
-    <div>
-      <div className="flex items-center gap-3 mb-4">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 shadow-lg shadow-amber-500/20">
-          <Mail className="h-5 w-5 text-white" aria-hidden />
+    <div className="newsletter-card-shell relative overflow-hidden rounded-[1.75rem] border border-stone-200/80 sm:rounded-[2rem]">
+      <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="relative min-h-[200px] overflow-hidden bg-stone-200 sm:min-h-[240px] lg:min-h-[280px] lg:rounded-l-[1.75rem]">
+          <Image
+            src={NEWSLETTER_IMAGE}
+            alt="Modern South African home"
+            fill
+            priority
+            quality={92}
+            className="object-cover object-center"
+            sizes="(max-width: 1024px) 100vw, 480px"
+          />
         </div>
-        <h3 className="text-lg font-semibold text-slate-100">Stay in the loop</h3>
-      </div>
-      <p className="max-w-md text-sm leading-relaxed text-slate-400">
-        Join our newsletter to stay up to date on property news, market updates, and
-        buying advice across South Africa.
-      </p>
-      
-      <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-        <div className="flex max-w-lg flex-col gap-3 sm:flex-row sm:items-stretch">
-          <label className="sr-only" htmlFor="footer-newsletter-email">
-            Your email address
-          </label>
-          <div className="relative flex-1">
-            <input
-              id="footer-newsletter-email"
-              name="email"
-              type="email"
-              required
-              placeholder="Enter your email"
-              disabled={status === 'loading'}
-              className="w-full rounded-xl border border-slate-600/50 bg-slate-800/50 px-4 py-3.5 text-sm text-slate-100 placeholder:text-slate-500 outline-none transition-all duration-300 focus:border-amber-500/50 focus:bg-slate-800/80 focus:ring-2 focus:ring-amber-500/20 disabled:opacity-60"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={status === 'loading'}
-            className="group shrink-0 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-amber-500/20 transition-all duration-300 hover:shadow-amber-500/30 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:hover:scale-100"
-          >
-            {status === 'loading' ? (
-              <span className="flex items-center gap-2">
-                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                Subscribing
-              </span>
-            ) : (
-              <>
-                Subscribe
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
-              </>
+
+        <div className="newsletter-content-panel relative px-6 py-8 sm:px-10 sm:py-10 lg:py-12">
+          <div className="relative z-10 max-w-xl">
+            <h3 className="text-2xl font-bold leading-tight text-stone-800 sm:text-[1.75rem]">
+              Subscribe to our newsletter for property updates across South Africa
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-stone-600 sm:text-base">
+              Get market insights, new listings, and buying tips delivered to your inbox.
+            </p>
+
+            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="newsletter-input-pill flex min-w-0 flex-1 items-center gap-3 overflow-hidden rounded-full px-4 py-1 ring-1 ring-stone-200/90">
+                  <Mail
+                    className="h-4 w-4 shrink-0 text-stone-400"
+                    aria-hidden
+                  />
+                  <label className="sr-only" htmlFor="footer-newsletter-email">
+                    Your email address
+                  </label>
+                  <input
+                    id="footer-newsletter-email"
+                    name="email"
+                    type="email"
+                    required
+                    autoComplete="email"
+                    placeholder="Enter your email"
+                    disabled={status === 'loading'}
+                    className="newsletter-input-light h-11 min-w-0 flex-1 border-0 bg-transparent py-0 text-sm text-stone-800 placeholder:text-stone-400 outline-none ring-0 focus:outline-none focus:ring-0 disabled:opacity-60"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className="btn-grad w-full shrink-0 rounded-full px-8 py-3 text-sm font-semibold sm:w-auto sm:py-2.5"
+                >
+                  {status === 'loading' ? 'Subscribing…' : 'Subscribe'}
+                </button>
+              </div>
+
+              <ConsentCheckbox
+                variant="newsletter"
+                id="footer-newsletter-privacy-consent"
+                tone="newsletter"
+              />
+            </form>
+
+            {status === 'success' && (
+              <p className="mt-4 text-sm font-medium text-emerald-700">
+                Thanks — you&apos;re on the list!
+              </p>
             )}
-          </button>
+            {status === 'error' && (
+              <p className="mt-4 text-sm font-medium text-red-600">{errorMessage}</p>
+            )}
+
+            <p className="mt-4 text-xs text-stone-500">
+              You can unsubscribe at any time. Read our{' '}
+              <Link
+                href="/privacy"
+                className="font-medium text-stone-700 underline underline-offset-2 hover:text-stone-900"
+              >
+                privacy policy
+              </Link>
+              .
+            </p>
+          </div>
         </div>
-        <ConsentCheckbox variant="newsletter" id="footer-newsletter-privacy-consent" tone="dark" />
-      </form>
-      
-      {status === 'success' && (
-        <div className="mt-4 flex items-center gap-2 text-sm font-medium text-emerald-400">
-          <CheckCircle2 className="h-4 w-4" aria-hidden />
-          Thanks — you&apos;re on the list!
-        </div>
-      )}
-      {status === 'error' && (
-        <p className="mt-4 text-sm font-medium text-red-400">{errorMessage}</p>
-      )}
-      
-      <div className="mt-10 pt-8 border-t border-slate-700/60">
-        <p className="text-xs text-slate-500 mb-4">Follow us</p>
-        <FooterSocialLinks tone="dark" />
       </div>
     </div>
   )

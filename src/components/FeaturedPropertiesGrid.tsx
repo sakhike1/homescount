@@ -31,7 +31,7 @@ export default function FeaturedPropertiesGrid({
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-stone-500">
               Featured listings
             </p>
             <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-stone-900 text-section-title">
@@ -45,7 +45,7 @@ export default function FeaturedPropertiesGrid({
           </div>
           <Link
             href="/properties"
-            className="inline-flex items-center gap-1.5 text-sm font-bold text-amber-600 hover:text-amber-700 shrink-0"
+            className="inline-flex items-center gap-1.5 text-sm font-bold text-stone-700 hover:text-stone-900 shrink-0"
           >
             View all properties
             <ArrowRight className="h-4 w-4" />
@@ -72,7 +72,7 @@ export default function FeaturedPropertiesGrid({
             >
               <Link
                 href={`/properties/${property.id}`}
-                className="group block rounded-2xl border border-stone-200/80 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-amber-200/60 hover:-translate-y-1 transition-all duration-300"
+                className="group block rounded-2xl border border-stone-200/80 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-stone-300 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="relative aspect-[4/3] bg-stone-100 overflow-hidden">
                   <SafeImage
@@ -87,7 +87,7 @@ export default function FeaturedPropertiesGrid({
                     className={`absolute top-3 left-3 rounded-full px-2.5 py-1 text-xs font-bold ${
                       property.listingType === 'RENT'
                         ? 'bg-sky-600 text-white'
-                        : 'bg-amber-500 text-white'
+                        : 'bg-stone-800 text-white'
                     }`}
                   >
                     {property.listingType === 'RENT' ? 'For rent' : 'For sale'}
@@ -95,10 +95,10 @@ export default function FeaturedPropertiesGrid({
                 </div>
 
                 <div className="p-4 sm:p-5">
-                  <p className="text-xl font-bold text-amber-600">
+                  <p className="text-xl font-bold text-stone-900">
                     {formatPrice(property.price, property.listingType)}
                   </p>
-                  <h3 className="mt-1 font-bold text-stone-900 line-clamp-1 group-hover:text-amber-800 transition-colors">
+                  <h3 className="mt-1 font-bold text-stone-900 line-clamp-1 group-hover:text-stone-700 transition-colors">
                     {property.title}
                   </h3>
                   <p className="mt-2 flex items-center gap-1 text-sm text-stone-500">

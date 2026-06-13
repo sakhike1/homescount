@@ -10,6 +10,9 @@ const filterInputClass =
 const heroFieldClass =
   'w-full rounded-2xl border border-stone-200/80 bg-stone-50/60 px-4 py-3 text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:border-gray-400 focus:bg-white focus:ring-2 focus:ring-gray-200/60'
 
+const searchButtonClass =
+  'w-full sm:w-auto rounded-full border border-stone-200 bg-white px-10 py-3.5 text-sm font-bold text-stone-900 transition hover:border-stone-300 hover:bg-stone-50'
+
 type Props = {
   variant?: 'default' | 'hero'
   defaultType?: string
@@ -85,7 +88,7 @@ export default function PropertyBrowseFilters({
           key={tab.value}
           className={`cursor-pointer rounded-full px-4 py-2 text-sm font-bold transition ${
             activeType === tab.value
-              ? 'bg-amber-500 text-white shadow-md shadow-amber-500/25'
+              ? 'bg-violet-700 text-white shadow-md shadow-violet-900/20'
               : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
           }`}
         >
@@ -179,10 +182,7 @@ export default function PropertyBrowseFilters({
               <SlidersHorizontal className="h-3.5 w-3.5" aria-hidden />
               Refine with suburb, address, and price range
             </p>
-            <button
-              type="submit"
-              className="w-full sm:w-auto rounded-full bg-stone-900 px-10 py-3.5 text-sm font-bold text-white shadow-lg shadow-stone-900/20 hover:bg-stone-800 transition"
-            >
+            <button type="submit" className={searchButtonClass}>
               Search properties
             </button>
           </div>
@@ -253,10 +253,7 @@ export default function PropertyBrowseFilters({
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="w-full sm:w-auto rounded-full bg-stone-900 px-10 py-3.5 text-sm font-bold text-white shadow-sm shadow-stone-900/20 hover:bg-stone-800 transition"
-          >
+          <button type="submit" className={searchButtonClass}>
             Search properties
           </button>
         </>

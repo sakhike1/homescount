@@ -65,8 +65,8 @@ export default function BuyLandingContent({
       </ListingLandingHero>
 
       {hasSearch && (
-        <div className="border-b border-amber-100 bg-amber-50 px-4 py-4">
-          <p className="max-w-7xl mx-auto text-sm text-amber-950">
+        <div className="border-b border-stone-200 bg-stone-50 px-4 py-4">
+          <p className="max-w-7xl mx-auto text-sm text-stone-700">
             You have an active search.{' '}
             <Link href={browseHref} className="font-bold underline hover:no-underline">
               View matching homes for sale

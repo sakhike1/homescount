@@ -103,6 +103,7 @@ model Inquiry {
 model Image {
   id         String   @id @default(cuid())
   url        String
+  sortOrder  Int      @default(0)
   property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   propertyId String
   createdAt  DateTime @default(now())

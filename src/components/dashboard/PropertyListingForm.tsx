@@ -4,8 +4,10 @@ import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
-  formButtonPrimaryClass,
-  formButtonSecondaryClass,
+  dashboardPrimaryButtonClass,
+  dashboardSecondaryButtonClass,
+} from '@/components/dashboard/ListingSection'
+import {
   formChoiceButtonClass,
   formErrorClass,
   formInputClass,
@@ -448,7 +450,7 @@ export default function PropertyListingForm({
               type="checkbox"
               checked={values.showPhone}
               onChange={(e) => update('showPhone', e.target.checked)}
-              className="rounded border-gray-300 text-amber-600 focus:ring-amber-500"
+              className="rounded border-stone-300 text-violet-600 focus:ring-violet-500"
             />
             Show my number on the listing (with WhatsApp button)
           </label>
@@ -464,14 +466,14 @@ export default function PropertyListingForm({
       </div>
 
       <div className="flex flex-wrap gap-3">
-        <button type="submit" disabled={loading} className={formButtonPrimaryClass}>
+        <button type="submit" disabled={loading} className={dashboardPrimaryButtonClass}>
           {loading
             ? 'Saving...'
             : mode === 'create'
-              ? 'Save & add photos'
+              ? 'Save & continue to photos'
               : 'Save changes'}
         </button>
-        <Link href="/dashboard" className={formButtonSecondaryClass}>
+        <Link href="/dashboard" className={dashboardSecondaryButtonClass}>
           Cancel
         </Link>
       </div>

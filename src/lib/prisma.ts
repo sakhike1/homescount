@@ -5,6 +5,18 @@ import { Pool } from 'pg'
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
   pool: Pool | undefined
+  prismaSchemaVersion?: string
+}
+
+/** Bump when Prisma schema changes so `next dev` does not keep a stale client. */
+const PRISMA_SCHEMA_VERSION = 'image-sort-order-v1'
+
+if (
+  process.env.NODE_ENV !== 'production' &&
+  globalForPrisma.prismaSchemaVersion !== PRISMA_SCHEMA_VERSION
+) {
+  globalForPrisma.prisma = undefined
+  globalForPrisma.prismaSchemaVersion = PRISMA_SCHEMA_VERSION
 }
 
 /** Prefer Neon pooler + connect_timeout for cold starts and concurrent Next.js cache revalidation. */

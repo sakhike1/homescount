@@ -9,7 +9,7 @@ export default function PropertyBrowseHeader({ type }: { type: string }) {
   return (
     <div className="border-b border-stone-200 bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 text-white px-4 py-14 sm:py-16">
       <div className="max-w-7xl mx-auto">
-        <p className="text-xs font-bold uppercase tracking-[0.25em] text-amber-400">
+        <p className="text-xs font-bold uppercase tracking-[0.25em] text-violet-300">
           Homescout listings
         </p>
         <h1 className="mt-3 text-3xl sm:text-5xl font-bold tracking-tight max-w-2xl">

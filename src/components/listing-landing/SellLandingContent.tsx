@@ -48,15 +48,15 @@ export default function SellLandingContent() {
         title="How to list your property"
         subtitle="Six simple steps from sign-up to enquiries — you stay in control of when your listing goes live."
         steps={sellJourneySteps}
-        footnote="Already a seller? Sign in and open your dashboard to manage listings, upload photos, and promote."
+        footnote="Already a seller? Sign in, complete your listing, choose a package, and pay to go live."
       />
 
       <SellPromoteSection />
 
       <LandingCtaBanner
         variant="sell"
-        title="Start listing today — it's free to publish"
-        description="Create a seller account, add your first property, and go live when you are ready. Promotion plans are optional."
+        title="Start listing today"
+        description="Create your listing, upload photos, choose a package, and pay to publish — your property goes live on Homescout immediately."
         primaryHref="/register?role=SELLER"
         primaryLabel="Register as seller"
         secondaryHref="/login?intent=seller"

@@ -23,7 +23,7 @@ export default function SocialIconButton({
       className={
         isLight
           ? 'group flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 bg-white text-stone-700 shadow-sm transition hover:border-stone-400 hover:bg-stone-50 hover:text-stone-900'
-          : 'group flex h-11 w-11 items-center justify-center rounded-full border border-slate-600/50 bg-slate-800/50 text-slate-300 shadow-sm backdrop-blur-sm transition hover:border-amber-400/40 hover:bg-amber-500/15 hover:text-slate-100 hover:shadow-[0_0_20px_rgba(251,191,36,0.25)]'
+          : 'group flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 bg-white text-stone-700 shadow-sm transition hover:border-violet-300 hover:bg-violet-50 hover:text-violet-800'
       }
     >
       {children}

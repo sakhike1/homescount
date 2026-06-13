@@ -5,7 +5,7 @@
   --foreground: #1c1917;
   --section-warm: #faf9f7;
   --section-white: #ffffff;
-  --accent: #f59e0b;
+  --accent: #6d28d9;
   --stone-muted: #78716c;
 }
 
@@ -13,6 +13,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-playfair), Georgia, 'Times New Roman', serif;
 }
 
 body {
@@ -77,8 +78,100 @@ body {
 
 .platform-mesh {
   background-image:
-    radial-gradient(at 40% 20%, rgba(245, 158, 11, 0.08) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(16, 185, 129, 0.06) 0px, transparent 45%),
-    radial-gradient(at 0% 50%, rgba(14, 165, 233, 0.06) 0px, transparent 45%),
-    radial-gradient(at 80% 80%, rgba(139, 92, 246, 0.05) 0px, transparent 50%);
+    radial-gradient(at 40% 20%, rgba(109, 40, 217, 0.08) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(120, 113, 108, 0.06) 0px, transparent 45%),
+    radial-gradient(at 0% 50%, rgba(139, 92, 246, 0.06) 0px, transparent 45%),
+    radial-gradient(at 80% 80%, rgba(109, 40, 217, 0.05) 0px, transparent 50%);
+}
+
+/* Dark newsletter inputs — prevent browser autofill / default input backgrounds */
+.newsletter-input-dark {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0;
+  color-scheme: dark;
+  caret-color: #ffffff;
+}
+
+.newsletter-input-dark:hover,
+.newsletter-input-dark:focus,
+.newsletter-input-dark:active {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Newsletter email field on light sage panel */
+.newsletter-input-light {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  caret-color: #44403c;
+}
+
+.newsletter-input-light:hover,
+.newsletter-input-light:focus,
+.newsletter-input-light:active {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.newsletter-input-light:-webkit-autofill,
+.newsletter-input-light:-webkit-autofill:hover,
+.newsletter-input-light:-webkit-autofill:focus,
+.newsletter-input-light:-webkit-autofill:active {
+  -webkit-text-fill-color: #44403c !important;
+  caret-color: #44403c;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+  transition: background-color 99999s ease-in-out 0s;
+}
+
+.newsletter-input-pill {
+  background-color: #ffffff;
+  box-shadow: 0 1px 4px rgba(93, 65, 87, 0.08);
+}
+
+/* Newsletter card — stone-100 panel on white section background */
+.newsletter-card-shell {
+  background-color: #f5f5f4;
+  box-shadow: 0 12px 32px rgba(28, 25, 23, 0.06);
+}
+
+.newsletter-content-panel {
+  background-color: #f5f5f4;
+}
+
+/* Plum → sage gradient CTA (animated on hover) */
+.btn-grad {
+  background-image: linear-gradient(to right, #5d4157 0%, #a8caba 51%, #5d4157 100%);
+  background-size: 200% auto;
+  color: #ffffff;
+  transition: background-position 0.5s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 20px rgba(238, 238, 238, 0.2);
+  border: none;
+  outline: none;
+}
+
+.btn-grad:hover:not(:disabled) {
+  background-position: right center;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.btn-grad:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }

@@ -2,16 +2,16 @@ import { test, expect } from '@playwright/test'
 import { acceptCookies, registerAccount, TEST_USERS } from './helpers'
 
 test.describe('Registration', () => {
-  test('buyer registration redirects to login', async ({ page }) => {
+  test('buyer registration signs in and redirects home', async ({ page }) => {
     test.skip(!process.env.AUTH_SECRET && !process.env.NEXTAUTH_SECRET, 'Auth secrets required')
     await registerAccount(page, { role: 'BUYER' })
-    await expect(page).toHaveURL(/\/login/, { timeout: 15_000 })
+    await expect(page).toHaveURL('/', { timeout: 15_000 })
   })
 
-  test('seller registration redirects to seller login', async ({ page }) => {
+  test('seller registration signs in and opens new listing', async ({ page }) => {
     test.skip(!process.env.AUTH_SECRET && !process.env.NEXTAUTH_SECRET, 'Auth secrets required')
     await registerAccount(page, { role: 'SELLER' })
-    await expect(page).toHaveURL(/\/login\?intent=seller/, { timeout: 15_000 })
+    await expect(page).toHaveURL(/\/dashboard\/listings\/new/, { timeout: 15_000 })
   })
 
   test('register?role=SELLER pre-selects seller role', async ({ page }) => {

@@ -23,17 +23,17 @@ export default async function DashboardLayout({
   const unreadCount = await getUnreadInquiryCount(session.user.id)
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="border-b border-gray-200 bg-white">
+    <div className="min-h-screen bg-[#faf9f7]">
+      <header className="border-b border-stone-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4">
           <div className="flex items-center gap-6">
             <HomescoutLogo href="/" size="md" />
-            <span className="hidden sm:inline text-sm font-semibold text-gray-500">
-              Seller Portal
+            <span className="hidden rounded-full bg-violet-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-violet-800 sm:inline">
+              Seller portal
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="hidden sm:inline text-sm text-gray-600">
+            <span className="hidden text-sm text-stone-600 sm:inline">
               {session.user.name}
             </span>
             <SignOutButton />
@@ -42,11 +42,13 @@ export default async function DashboardLayout({
       </header>
 
       <div className="mx-auto max-w-7xl px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          <aside className="lg:w-56 shrink-0">
-            <DashboardNav unreadCount={unreadCount} />
+        <div className="flex flex-col gap-8 lg:flex-row">
+          <aside className="shrink-0 lg:w-60">
+            <div className="rounded-2xl border border-stone-200 bg-white p-3 shadow-sm lg:sticky lg:top-6">
+              <DashboardNav unreadCount={unreadCount} />
+            </div>
           </aside>
-          <main className="flex-1 min-w-0">{children}</main>
+          <main className="min-w-0 flex-1">{children}</main>
         </div>
       </div>
     </div>

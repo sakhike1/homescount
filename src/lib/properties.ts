@@ -15,6 +15,7 @@ import {
   normalizeListingVerified,
 } from '@/lib/listing-seller-display'
 import { parsePropertyFeatures } from '@/lib/property-features'
+import { propertyImageOrderBy } from '@/lib/property-image-order'
 export { formatPrice, formatZaNumber } from '@/lib/format-price'
 
 export function parseListingTypeFromParam(
@@ -89,7 +90,7 @@ function buildWhere(filters: PropertyFilters): Prisma.PropertyWhereInput {
 }
 
 const propertyListInclude = {
-  images: { take: 1, orderBy: [{ createdAt: 'asc' as const }, { id: 'asc' as const }] },
+  images: { take: 1, orderBy: propertyImageOrderBy },
   seller: { select: { name: true } },
 } satisfies Prisma.PropertyInclude
 
@@ -115,7 +116,7 @@ export async function getPropertyById(id: string) {
     prisma.property.findFirst({
       where: { id, published: true, status: 'AVAILABLE', seller: { active: true } },
       include: {
-        images: { orderBy: [{ createdAt: 'asc' }, { id: 'asc' }] },
+        images: { orderBy: propertyImageOrderBy },
         seller: {
           select: {
             name: true,

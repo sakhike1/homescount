@@ -106,7 +106,7 @@ export default function PropertyBrowsePage({
 
         <div className="max-w-7xl mx-auto">
 
-          <p className="text-xs font-bold uppercase tracking-[0.25em] text-amber-400">
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-violet-300">
 
             Homescout listings
 
@@ -138,11 +138,11 @@ export default function PropertyBrowsePage({
 
         {isDemo && (
 
-          <div className="mb-8 flex gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 sm:px-5 sm:py-4">
+          <div className="mb-8 flex gap-3 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 sm:px-5 sm:py-4">
 
-            <Info className="h-5 w-5 shrink-0 text-amber-600 mt-0.5" aria-hidden />
+            <Info className="h-5 w-5 shrink-0 text-stone-500 mt-0.5" aria-hidden />
 
-            <p className="text-sm text-amber-900 leading-relaxed">
+            <p className="text-sm text-stone-700 leading-relaxed">
 
               These are <strong>sample listings</strong> so you can explore the
 

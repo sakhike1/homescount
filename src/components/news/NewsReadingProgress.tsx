@@ -28,7 +28,7 @@ export default function NewsReadingProgress() {
       aria-hidden
     >
       <div
-        className="h-full bg-gradient-to-r from-amber-500 to-orange-500 transition-[width] duration-150 ease-out"
+        className="h-full bg-violet-600 transition-[width] duration-150 ease-out"
         style={{ width: `${progress}%` }}
       />
     </div>

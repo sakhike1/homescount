@@ -1,58 +1,73 @@
 import Link from 'next/link'
-import { AD_PLANS } from '@/lib/ad-plans'
-import { Megaphone, Sparkles } from 'lucide-react'
+import { LISTING_PACKAGES, formatPackagePrice } from '@/lib/listing-packages'
+import { Check, Megaphone } from 'lucide-react'
 
 export default function SellPromoteSection() {
-  const plans = Object.entries(AD_PLANS)
+  const plans = Object.values(LISTING_PACKAGES)
 
   return (
-    <section className="section-warm px-4 py-14 sm:py-16 border-t border-stone-100">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-start gap-3 max-w-2xl">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-stone-900 text-amber-400">
-            <Megaphone className="h-5 w-5" />
+    <section className="section-warm border-t border-stone-100 px-4 py-14 sm:py-16">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex max-w-2xl items-start gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-900 text-white">
+            <Megaphone className="h-5 w-5" aria-hidden />
           </div>
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 text-section-title">
-              Promote your listing
+            <h2 className="text-section-title text-2xl font-bold text-stone-900 sm:text-3xl">
+              Listing packages
             </h2>
-            <p className="mt-2 text-stone-600 leading-relaxed">
-              Optional paid boosts after you publish — more visibility on the
-              homepage and in search results.
+            <p className="mt-2 leading-relaxed text-stone-600">
+              Choose a package when you publish — pay once and your listing goes live
+              immediately. Upgrade anytime from your dashboard.
             </p>
           </div>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {plans.map(([key, plan]) => (
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {plans.map((plan) => (
             <div
-              key={key}
-              className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm"
+              key={plan.key}
+              className={`relative rounded-2xl border bg-white p-6 shadow-sm ${
+                plan.popular
+                  ? 'border-violet-300 ring-2 ring-violet-100'
+                  : 'border-stone-200'
+              }`}
             >
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-amber-500" />
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-700">
-                  {plan.label}
+              {plan.popular && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-violet-900 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+                  Most popular
                 </span>
-              </div>
+              )}
+              <p className="text-sm font-bold text-violet-700">{plan.label}</p>
               <p className="mt-3 text-2xl font-bold text-stone-900">
-                R {plan.price.toLocaleString('en-ZA')}
+                {formatPackagePrice(plan.price)}
               </p>
-              <p className="text-sm text-stone-500">{plan.days} days</p>
-              <p className="mt-3 text-sm text-stone-600 leading-relaxed">
-                {plan.description}
+              <p className="text-sm text-stone-500">{plan.days}-day listing</p>
+              <p className="mt-3 text-sm leading-relaxed text-stone-600">
+                {plan.tagline}
               </p>
+              <ul className="mt-4 space-y-2">
+                {plan.features.slice(0, 4).map((feature) => (
+                  <li
+                    key={feature}
+                    className="flex items-start gap-2 text-xs text-stone-600"
+                  >
+                    <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-violet-600" aria-hidden />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
 
         <p className="mt-8 text-center text-sm text-stone-500">
-          Promote from your seller dashboard after a listing is published.{' '}
+          Create a seller account, add your listing, then pick a package at checkout.{' '}
           <Link
             href="/register?role=SELLER"
-            className="font-bold text-amber-700 hover:text-amber-800"
+            className="font-bold text-violet-700 hover:text-violet-800"
           >
-            Create a seller account
+            Get started free
           </Link>
         </p>
       </div>

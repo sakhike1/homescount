@@ -29,7 +29,7 @@ export default function PropertyCard({
   return (
     <Link
       href={`/properties/${id}`}
-      className="group block rounded-2xl border border-stone-200 bg-white overflow-hidden shadow-sm hover:shadow-md hover:border-amber-200 transition"
+      className="group block rounded-2xl border border-stone-200 bg-white overflow-hidden shadow-sm hover:shadow-md hover:border-stone-300 transition"
     >
       <div className="relative aspect-[4/3] bg-stone-100">
         <SafeImage
@@ -39,13 +39,17 @@ export default function PropertyCard({
           className="object-cover group-hover:scale-105 transition duration-300"
           sizes="(max-width:768px) 100vw, 33vw"
         />
-        <span className="absolute top-3 left-3 rounded-full bg-amber-500 px-2.5 py-1 text-xs font-bold text-white">
+        <span
+          className={`absolute top-3 left-3 rounded-full px-2.5 py-1 text-xs font-bold text-white ${
+            listingType === 'RENT' ? 'bg-sky-600' : 'bg-stone-700'
+          }`}
+        >
           {listingType === 'RENT' ? 'For rent' : 'For sale'}
         </span>
       </div>
 
       <div className="p-4">
-        <p className="text-lg font-bold text-amber-600">
+        <p className="text-lg font-bold text-stone-900">
           {formatPrice(price, listingType)}
         </p>
         <h3 className="font-bold text-stone-900 line-clamp-1">{title}</h3>

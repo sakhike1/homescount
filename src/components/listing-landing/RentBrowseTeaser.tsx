@@ -57,7 +57,7 @@ export default function RentBrowseTeaser({
           <p className="mt-3 text-stone-600">{emptyBody}</p>
           <Link
             href={emptyLink}
-            className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-amber-700 hover:text-amber-800"
+            className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-violet-700 hover:text-violet-800"
           >
             {emptyLinkLabel}
             <ArrowRight className="h-4 w-4" />
@@ -79,7 +79,7 @@ export default function RentBrowseTeaser({
           </div>
           <Link
             href={browseHref}
-            className="inline-flex items-center gap-2 text-sm font-bold text-amber-700 hover:text-amber-800 shrink-0"
+            className="inline-flex items-center gap-2 text-sm font-bold text-violet-700 hover:text-violet-800 shrink-0"
           >
             {viewAllLabel}
             <ArrowRight className="h-4 w-4" />

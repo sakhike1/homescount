@@ -1,4 +1,4 @@
-import { Geist } from 'next/font/google'
+import { Geist, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import TopNav from '@/components/TopNav'
 import SiteFooter from '@/components/SiteFooter'
@@ -12,6 +12,11 @@ import { defaultSiteMetadata, organizationJsonLd, websiteJsonLd } from '@/lib/se
 const geist = Geist({
   subsets: ['latin'],
   variable: '--font-geist-sans',
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
 })
 
 export const metadata = {
@@ -30,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en-ZA">
       <body
-        className={`${geist.variable} ${geist.className} min-h-full flex flex-col antialiased`}
+        className={`${geist.variable} ${playfair.variable} ${geist.className} min-h-full flex flex-col antialiased`}
         suppressHydrationWarning
       >
         <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />

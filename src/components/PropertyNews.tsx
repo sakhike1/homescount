@@ -18,7 +18,7 @@ export default function PropertyNews() {
           </h2>
           <Link
             href="/news"
-            className="text-sm font-bold text-amber-700 hover:text-amber-800 hover:underline underline-offset-2"
+            className="text-sm text-stone-600 transition-colors hover:text-stone-700 hover:underline underline-offset-2"
           >
             View all articles →
           </Link>
@@ -41,7 +41,7 @@ export default function PropertyNews() {
                   <span className="mt-4 inline-block rounded-md bg-sky-100 px-2.5 py-1 text-xs font-bold text-sky-800">
                     {article.category}
                   </span>
-                  <h3 className="mt-3 text-lg sm:text-xl font-bold text-gray-900 leading-snug group-hover:text-amber-800 transition-colors">
+                  <h3 className="mt-3 text-lg sm:text-xl font-bold text-gray-900 leading-snug group-hover:text-stone-700 transition-colors">
                     {article.title}
                   </h3>
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed line-clamp-3">
@@ -65,7 +65,7 @@ export default function PropertyNews() {
                       className="object-cover transition duration-500 group-hover:scale-105"
                     />
                   </div>
-                  <h3 className="text-sm sm:text-base font-bold text-gray-900 leading-snug pt-0.5 group-hover:text-amber-800 transition-colors">
+                  <h3 className="text-sm sm:text-base font-bold text-gray-900 leading-snug pt-0.5 group-hover:text-stone-700 transition-colors">
                     {story.title}
                   </h3>
                 </Link>

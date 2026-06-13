@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma'
+import { propertyImageOrderBy } from '@/lib/property-image-order'
 
 export async function getAdminListings() {
   return prisma.property.findMany({
@@ -11,7 +12,7 @@ export async function getAdminListings() {
           active: true,
         },
       },
-      images: { take: 1, orderBy: { createdAt: 'asc' } },
+      images: { take: 1, orderBy: propertyImageOrderBy },
       _count: { select: { inquiries: true } },
     },
     orderBy: [{ published: 'desc' }, { updatedAt: 'desc' }],

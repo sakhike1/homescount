@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { logActivity } from '@/lib/activity'
-import { AD_PLANS, type AdPlanKey } from '@/lib/ad-plans'
+import { LISTING_PACKAGES, type ListingPackageKey } from '@/lib/listing-packages'
 import {
   forbidden,
   getSellerSession,
@@ -23,12 +23,12 @@ export async function POST(
 
   try {
     const { plan } = await req.json()
-    if (!plan || !(plan in AD_PLANS)) {
-      return NextResponse.json({ error: 'Invalid ad plan' }, { status: 400 })
+    if (!plan || !(plan in LISTING_PACKAGES)) {
+      return NextResponse.json({ error: 'Invalid package' }, { status: 400 })
     }
 
-    const planKey = plan as AdPlanKey
-    const selected = AD_PLANS[planKey]
+    const planKey = plan as ListingPackageKey
+    const selected = LISTING_PACKAGES[planKey]
     const featuredUntil = new Date()
     featuredUntil.setDate(featuredUntil.getDate() + selected.days)
 
@@ -45,7 +45,7 @@ export async function POST(
       prisma.property.update({
         where: { id },
         data: {
-          featured: true,
+          featured: selected.featured,
           featuredUntil,
           adPlan: planKey,
         },

@@ -8,7 +8,7 @@ const markSizes = {
   lg: 'text-lg px-3 py-1.5 rounded-lg min-w-[3rem]',
 } as const
 
-export type HomescoutLogoTone = 'default' | 'hero' | 'onDark'
+export type HomescoutLogoTone = 'default' | 'hero' | 'onDark' | 'home'
 export type HomescoutLogoSize = keyof typeof markSizes
 
 export function HomescoutLogoMark({
@@ -22,7 +22,7 @@ export function HomescoutLogoMark({
 }) {
   return (
     <span
-      className={`inline-flex items-center justify-center bg-amber-500 text-white font-black tracking-tight shrink-0 shadow-sm ${markSizes[size]} ${className}`}
+      className={`inline-flex items-center justify-center bg-violet-800 text-white font-black tracking-tight shrink-0 shadow-sm ${markSizes[size]} ${className}`}
       aria-label={title}
     >
       HS
@@ -33,15 +33,19 @@ export function HomescoutLogoMark({
 const wordmarkTone = {
   default: {
     homes: 'text-stone-900',
-    scout: 'text-amber-600',
+    scout: 'text-violet-700',
   },
   hero: {
     homes: 'text-white',
-    scout: 'text-amber-300',
+    scout: 'text-violet-300',
   },
   onDark: {
     homes: 'text-white',
-    scout: 'text-amber-300',
+    scout: 'text-violet-300',
+  },
+  home: {
+    homes: 'text-stone-900',
+    scout: 'text-violet-700',
   },
 } as const
 
@@ -63,12 +67,13 @@ export default function HomescoutLogo({
   suffix,
 }: HomescoutLogoProps) {
   const colors = wordmarkTone[tone]
+  const markClass = 'bg-violet-800 shadow-violet-900/20'
   const wordmarkSize =
     size === 'sm' ? 'text-base sm:text-lg' : size === 'lg' ? 'text-xl sm:text-2xl' : 'text-lg sm:text-xl'
 
   const content = (
     <>
-      <HomescoutLogoMark size={size} />
+      <HomescoutLogoMark size={size} className={markClass} />
       {showWordmark && (
         <span
           className={`hidden sm:inline font-bold tracking-tight truncate ${wordmarkSize} ${colors.homes}`}

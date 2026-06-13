@@ -8,20 +8,14 @@ import {
 } from './helpers'
 
 test.describe('End-to-end buyer flow', () => {
-  test('register as buyer then sign in', async ({ page }) => {
+  test('register as buyer signs in automatically', async ({ page }) => {
     test.skip(!hasAuthSecrets(), 'Auth secrets required')
 
     const email = uniqueTestEmail('buyer-flow')
     const password = 'password123'
 
     await registerAccount(page, { email, password, role: 'BUYER' })
-    await expect(page).toHaveURL(/\/login/, { timeout: 15_000 })
-
-    await page.locator('input[type="email"]').fill(email)
-    await page.locator('input[type="password"]').fill(password)
-    await page.getByRole('button', { name: /^sign in$/i }).click()
-
-    await expect(page).toHaveURL('/', { timeout: 20_000 })
+    await expect(page).toHaveURL('/', { timeout: 15_000 })
   })
 })
 
